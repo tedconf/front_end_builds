@@ -1,3 +1,5 @@
+require 'front_end_builds/routing_constraints/html_routing_constraint'
+
 module ActionDispatch::Routing
   class Mapper
 
@@ -19,14 +21,16 @@ module ActionDispatch::Routing
         }
       )
 
-      # Fetch a build for this app.
-      get(
-        "/#{path}/(*path)" => "front_end_builds/builds#index",
-        defaults: {
-          branch: :master,
-          app_name: name
-        }.merge(options)
-      )
+      # Get a build for this app.
+      constraints FrontEndBuilds::HtmlRoutingConstraint.new do
+        get(
+          "/#{path}/(*path)" => "front_end_builds/builds#index",
+          defaults: {
+            branch: :master,
+            app_name: name
+          }.merge(options)
+        )
+      end
     end
 
   end

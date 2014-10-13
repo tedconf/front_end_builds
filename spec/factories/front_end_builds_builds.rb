@@ -5,6 +5,7 @@ FactoryGirl.define do
     sequence(:sha) { |n| "sha#{n}" }
     sequence(:job) { |n| n }
     branch "master"
+    html "hello world"
     association :app, factory: :front_end_builds_app
   end
 end

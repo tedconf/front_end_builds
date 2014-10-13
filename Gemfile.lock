@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    front_end_builds (0.0.1)
+    front_end_builds (0.0.2)
       rails (~> 4.1.4)
 
 GEM
