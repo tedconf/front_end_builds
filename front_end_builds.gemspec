@@ -7,7 +7,7 @@ require "front_end_builds/version"
 Gem::Specification.new do |s|
   s.name        = "front_end_builds"
   s.version     = FrontEndBuilds::VERSION
-  s.authors     = ["Ryan Toronto  "]
+  s.authors     = ["Ryan Toronto"]
   s.email       = ["rt@ted.com"]
   s.homepage    = "http://github.com/tedconf/front_end_builds"
   s.summary     = "Summary of FrontEndBuilds."
