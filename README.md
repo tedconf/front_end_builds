@@ -62,3 +62,5 @@ rspec
 * Create docs site
 * Build admin ui
 * Auto live setting
+* make posts idempotent (i think they are), but dont insert a new row if
+  it already exists.
