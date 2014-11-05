@@ -51,10 +51,10 @@ module FrontEndBuilds
     end
 
     def find_app
-      FrontEndBuilds::App.find_by(
+      FrontEndBuilds::App.where(
         name: params[:app_name],
         api_key: params[:api_key]
-      )
+      ).limit(1).first
     end
   end
 end
