@@ -18,7 +18,7 @@ module FrontEndBuilds
       }
 
       if params[:app]
-        query[:app] = params[:app]
+        query[:app_id] = params[:app].id
       end
 
       if params[:app_name]

@@ -8,7 +8,10 @@ require 'shoulda/matchers'
 require 'webmock/rspec'
 
 Rails.backtrace_cleaner.remove_silencers!
-ActiveRecord::Migration.maintain_test_schema!
+
+if Rails::VERSION::MAJOR > 3
+  ActiveRecord::Migration.maintain_test_schema!
+end
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
