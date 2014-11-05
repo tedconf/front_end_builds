@@ -16,14 +16,22 @@ module FrontEndBuilds
     def create
       app = find_app
 
-      if app
-        build = app.builds.create(build_create_params)
-      end
+      if !app
+        render text: 'No app found'
 
-      if app && build
-        build.fetch!
-        build.activate!
-        head :ok
+      elsif app
+        build = app.builds.new(build_create_params)
+
+        if !build.save
+          puts 'here'
+          render text: 'Could not create the build: ' + build.errors.full_messages.to_s
+
+        else
+          build.fetch!
+          build.activate!
+          head :ok
+        end
+
       else
         head :unprocessable_entity
       end
