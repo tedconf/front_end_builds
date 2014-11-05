@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/tedconf/front_end_builds.svg)](https://travis-ci.org/tedconf/front_end_builds)
+
 # FrontEndBuilds
 
 FrontEndBuilds lets you easily serve remotely-hosted static (JS) applications from your Rails apps.
