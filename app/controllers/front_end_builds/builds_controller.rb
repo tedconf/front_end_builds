@@ -2,6 +2,7 @@ require_dependency "front_end_builds/application_controller"
 
 module FrontEndBuilds
   class BuildsController < ApplicationController
+    before_filter :set_app!, only: :create
 
     def index
       front_end = FrontEndBuilds::Build.find_best(build_search_params)
@@ -14,22 +15,32 @@ module FrontEndBuilds
     end
 
     def create
-      app = find_app
+      build = @app.builds.new(build_create_params)
 
-      if app
-        build = app.builds.create(build_create_params)
-      end
-
-      if app && build
+      if build.save
         build.fetch!
         build.activate!
         head :ok
+
       else
-        head :unprocessable_entity
+        render(
+          text: 'Could not create the build: ' + build.errors.full_messages.to_s,
+          status: :unprocessable_entity
+        )
       end
     end
 
     private
+
+    def set_app!
+      @app = find_app
+      if @app.nil?
+        render(
+          text: 'That app name/API combination was not found.',
+          status: :unprocessable_entity
+        )
+      end
+    end
 
     def csrf_tag
       [
@@ -51,10 +62,10 @@ module FrontEndBuilds
     end
 
     def find_app
-      FrontEndBuilds::App.find_by(
+      FrontEndBuilds::App.where(
         name: params[:app_name],
         api_key: params[:api_key]
-      )
+      ).limit(1).first
     end
   end
 end

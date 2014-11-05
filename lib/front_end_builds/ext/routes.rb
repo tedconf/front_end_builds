@@ -26,7 +26,7 @@ module ActionDispatch::Routing
         get(
           "/#{path}/(*path)" => "front_end_builds/builds#index",
           defaults: {
-            branch: :master,
+            branch: 'master',
             app_name: name
           }.merge(options)
         )
