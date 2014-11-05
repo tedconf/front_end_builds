@@ -36,7 +36,7 @@ module FrontEndBuilds
       @app = find_app
       if @app.nil?
         render(
-          text: 'That app name/api combination was not found.',
+          text: 'That app name/API combination was not found.',
           status: :unprocessable_entity
         )
       end

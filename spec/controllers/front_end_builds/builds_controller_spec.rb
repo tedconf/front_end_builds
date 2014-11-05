@@ -92,7 +92,7 @@ module FrontEndBuilds
          }
 
          expect(response).to_not be_success
-         expect(response.body).to eq('That app name/api combination was not found.')
+         expect(response.body).to eq('That app name/API combination was not found.')
        end
 
       it "should error if not all fields are present" do
