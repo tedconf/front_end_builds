@@ -17,14 +17,19 @@ module FrontEndBuilds
       app = find_app
 
       if !app
-        render text: 'No app found'
+        render(
+          text: 'That app name/api combination was not found.',
+          status: :unprocessable_entity
+        )
 
       elsif app
         build = app.builds.new(build_create_params)
 
         if !build.save
-          puts 'here'
-          render text: 'Could not create the build: ' + build.errors.full_messages.to_s
+          render(
+            text: 'Could not create the build: ' + build.errors.full_messages.to_s,
+            status: :unprocessable_entity
+          )
 
         else
           build.fetch!
