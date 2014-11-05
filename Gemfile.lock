@@ -126,12 +126,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  factory_girl_rails (~> 4.4.1)
+  factory_girl_rails
   front_end_builds!
-  pry (~> 0.10.1)
+  pry
   pry-stack_explorer
   rails (~> 4.1.0)
-  rspec-rails (~> 3.1.0)
-  shoulda-matchers (~> 2.7.0)
+  rspec-rails
+  shoulda-matchers
   sqlite3
-  webmock (~> 1.19.0)
+  webmock

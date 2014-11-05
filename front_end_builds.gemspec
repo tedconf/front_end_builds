@@ -18,10 +18,10 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_development_dependency "sqlite3"
-  s.add_development_dependency 'rspec-rails', '~> 3.1.0'
-  s.add_development_dependency 'factory_girl_rails', '~> 4.4.1'
-  s.add_development_dependency 'pry', '~> 0.10.1'
+  s.add_development_dependency 'rspec-rails'
+  s.add_development_dependency 'factory_girl_rails'
+  s.add_development_dependency 'pry'
   s.add_development_dependency 'pry-stack_explorer'
-  s.add_development_dependency 'shoulda-matchers', '~> 2.7.0'
-  s.add_development_dependency 'webmock', '~> 1.19.0'
+  s.add_development_dependency 'shoulda-matchers'
+  s.add_development_dependency 'webmock'
 end
