@@ -6,7 +6,7 @@ describe "Front end builds API", type: :request do
   it "creates a new build and then uses it" do
     stub_request(
       :get,
-      "ted.conferences.#{front_end_app.name}.s3-website-us-east-1.amazonaws.com/dist-jenkins-build-1-a1b2c3/index.html"
+      "www.ted.com/builds/1"
     ).to_return(
       body: 'your app!'
     )
@@ -15,7 +15,8 @@ describe "Front end builds API", type: :request do
       api_key: front_end_app.api_key,
       branch: "master",
       sha: "a1b2c3",
-      job: "jenkins-build-1"
+      job: "jenkins-build-1",
+      endpoint: "http://www.ted.com/builds/1"
 
     expect(response).to be_success
 

@@ -7,8 +7,8 @@ module FrontEndBuilds
 
     validates :app, presence: true
     validates :sha, presence: true
-    validates :job, presence: true
     validates :branch, presence: true
+    validates :endpoint, presence: true
 
     def self.find_best(params = {})
       scope = self
@@ -54,8 +54,6 @@ module FrontEndBuilds
     def fetch!
       return if fetched?
 
-      # Store endpoint in app
-      endpoint = "http://ted.conferences.#{app.name}.s3-website-us-east-1.amazonaws.com/dist-#{job}-#{sha}/index.html"
       html = Net::HTTP.get(URI.parse(endpoint))
 
       update_attributes(

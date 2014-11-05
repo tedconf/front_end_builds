@@ -57,7 +57,8 @@ module FrontEndBuilds
       params.permit(
         :branch,
         :sha,
-        :job
+        :job,
+        :endpoint
       )
     end
 

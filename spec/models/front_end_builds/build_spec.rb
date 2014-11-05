@@ -7,9 +7,8 @@ module FrontEndBuilds
 
     it { should validate_presence_of(:app) }
     it { should validate_presence_of(:sha) }
-    it { should validate_presence_of(:job) }
     it { should validate_presence_of(:branch) }
-
+    it { should validate_presence_of(:endpoint) }
 
     describe :find_best do
       let(:app) { FactoryGirl.create :front_end_builds_app }
@@ -101,12 +100,14 @@ module FrontEndBuilds
     end
 
     describe :fetch! do
-      let(:app) { FactoryGirl.create(:front_end_builds_app) }
+      let(:app) do
+        FactoryGirl.create(:front_end_builds_app)
+      end
 
       before(:each) do
         stub_request(
           :get,
-          "ted.conferences.#{app.name}.s3-website-us-east-1.amazonaws.com/dist-job1-sha1/index.html"
+          "www.ted.com/1/asdf"
         ).to_return(
           body: 'fetched html'
         )
@@ -117,6 +118,7 @@ module FrontEndBuilds
           app: app,
           job: 'job1',
           sha: 'sha1',
+          endpoint: 'http://www.ted.com/1/asdf',
           fetched: false,
           html: ''
         )
