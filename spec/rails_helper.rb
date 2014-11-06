@@ -9,7 +9,7 @@ require 'webmock/rspec'
 
 Rails.backtrace_cleaner.remove_silencers!
 
-if Rails::VERSION::MAJOR > 3
+if Rails::VERSION::MAJOR >= 4 && Rails::VERSION::MINOR >= 1
   ActiveRecord::Migration.maintain_test_schema!
 end
 
