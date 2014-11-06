@@ -11,8 +11,6 @@ Rails.backtrace_cleaner.remove_silencers!
 
 if Rails::VERSION::MAJOR > 3
   ActiveRecord::Migration.maintain_test_schema!
-else
-  load "#{Rails.root}/db/schema.rb"
 end
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
