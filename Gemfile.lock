@@ -141,7 +141,7 @@ DEPENDENCIES
   front_end_builds!
   pry
   pry-stack_explorer
-  rails (~> 3.2.0)
+  rails (~> 3.2.20)
   rspec-rails
   shoulda-matchers
   sqlite3
