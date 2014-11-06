@@ -3,7 +3,6 @@ language: ruby
 before_install: "rm Gemfile.lock"
 install: bundle install
 script:
-  - echo $RAILS_ENV
   - bundle exec rake db:create
   - bundle exec rake db:schema:load
   - bundle exec rake spec
