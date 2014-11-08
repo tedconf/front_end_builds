@@ -28,7 +28,10 @@ And then execute:
 
 ## Usage
 
-1. Run migrations
+1. Run migrations with
+
+    rake front_end_builds:install:migrations
+
 2. Add a front_end route pointing to your app in your `routes.rb`:
 
     ```rb
