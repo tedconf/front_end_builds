@@ -8,7 +8,10 @@ module FrontEndBuilds
       @app = FrontEndBuilds::App.new(app_create_params)
 
       if @app.save!
-        respond_with @app
+        # render json: @app
+        respond_with @app, location: nil
+        # respond_with :front_end_builds, @app
+        # respond_with :front_end_builds, @app
 
       else
         respond_with(
