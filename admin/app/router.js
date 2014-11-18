@@ -3,7 +3,7 @@ import config from './config/environment';
 
 var Router = Ember.Router.extend({
   location: config.locationType,
-  baseURL: config.environment == 'development' ? config.baseURL : window.RAILS_ENV.baseURL
+  baseURL: window.RAILS_ENV.baseURL
 });
 
 Router.map(function() {

@@ -1,0 +1,22 @@
+// .panel {
+//   padding: 1em;
+//   @include box-shadow(0 0 3px 3px rgba(0,0,0,.5));
+// }
+
+.panel-link {
+  display: block;
+  padding: 3em;
+  border: 1px dashed #bbb;
+  text-align: center;
+  color: #999;
+  font-size: 1.1em;
+  @include box-shadow(none);
+  @include transition(background-color, 0.1s);
+  @include transition(color, 0.1s);
+
+  &:hover {
+    color: #666;
+    background-color: whitesmoke;
+    text-decoration: none;
+  }
+}
