@@ -8,7 +8,7 @@ module FrontEndBuilds
       @app = FrontEndBuilds::App.new(app_create_params)
 
       if @app.save!
-        respond_with @app
+        respond_with @app, location: nil
 
       else
         respond_with(
