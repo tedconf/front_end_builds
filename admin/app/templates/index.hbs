@@ -1,3 +1,10 @@
+<div class='text-right'>
+  <button {{action 'createApp'}} class="btn btn-default btn-sm">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    New app
+  </button>
+</div>
+
 <div class="row">
 
   {{#each app in controller}}
@@ -32,8 +39,4 @@
       </div>
     </div>
   {{/each}}
-
-  <div class="col-sm-4">
-    <a {{action 'createApp'}} class='panel panel-link' href="#">Create a new app</a>
-  </div>
 </div>
