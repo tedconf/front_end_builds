@@ -13,15 +13,15 @@
       <div class="row">
         <div class="col-xs-4">
           <p class='appCard-infoLabel'>Branch</p>
-          <p>master</p>
+          <p>{{app.bestBuild.branch}}</p>
         </div>
         <div class="col-xs-4">
           <p class='appCard-infoLabel'>Sha</p>
-          <p>3fdw53</p>
+          <p>{{app.bestBuild.sha}}</p>
         </div>
         <div class="col-xs-4">
-          <p class='appCard-infoLabel'>Tag</p>
-          <p>v0.0.1</p>
+          <p class='appCard-infoLabel'>Job</p>
+          <p>{{app.bestBuild.job}}</p>
         </div>
       </div>
 
