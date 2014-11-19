@@ -6,20 +6,27 @@
       </h3>
     </div>
     <div class="panel-body">
-      <div class="row">
-        <div class="col-xs-4">
-          <p class='appCard-infoLabel'>Branch</p>
-          <p>{{app.bestBuild.branch}}</p>
+      {{#if app.bestBuild}}
+        <div class="row">
+          <div class="col-xs-4">
+            <p class='appCard-infoLabel'>Branch</p>
+            <p>{{app.bestBuild.branch}}</p>
+          </div>
+          <div class="col-xs-4">
+            <p class='appCard-infoLabel'>Sha</p>
+            <p>{{app.bestBuild.sha}}</p>
+          </div>
+          <div class="col-xs-4">
+            <p class='appCard-infoLabel'>Job</p>
+            <p>{{app.bestBuild.job}}</p>
+          </div>
         </div>
-        <div class="col-xs-4">
-          <p class='appCard-infoLabel'>Sha</p>
-          <p>{{app.bestBuild.sha}}</p>
-        </div>
-        <div class="col-xs-4">
-          <p class='appCard-infoLabel'>Job</p>
-          <p>{{app.bestBuild.job}}</p>
-        </div>
-      </div>
+      {{else}}
+        <p class='text-muted'>No active build.</p>
+        <p class='text-muted'><small>To start pushing builds,
+          <pre>POST /front-end-builds?app_name={{app.name}}&api_key=[api_key_below]</pre>
+          </small></p>
+      {{/if}}
 
       <hr class='short-divider'>
 

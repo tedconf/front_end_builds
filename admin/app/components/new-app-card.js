@@ -11,8 +11,9 @@ export default Ember.Component.extend({
     },
 
     cancelNewApp: function() {
-      var app = this.get('app');
-      this.get('onCancelNewApp')(app);
+      this.get('app').deleteRecord();
+      // var app = this.get('app');
+      // this.get('onCancelNewApp')(app);
     }
   }
 });
