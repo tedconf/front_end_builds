@@ -1,13 +1,10 @@
 <div class='text-right u-margin-bottom'>
   <button {{action 'createApp'}} class="btn btn-default btn-sm">
-    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    {{fa-icon 'plus'}}
     New app
   </button>
 </div>
 
 <div class="row">
-
-  {{#each app in controller}}
-    {{app-card app=app}}
-  {{/each}}
+  {{app-card-list apps=controller}}
 </div>

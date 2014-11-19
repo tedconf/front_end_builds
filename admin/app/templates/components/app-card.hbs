@@ -2,11 +2,7 @@
   <div class="appCard panel panel-primary">
     <div class="panel-heading">
       <h3 class="panel-title">
-        {{#if app.isEditing}}
-          {{input value=app.name placeholder='Enter an app name'}}
-        {{else}}
-          <a href="#">{{app.name}}</a>
-        {{/if}}
+        <a href="#">{{app.name}}</a>
       </h3>
     </div>
     <div class="panel-body">

@@ -1,0 +1,18 @@
+<div class="col-sm-4">
+  <div class="appCard panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        {{input value=app.name
+          class='appCard-newInput'
+          placeholder='Enter an app name'}}
+      </h3>
+    </div>
+    <div class='panel-body'>
+      <p class='text-muted'><small>Once your app is created, you'll receive an API key you can use to push out new builds.</small></p>
+      <button class='btn btn-sm btn-success'>Create</button>
+      <button {{action 'removeApp'}} class='btn btn-link btn-default'>
+        {{fa-icon 'remove'}}
+      </button>
+    </div>
+  </div>
+</div>

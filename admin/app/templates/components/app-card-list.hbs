@@ -1,0 +1,11 @@
+{{#each app in apps}}
+
+  {{#if app.isNew}}
+    {{new-app-card app=app}}
+
+  {{else}}
+    {{app-card app=app}}
+
+  {{/if}}
+
+{{/each}}
