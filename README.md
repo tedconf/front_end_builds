@@ -12,7 +12,7 @@ Benefits:
 Features:
   - Admin interface lets you easily view, rollback and activate different app versions (coming soon)
 
-The motivation for this gem came from [Luke Melia's RailsConf2014 talk]().
+The motivation for this gem came from [Luke Melia's RailsConf2014 talk](http://www.confreaks.com/videos/3324-railsconf-lightning-fast-deployment-of-your-rails-backed-javascript-app).
 
 
 ## Installation
