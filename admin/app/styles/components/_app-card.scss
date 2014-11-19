@@ -5,3 +5,27 @@
   color: rgb(164, 164, 164);
   font-weight: 200;
 }
+.appCard-api {
+  border: 1px dotted transparent;
+  padding: 1px 3px;
+  cursor: pointer;
+  @include border-top-radius(3px);
+  @include border-bottom-radius(3px);
+}
+.appCard-api:hover {
+  border-color: #ccc;
+
+  .appCard-copyApiButton {
+    opacity: 1;
+  }
+}
+.appCard-copyApiButton {
+  opacity: 0;
+  padding-left: 4px;
+  color: #999;
+  vertical-align: top;
+
+  &:hover {
+    color: #333;
+  }
+}

@@ -1,0 +1,39 @@
+<div class="col-sm-4">
+  <div class="appCard panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        {{#if app.isEditing}}
+          {{input value=app.name placeholder='Enter an app name'}}
+        {{else}}
+          <a href="#">{{app.name}}</a>
+        {{/if}}
+      </h3>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-xs-4">
+          <p class='appCard-infoLabel'>Branch</p>
+          <p>master</p>
+        </div>
+        <div class="col-xs-4">
+          <p class='appCard-infoLabel'>Sha</p>
+          <p>3fdw53</p>
+        </div>
+        <div class="col-xs-4">
+          <p class='appCard-infoLabel'>Tag</p>
+          <p>v0.0.1</p>
+        </div>
+      </div>
+
+      <hr class='short-divider'>
+
+      <p class='u-no-margin-bottom'>
+        API key:
+        <span class='appCard-api'>
+          ********
+          <small class='appCard-copyApiButton'>copy</small>
+        </span>
+      </p>
+    </div>
+  </div>
+</div>

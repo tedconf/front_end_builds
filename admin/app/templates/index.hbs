@@ -1,4 +1,4 @@
-<div class='text-right'>
+<div class='text-right u-margin-bottom'>
   <button {{action 'createApp'}} class="btn btn-default btn-sm">
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     New app
@@ -8,35 +8,6 @@
 <div class="row">
 
   {{#each app in controller}}
-    <div class="col-sm-4">
-      <div class="appCard panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            {{#if app.isEditing}}
-              {{input value=app.name placeholder='Enter an app name'}}
-            {{else}}
-              <a href="#">{{app.name}}</a>
-            {{/if}}
-          </h3>
-        </div>
-        <div class="panel-body">
-          <div class="row">
-            <div class="col-xs-4">
-              <p class='appCard-infoLabel'>Branch</p>
-              <p>master</p>
-            </div>
-            <div class="col-xs-4">
-              <p class='appCard-infoLabel'>Sha</p>
-              <p>3fdw53</p>
-            </div>
-            <div class="col-xs-4">
-              <p class='appCard-infoLabel'>Tag</p>
-              <p>v0.0.1</p>
-            </div>
-          </div>
-          <p class='text-right'><a href="#">See all builds</a></p>
-        </div>
-      </div>
-    </div>
+    {{app-card app=app}}
   {{/each}}
 </div>
