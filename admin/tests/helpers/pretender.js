@@ -42,12 +42,18 @@ var pretender = new Pretender(function() {
   };
 
   /*
-    Routes
+    Default routes
   */
-  this.stubUrl('get', '/apps', {
-    apps: this.data.apps,
-    builds: this.data.builds
-  });
+  this.setupDefaultRoutes = function() {
+
+    this.stubUrl('get', '/apps', {
+      apps: this.data.apps,
+      builds: this.data.builds
+    });
+
+    this.stubUrl('post', '/apps', {});
+
+  }.bind(this)
 
 });
 

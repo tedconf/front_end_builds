@@ -8,9 +8,7 @@ export default Ember.Route.extend({
 
   actions: {
     createApp: function() {
-      var app = this.store.createRecord('app');
-
-      // app.save();
+      this.store.createRecord('app');
     }
   }
 
