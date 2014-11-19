@@ -8,7 +8,7 @@ module('Acceptance: CreateApp', {
     App = startApp();
   },
   teardown: function() {
-    // Ember.run(App, 'destroy');
+    Ember.run(App, 'destroy');
   }
 });
 
