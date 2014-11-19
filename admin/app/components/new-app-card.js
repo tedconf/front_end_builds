@@ -6,6 +6,10 @@ export default Ember.Component.extend({
   },
 
   actions: {
+    createApp: function() {
+      this.get('app').save();
+    },
+
     removeApp: function() {
       this.get('app').deleteRecord();
     }

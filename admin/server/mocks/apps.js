@@ -21,19 +21,24 @@ module.exports = function(app) {
   ]
 
   appsRouter.get('/', function(req, res) {
-    res.send({
-      apps: apps,
-      builds: builds
-    });
+    setTimeout(function() {
+      res.send({
+        apps: apps,
+        builds: builds
+      });
+    }, 500);
   });
 
   appsRouter.post('/', function(req, res) {
     var newIndex = apps.length;
     var data = {
       id: newIndex,
-      name: req.name
+      name: req.body.app.name
     }
-    res.send({"app":data});
+
+    setTimeout(function() {
+      res.send({"app":data});
+    }.bind(this), 500);
   });
 
   app.use('/apps', appsRouter);
