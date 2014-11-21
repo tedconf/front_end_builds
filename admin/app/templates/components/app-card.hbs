@@ -6,6 +6,7 @@
       </h3>
     </div>
     <div class="panel-body">
+
       {{#if app.bestBuild}}
         <div class="row">
           <div class="col-xs-4">
@@ -21,22 +22,30 @@
             <p>{{app.bestBuild.job}}</p>
           </div>
         </div>
+
+        <hr class='short-divider'>
+
+        <p class='u-no-margin-bottom'>
+          API key:
+          <span class='appCard-api'>
+            ********
+            <small class='appCard-copyApiButton'>copy</small>
+          </span>
+        </p>
+
       {{else}}
-        <p class='text-muted'>No active build.</p>
-        <p class='text-muted'><small>To start pushing builds,
-          <pre>POST /front-end-builds?app_name={{app.name}}&api_key=[api_key_below]</pre>
-          </small></p>
+        <div class="text-muted">
+          <p class='text-center'>No active build.</p>
+          <hr class='short-divider'>
+          <p>
+            <small>To start pushing builds, POST to
+            <pre>/front-end-builds?app_name={{app.name}}&api_key={{app.apiKey}}</pre>
+            </small>
+          </p>
+        </div>
+
       {{/if}}
 
-      <hr class='short-divider'>
-
-      <p class='u-no-margin-bottom'>
-        API key:
-        <span class='appCard-api'>
-          ********
-          <small class='appCard-copyApiButton'>copy</small>
-        </span>
-      </p>
     </div>
   </div>
 </div>

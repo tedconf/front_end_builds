@@ -18,7 +18,7 @@ module.exports = function(app) {
       branch: 'master',
       is_best: true
     }
-  ]
+  ];
 
   appsRouter.get('/', function(req, res) {
     setTimeout(function() {
@@ -33,8 +33,9 @@ module.exports = function(app) {
     var newIndex = apps.length;
     var data = {
       id: newIndex,
-      name: req.body.app.name
-    }
+      name: req.body.app.name,
+      api_key: 'blk24b3l4kjsfbabc'
+    };
 
     setTimeout(function() {
       res.send({"app":data});
