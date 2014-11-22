@@ -1,0 +1,23 @@
+<table class='table table-hover appDetail-buildList'>
+  <tbody>
+    {{#each build in orderedBuilds}}
+      <tr {{bind-attr class=':appDetail-buildListItem'}}>
+        <td class='appDetail-buildListItemCell'>#{{build.id}}</td>
+        <td class='appDetail-buildListItemCell'>
+          <p>{{ago build.createdAt}}</p>
+          {{#if build.isBest}}
+            <span class="label label-success">Live</span>
+          {{/if}}
+        </td>
+        <td class='appDetail-buildListItemCell'>#{{build.sha}}</td>
+        <td class='appDetail-buildListItemCell text-right'>
+          {{#if build.isBest}}
+            <button class="btn btn-danger btn-xs">Deactivate</button>
+          {{else}}
+            <button class="btn btn-warning btn-xs">Make live</button>
+          {{/if}}
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

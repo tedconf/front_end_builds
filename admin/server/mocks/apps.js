@@ -17,7 +17,7 @@ module.exports = function(app) {
       sha: Math.floor(Math.random()*100000),
       job: i,
       branch: 'master',
-      is_best: i === 1 ? true : false,
+      is_best: i === 10 ? true : false,
       created_at: '2014-11-' + (9+i)
     });
   }

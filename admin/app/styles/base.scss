@@ -2,3 +2,12 @@
   max-width: 1000px;
   margin: 0 auto;
 }
+.navbar-inverse {
+  background-color: #1D4160;
+}
+.navbar-inverse .navbar-brand {
+  color: #eee;
+  &:hover {
+    color: #eee;
+  }
+}
