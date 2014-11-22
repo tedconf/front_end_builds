@@ -1,0 +1,29 @@
+.appDetail-title {
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+.appDetail-buildListTitle {
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+.appDetail-buildList {
+  color: #999;
+  border: 1px solid #e5e5e5;
+}
+.appDetail-buildList > tbody > .appDetail-buildListItem > .appDetail-buildListItemCell {
+  padding: 15px 13px;
+}
+.appDetail-buildListItem {
+  .btn {
+    visibility: hidden;
+  }
+  &:hover .btn {
+    visibility: visible;
+  }
+}
+.appDetail-buildListItemCell:nth-child(1) {
+  width: 5%;
+}
+.appDetail-buildListItemCell:nth-child(2) {
+  width: 25%;
+}

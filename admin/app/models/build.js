@@ -10,6 +10,7 @@ export default DS.Model.extend({
   fetched: DS.attr('boolean'),
   active: DS.attr('boolean'),
   endpoint: DS.attr('string'),
+  createdAt: DS.attr('date'),
 
   isBest: DS.attr('boolean')
 });

@@ -1,0 +1,12 @@
+.link-subtle,
+.link-subtle:focus,
+.link-subtle:visited {
+  color: #999;
+  font-weight: 200;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+    color: #777;
+  }
+}
