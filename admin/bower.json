@@ -15,6 +15,7 @@
     "qunit": "~1.15.0",
     "bourbon": "3.2.1",
     "pretender": "0.1.0",
-    "ember-cli-moment-shim": "~0.0.2"
+    "ember-cli-moment-shim": "~0.0.2",
+    "bootstrap": "~3.3.1"
   }
 }
