@@ -3,5 +3,5 @@ Rails.application.routes.draw do
 
   resources :items, only: [:show]
 
-  mount FrontEndBuilds::Engine, at: '/front-end-builds'
+  mount FrontEndBuilds::Engine, at: '/frontend-config'
 end
