@@ -22,6 +22,15 @@ rescue LoadError
   # no rspec available
 end
 
+task :build_admin do
+  Dir.chdir('admin'){
+    cmd = 'ember build --output-path ../public --environment production'
+    system 'echo Running command: ' + cmd
+    system cmd
+    system 'rm ../public/index.html'
+  }
+end
+
 APP_RAKEFILE = File.expand_path("../spec/dummy/Rakefile", __FILE__)
 load 'rails/tasks/engine.rake'
 
