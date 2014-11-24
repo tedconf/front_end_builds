@@ -1,5 +1,5 @@
 FrontEndBuilds::Engine.routes.draw do
-  get '/', to: 'admin#index'
-  
-  resources :apps, only: [:index, :create, :edit]
+  resources :apps, only: [:index, :create, :edit], path: '/api/apps'
+
+  get '/(*path)', to: 'admin#index'
 end

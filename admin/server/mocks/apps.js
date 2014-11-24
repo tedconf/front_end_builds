@@ -53,5 +53,5 @@ module.exports = function(app) {
     }.bind(this), 500);
   });
 
-  app.use('/apps', appsRouter);
+  app.use('/api/apps', appsRouter);
 };
