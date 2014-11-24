@@ -1,5 +1,3 @@
-require 'active_model_serializers'
-
 module FrontEndBuilds
   class Engine < ::Rails::Engine
     isolate_namespace FrontEndBuilds
