@@ -2,7 +2,6 @@ PATH
   remote: .
   specs:
     front_end_builds (0.0.6)
-      active_model_serializers (~> 0.8.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -20,8 +19,6 @@ GEM
       activesupport (= 4.1.7)
       builder (~> 3.1)
       erubis (~> 2.7.0)
-    active_model_serializers (0.8.1)
-      activemodel (>= 3.0)
     activemodel (4.1.7)
       activesupport (= 4.1.7)
       builder (~> 3.1)
