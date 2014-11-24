@@ -5,14 +5,16 @@ module FrontEndBuilds
     respond_to :json
 
     def index
-      respond_with FrontEndBuilds::App.all
+      @apps = FrontEndBuilds::App.all
+      respond_with apps: @apps
     end
 
     def create
       @app = FrontEndBuilds::App.new(app_create_params)
 
       if @app.save!
-        respond_with @app, location: nil
+        hash = { app: @app }
+        respond_with hash, location: nil
 
       else
         respond_with(
