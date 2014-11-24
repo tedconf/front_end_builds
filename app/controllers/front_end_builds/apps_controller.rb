@@ -13,8 +13,7 @@ module FrontEndBuilds
         @builds.push app.builds
 
         # Add this app's build IDs to app's hash
-        build_ids = app.builds.map {|build| build.id}
-        app = app.as_json.merge( {build_ids: build_ids} )
+        app = add_builds_to_app(app)
 
         # Add app hash to @apps
         @apps.push app
@@ -24,6 +23,12 @@ module FrontEndBuilds
         apps: @apps,
         builds: @builds
       })
+    end
+
+    def show
+      @app = FrontEndBuilds::App.find params[:id]
+      app = add_builds_to_app @app
+      respond_with app: app
     end
 
     def create
@@ -47,6 +52,12 @@ module FrontEndBuilds
       params.require(:app).permit(
         :name
       )
+    end
+
+    def add_builds_to_app(app)
+      build_ids = app.builds.map {|build| build.id}
+
+      app.as_json.merge( {build_ids: build_ids} )
     end
   end
 end
