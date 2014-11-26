@@ -3,6 +3,7 @@ import Application from '../../app';
 import Router from '../../router';
 import config from '../../config/environment';
 import pretender from './pretender';
+import domAssertions from '../helpers/dom-assertions';
 
 export default function startApp(attrs) {
   var App;

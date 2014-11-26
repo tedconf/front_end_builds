@@ -18,23 +18,21 @@ test('I should be able to start creating a new app, but then cancel', function()
 
   visit('/');
   click('button:contains("New app")');
-  click('.appCard:last-child .fa-remove');
+  click('.appCard:last .fa-remove');
 
   andThen(function() {
-    // equal(find('.appCard').length, 0);
-    ok(1);
+    equal(find('.appCard').length, 0);
   });
 });
 
 test('I should be able to create a new app', function() {
   visit('/');
   click('button:contains("New app")');
-  fillIn('.appCard-newInput', 'my-new-app')
+  fillIn('.appCard-newInput', 'my-new-app');
   click('button:contains("Create")');
 
   andThen(function() {
-    ok(1);
-  //   equal(find('.appCard').length, 2);
-  //   // equal(find('.appCard:last-child .panel-title').text(), 'my-new-app');
+    equal(find('.appCard').length, 2);
+    assertText('.appCard:last .panel-title', 'my-new-app');
   });
 });

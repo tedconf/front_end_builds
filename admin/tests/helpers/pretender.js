@@ -25,7 +25,7 @@ var pretender = new Pretender(function() {
 
   this.stubUrl = function(verb, url, data) {
     console.log(data);
-    this[verb].call(this, url, function(request) {
+    this[verb].call(this, '/api' + url, function(request) {
       return [200, {}, JSON.stringify(data)];
     });
   }.bind(this);
@@ -53,7 +53,7 @@ var pretender = new Pretender(function() {
 
     this.stubUrl('post', '/apps', {});
 
-  }.bind(this)
+  }.bind(this);
 
 });
 
