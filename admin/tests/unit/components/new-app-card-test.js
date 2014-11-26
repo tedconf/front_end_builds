@@ -5,7 +5,7 @@ import {
 
 moduleForComponent('new-app-card', 'NewAppCardComponent', {
   // specify the other units that are required for this test
-  // needs: ['component:foo', 'helper:bar']
+  needs: ['component:async-button', 'helper:fa-icon']
 });
 
 test('it renders', function() {

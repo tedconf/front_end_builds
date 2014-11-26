@@ -5,7 +5,7 @@ import {
 
 moduleForModel('app', 'App', {
   // Specify the other units that are required for this test.
-  needs: []
+  needs: ['model:build']
 });
 
 test('it exists', function() {
