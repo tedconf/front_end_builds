@@ -76,3 +76,12 @@ test("In the builds list, I can which build is live", function() {
     ok(find('.appDetail-buildListItem').eq(1).find(':contains("Live")').length > 0);
   });
 });
+
+test("I can delete an app", function() {
+  visit('/1');
+  click('a:contains("Delete")')
+
+  andThen(function() {
+    ok(find('.appDetail-buildListItem').eq(1).find(':contains("Live")').length > 0);
+  });
+});
