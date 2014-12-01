@@ -31,6 +31,21 @@ test("I see an info message if an app has no builds", function() {
 
   andThen(function() {
     assertPageContainsText('No active build');
+    assertPageContainsText('To push a new active build');
+  });
+});
+
+test("I see an info message if an app has builds, but none are active", function() {
+  App.pretender.stubUrl('get', '/apps/:id', {
+    app: {id: 1, name: 'first-app', api_key: '123', build_ids: [1]},
+    builds: [ {id: 1, app_id: 1, sha: '83jnbj', job: 1, branch: 'master'} ]
+  });
+
+  visit('/1');
+
+  andThen(function() {
+    assertPageContainsText('No active build');
+    equal(find('.appDetail-buildListItem').length, 1);
   });
 });
 
