@@ -7,6 +7,11 @@ module.exports = function(app) {
       name: 'ted-ed-lesson-creator',
       api_key: '2313123',
       build_ids: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    },
+    {
+      id: 2,
+      name: 'my-app',
+      api_key: 'na23908g',
     }
   ];
   var builds = [];
@@ -32,9 +37,10 @@ module.exports = function(app) {
   });
 
   appsRouter.get('/:id', function(req, res) {
+    var i = req.params.id - 1;
     setTimeout(function() {
       res.send({
-        app: apps[0],
+        app: apps[i],
         builds: builds
       });
     }, 500);

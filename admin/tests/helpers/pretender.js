@@ -51,6 +51,11 @@ var pretender = new Pretender(function() {
       builds: this.data.builds
     });
 
+    this.stubUrl('get', '/apps/:id', {
+      app: this.data.apps[0],
+      builds: this.data.builds
+    });
+
     this.stubUrl('post', '/apps', {});
 
   }.bind(this);

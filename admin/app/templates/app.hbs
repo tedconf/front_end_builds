@@ -4,17 +4,32 @@
   <h1>
 </div>
 
+{{#if bestBuild}}
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class='panel-title'>Current live build</h3>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class='panel-title'>Current live build</h3>
+    </div>
+    <div class="panel-body">
+      <p>Branch: <strong>{{bestBuild.branch}}</strong></p>
+      <p>Sha: <strong>{{bestBuild.sha}}</strong></p>
+      <p>Job: <strong>{{bestBuild.job}}</strong></p>
+    </div>
   </div>
-  <div class="panel-body">
-    <p>Branch: <strong>{{bestBuild.branch}}</strong></p>
-    <p>Sha: <strong>{{bestBuild.sha}}</strong></p>
-    <p>Job: <strong>{{bestBuild.job}}</strong></p>
-  </div>
-</div>
 
-<h3 class='appDetail-buildListTitle'>All builds</h3>
-{{build-list builds=builds}}
+  <h3 class='appDetail-buildListTitle'>All builds</h3>
+  {{build-list builds=builds}}
+
+{{else}}
+
+  <div class="text-muted">
+    <p class='lead'>No active build.</p>
+
+    <p>
+      <small>To start pushing builds, POST to
+      <pre>/front-end-builds?app_name={{app.name}}&api_key={{app.apiKey}}</pre>
+      </small>
+    </p>
+  </div>
+
+{{/if}}
