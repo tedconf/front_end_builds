@@ -6,6 +6,10 @@ export default Ember.Route.extend({
     return this.store.find('app');
   },
 
+  setupController: function(controller, model) {
+    controller.set('attrs.apps', model);
+  },
+
   actions: {
     createApp: function() {
       this.store.createRecord('app');
