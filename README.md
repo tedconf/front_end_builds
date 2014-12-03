@@ -19,27 +19,33 @@ The motivation for this gem came from [Luke Melia's RailsConf2014 talk](http://w
 
 Add this line to your application's Gemfile:
 
-    gem 'front_end_Builds' 
+```
+gem 'front_end_Builds' 
+```
 
 And then execute:
 
-    $ bundle 
+```
+$ bundle 
+```
 
 Front-End Builds brings some migrations along with it. To run, execute
 
-    rake front_end_builds:install:migrations
+```
+rake front_end_builds:install:migrations
+```
 
 ## Usage
 
 First, mount the admin interface in `routes.rb`:
 
-    ```rb
-    Rails.application.routes.draw do
+```rb
+Rails.application.routes.draw do
 
-      mount FrontEndBuilds::Engine, at: '/frontend-admin'
+  mount FrontEndBuilds::Engine, at: '/frontend-admin'
 
-    end
-    ```
+end
+```
 
 You should mount this under an authenticated route using your application's
 auth strategy, as anyone with access to the admin will be able to affect the
@@ -47,13 +53,13 @@ production builds of your front end apps.
 
 Now, to create a new app, first add a `front_end` route pointing to your app in `routes.rb`:
 
-    ```rb
-    Rails.application.routes.draw do
+```rb
+Rails.application.routes.draw do
 
-      front_end 'app-name', '/app-route'
+  front_end 'app-name', '/app-route'
 
-    end
-    ```
+end
+```
 
 Visit the admin (at whatever URL you mounted the engine above), create a new app
 named `app-name`, and you'll receive an API key with instructions on how to start
@@ -69,7 +75,9 @@ within the gem, and must be updated whenever admin code is updated.
 
 After changing the admin app, run
 
-    rake build_admin
+```
+rake build_admin
+```
 
 to store a fresh distribution.
 
