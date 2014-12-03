@@ -46,6 +46,27 @@ module.exports = function(app) {
     }, 500);
   });
 
+  appsRouter['delete']('/:id', function(req, res) {
+    var appId = +req.params.id;
+
+    var app = apps.filter(function(item) {
+      return item.id === appId;
+    })[0];
+    var i = apps.indexOf(app);
+    apps.splice(i, 1);
+
+    builds.filter(function(build) {
+      return build.app_id === appId;
+    }).forEach(function(build) {
+      var index = builds.indexOf(build);
+      builds.splice(index, 1);
+    });
+
+    setTimeout(function() {
+      res.send({});
+    }, 500);
+  });
+
   appsRouter.post('/', function(req, res) {
     var newIndex = apps.length + 1;
     var data = {

@@ -19,13 +19,15 @@ stubData.currentUser = {
   lastname: "Selikoff"
 };
 
-// pretender
+/*
+*/
 var pretender = new Pretender(function() {
   var _this = this;
 
   this.stubUrl = function(verb, url, data) {
-    console.log(data);
     this[verb].call(this, '/api' + url, function(request) {
+      console.log('Hitting ' + url);
+      console.log(data);
       return [200, {}, JSON.stringify(data)];
     });
   }.bind(this);
@@ -44,21 +46,38 @@ var pretender = new Pretender(function() {
   /*
     Default routes
   */
-  this.setupDefaultRoutes = function() {
+  this.setupRoutes = function(data) {
+    var _this = this;
 
     this.stubUrl('get', '/apps', {
-      apps: this.data.apps,
-      builds: this.data.builds
+      apps: data.apps,
+      builds: data.builds
     });
 
     this.stubUrl('get', '/apps/:id', {
-      app: this.data.apps[0],
-      builds: this.data.builds
+      app: data.apps[0],
+      builds: data.builds
     });
 
     this.stubUrl('post', '/apps', {});
 
+    this.delete('/api/apps/:id', function(request) {
+      var appId = +request.params.id;
+      data.apps = data.apps.rejectBy('id', appId);
+      data.builds = data.builds.rejectBy('app_id', appId);
+
+      _this.setupRoutes.call(_this, data);
+
+      return [204, {}];
+    });
+
   }.bind(this);
+
+  this.setupDefaultRoutes = function() {
+    var data = jQuery.extend(true, {}, stubData); // Make sure we have a copy
+
+    this.setupRoutes(data);
+  };
 
 });
 

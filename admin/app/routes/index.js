@@ -12,7 +12,7 @@ export default Ember.Route.extend({
 
   actions: {
     createApp: function() {
-      this.store.createRecord('app');
+      return this.store.createRecord('app');
     }
   }
 

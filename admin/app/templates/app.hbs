@@ -39,6 +39,9 @@
   <div class="panel-body">
     <p>Careful, this is permanent.</p>
 
-    <button class="btn btn-danger">Delete this app</button>
+    {{async-button action='deleteApp'
+      class='btn btn-danger'
+      default="Delete this app"
+      pending="Deleting..."}}
   </div>
 </div>
