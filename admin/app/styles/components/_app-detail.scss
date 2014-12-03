@@ -7,13 +7,12 @@
   margin-bottom: 1em;
 }
 .appDetail-buildList {
-  color: #999;
   border: 1px solid #e5e5e5;
-}
-.appDetail-buildList > tbody > .appDetail-buildListItem > .appDetail-buildListItemCell {
-  padding: 15px 13px;
+  table-layout: fixed;
 }
 .appDetail-buildListItem {
+  color: #999;
+
   .btn {
     visibility: hidden;
   }
@@ -21,9 +20,16 @@
     visibility: visible;
   }
 }
+.appDetail-buildListItem:hover,
+.success.appDetail-buildListItem {
+  color: #333;
+}
+.appDetail-buildList > tbody > .appDetail-buildListItem > .appDetail-buildListItemCell {
+  padding: 15px 13px;
+}
 .appDetail-buildListItemCell:nth-child(1) {
-  width: 5%;
+  width: 110px;
 }
 .appDetail-buildListItemCell:nth-child(2) {
-  width: 25%;
+  // width: 60px;
 }

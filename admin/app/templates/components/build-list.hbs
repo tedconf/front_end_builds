@@ -1,13 +1,17 @@
 <table class='table table-hover appDetail-buildList'>
   <tbody>
     {{#each build in orderedBuilds}}
-      <tr {{bind-attr class=':appDetail-buildListItem'}}>
-        <td class='appDetail-buildListItemCell'>#{{build.id}}</td>
+      <tr {{bind-attr class='build.isBest:success :appDetail-buildListItem'}}>
+        <td class='appDetail-buildListItemCell'>
+          #{{build.id}}
+          {{#if build.isBest}}
+            <span class='pull-right'>
+              <span class='label label-success'>Live</span>
+            </span>
+          {{/if}}
+        </td>
         <td class='appDetail-buildListItemCell'>
           <p>{{ago build.createdAt}}</p>
-          {{#if build.isBest}}
-            <span class="label label-success">Live</span>
-          {{/if}}
         </td>
         <td class='appDetail-buildListItemCell'>#{{build.sha}}</td>
         <td class='appDetail-buildListItemCell text-right'>
