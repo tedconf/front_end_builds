@@ -2,7 +2,7 @@
 
 # FrontEndBuilds
 
-FrontEndBuilds lets you easily serve remotely-hosted static (JS) applications from your Rails apps.
+Front-End Builds lets you easily serve remotely-hosted static (JS) applications from your Rails apps.
 
 Benefits:
   - JS app can be deployed without redeploying your Rails app
@@ -10,7 +10,7 @@ Benefits:
     http://your-app.com/my-ember-app?branch=new-feature
 
 Features:
-  - Admin interface lets you easily view, rollback and activate different app versions (coming soon)
+  - Admin interface lets you easily view, rollback and activate different app versions
 
 The motivation for this gem came from [Luke Melia's RailsConf2014 talk](http://www.confreaks.com/videos/3324-railsconf-lightning-fast-deployment-of-your-rails-backed-javascript-app).
 
@@ -25,46 +25,67 @@ And then execute:
 
     $ bundle 
 
-
-## Usage
-
-1. Run migrations with
+Front-End Builds brings some migrations along with it. To run, execute
 
     rake front_end_builds:install:migrations
 
-2. Add a front_end route pointing to your app in your `routes.rb`:
+## Usage
+
+First, mount the admin interface in `routes.rb`:
+
+    ```rb
+    Rails.application.routes.draw do
+
+      mount FrontEndBuilds::Engine, at: '/frontend-admin'
+
+    end
+    ```
+
+You should mount this under an authenticated route using your application's
+auth strategy, as anyone with access to the admin will be able to affect the
+production builds of your front end apps.
+
+Now, to create a new app, first add a `front_end` route pointing to your app in `routes.rb`:
 
     ```rb
     Rails.application.routes.draw do
 
       front_end 'app-name', '/app-route'
 
-      resources :users
-      ...
     end
     ```
 
-3. Make a FrontEndBuild model from the rails console:
-
-        $ rails console
-        > FrontEndBuilds::App.create(name: 'name-you-used-in-router')
-
-Copy the API key that shows up, and POST to `/name-you-used-in-router` with that key for a new deploy.
+Visit the admin (at whatever URL you mounted the engine above), create a new app
+named `app-name`, and you'll receive an API key with instructions on how to start
+pushing builds.
 
 
 ## Development
 
-### Running tests
+**Admin**
+
+The Admin interface is an Ember CLI app within feb. A distribution is kept
+within the gem, and must be updated whenever admin code is updated.
+
+After changing the admin app, run
+
+    rake build_admin
+
+to store a fresh distribution.
+
+**Running tests**
 
 ```
-rspec
-```
+# Rails tests
+rspec  
 
+# Admin tests, from /admin dir
+ember test
+```
 
 ## TODO
 
 * Create docs site
-* Build admin ui
 * Auto live setting
 * make posts idempotent (i think they are), but dont insert a new row if
   it already exists.
