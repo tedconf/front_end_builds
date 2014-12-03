@@ -6,7 +6,7 @@ var App;
 module('Acceptance: Index', {
   setup: function() {
     App = startApp();
-    App.pretender.setupDefaultRoutes();
+    App.pretender.resetGlobalRoutes();
   },
   teardown: function() {
     Ember.run(App, 'destroy');

@@ -32,21 +32,12 @@ var pretender = new Pretender(function() {
     });
   }.bind(this);
 
-  this.resetData = function() {
-    this.data = jQuery.extend(true, {}, stubData);
-  };
-
-  this.resetData();
-
   this.unhandledRequest = function(verb, path, request) {
     console.error("FAILED REQUEST");
     console.error(verb, path);
   };
 
-  /*
-    Default routes
-  */
-  this.setupRoutes = function(data) {
+  this.setupGlobalRoutes = function(data) {
     var _this = this;
 
     this.stubUrl('get', '/apps', {
@@ -66,17 +57,17 @@ var pretender = new Pretender(function() {
       data.apps = data.apps.rejectBy('id', appId);
       data.builds = data.builds.rejectBy('app_id', appId);
 
-      _this.setupRoutes.call(_this, data);
+      _this.setupGlobalRoutes.call(_this, data);
 
       return [204, {}];
     });
 
   }.bind(this);
 
-  this.setupDefaultRoutes = function() {
+  this.resetGlobalRoutes = function() {
     var data = jQuery.extend(true, {}, stubData); // Make sure we have a copy
 
-    this.setupRoutes(data);
+    this.setupGlobalRoutes(data);
   };
 
 });
