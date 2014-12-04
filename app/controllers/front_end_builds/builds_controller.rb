@@ -5,9 +5,15 @@ module FrontEndBuilds
     before_filter :set_app!, only: :create
 
     def index
-      front_end = FrontEndBuilds::Build.find_best(build_search_params)
+      app = FrontEndBuilds::App.where(
+        name: params[:app_name],
+      ).limit(1).first
 
-      if front_end
+      if app
+        front_end = app.find_best_build(build_search_params)
+      end
+
+      if app and front_end
         render text: front_end.with_head_tag(csrf_tag)
       else
         render text: "not found", status: 404

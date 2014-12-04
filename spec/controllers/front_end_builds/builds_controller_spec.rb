@@ -81,7 +81,7 @@ module FrontEndBuilds
           endpoint: 'http://www.ted.com/testing/build'
         }
 
-        expect(app.builds.find_best.html).to eq('fetched html')
+        expect(app.find_best_build.html).to eq('fetched html')
       end
 
       it "should error if the api key does not match" do

@@ -10,47 +10,6 @@ module FrontEndBuilds
     validates :branch, presence: true
     validates :endpoint, presence: true
 
-    def self.find_best(params = {})
-      scope = self
-
-      query = {
-        fetched: true
-      }
-
-      if params[:app]
-        query[:app_id] = params[:app].id
-      end
-
-      if params[:app_name]
-        scope = scope
-          .joins(:app)
-          .where(
-            front_end_builds_apps: { name: params[:app_name] }
-          )
-      end
-
-      if params[:sha]
-        query[:sha] = params[:sha]
-
-      elsif params[:job]
-        query[:job] = params[:job]
-
-      elsif params[:branch]
-        # only force activeness on branch based searched. Anyone who
-        # is searching by sha or build# is probably debugging/testing,
-        # so they would want non active builds
-        query[:branch] = params[:branch]
-        query[:active] = true
-
-      end
-
-      scope
-        .where(query)
-        .limit(1)
-        .order('created_at desc')
-        .first
-    end
-
     def fetch!
       return if fetched?
 
