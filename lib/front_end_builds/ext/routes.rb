@@ -5,14 +5,6 @@ module ActionDispatch::Routing
 
     # Create a front end in your rails router.
     def front_end(name, path = name, options = {})
-
-      # Generic routes that have nothing to do with the app
-      # name. Use this for testing or providing a non
-      # app api endpoint.
-      namespace :front_end_builds do
-        resources :builds, only: [:index, :create]
-      end
-
       # Create a new build for this app.
       post(
         "#{path}" => "front_end_builds/builds#create",
@@ -32,6 +24,6 @@ module ActionDispatch::Routing
         )
       end
     end
-    
+
   end
 end
