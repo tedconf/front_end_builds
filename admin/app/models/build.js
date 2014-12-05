@@ -12,5 +12,9 @@ export default DS.Model.extend({
   endpoint: DS.attr('string'),
   createdAt: DS.attr('date'),
 
-  isBest: DS.attr('boolean')
+  isBest: DS.attr('boolean'),
+
+  shortSha: function() {
+    return this.get('sha').slice(0, 6);
+  }.property('sha')
 });

@@ -19,7 +19,7 @@ module.exports = function(app) {
     builds.push({
       id: i,
       app_id: 1,
-      sha: Math.floor(Math.random()*100000),
+      sha: Math.floor(Math.random()*10000000000000000000),
       job: i,
       branch: 'master',
       is_best: i === 10 ? true : false,

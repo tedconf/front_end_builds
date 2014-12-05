@@ -1,4 +1,12 @@
 <table class='table table-hover appDetail-buildList'>
+  <thead>
+    <tr>
+      <th class='appDetail-buildListItemCell'>ID</th>
+      <th class='appDetail-buildListItemCell'>Built</th>
+      <th class='appDetail-buildListItemCell'>Commit</th>
+      <th class='appDetail-buildListItemCell'></th>
+    </tr>
+  </thead>
   <tbody>
     {{#each build in orderedBuilds}}
       <tr {{bind-attr class='build.isBest:success :appDetail-buildListItem'}}>
@@ -13,7 +21,7 @@
         <td class='appDetail-buildListItemCell'>
           <p>{{ago build.createdAt}}</p>
         </td>
-        <td class='appDetail-buildListItemCell'>#{{build.sha}}</td>
+        <td class='appDetail-buildListItemCell'>#{{build.shortSha}}</td>
         <td class='appDetail-buildListItemCell text-right'>
           {{#if build.isBest}}
             <button class="btn btn-danger btn-xs">Deactivate</button>
