@@ -13,7 +13,7 @@ module FrontEndBuilds
         builds.concat serialize_builds(app)
       end
 
-      respond_with ({
+      respond_with({
         apps: apps,
         builds: builds
       })
@@ -60,9 +60,12 @@ module FrontEndBuilds
     def serialize_builds(app)
       builds = app.builds.as_json
       best_build = app.find_best_build
-      builds.each do |build|
-        if build["id"] === best_build.id
-          build["is_best"] = true
+
+      if best_build
+        builds.each do |build|
+          if build["id"] === best_build.id
+            build["is_best"] = true
+          end
         end
       end
 
