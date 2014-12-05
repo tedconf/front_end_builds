@@ -7,11 +7,11 @@ require "front_end_builds/version"
 Gem::Specification.new do |s|
   s.name        = "front_end_builds"
   s.version     = FrontEndBuilds::VERSION
-  s.authors     = ["Ryan Toronto"]
-  s.email       = ["rt@ted.com"]
+  s.authors     = ["Ryan Toronto", "Sam Selikoff"]
+  s.email       = ["rt@ted.com", "sam@ted.com"]
   s.homepage    = "http://github.com/tedconf/front_end_builds"
   s.summary     = "Summary of FrontEndBuilds."
-  s.description = "Description of FrontEndBuilds."
+  s.description = "Rails engine to manage front end builds and deployments"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
