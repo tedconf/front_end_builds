@@ -10,5 +10,11 @@ module FrontEndBuilds
     def ensure_api_key!
       self.api_key = SecureRandom.uuid if api_key.blank?
     end
+
+    def find_best_build
+      FrontEndBuilds::Build.find_best({
+        app: self
+      })
+    end
   end
 end
