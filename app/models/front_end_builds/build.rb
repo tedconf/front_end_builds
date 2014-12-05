@@ -51,6 +51,10 @@ module FrontEndBuilds
         .first
     end
 
+    def live?
+      self == app.find_best_build
+    end
+
     def fetch!
       return if fetched?
 
