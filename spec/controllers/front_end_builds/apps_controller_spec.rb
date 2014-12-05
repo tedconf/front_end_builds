@@ -52,5 +52,32 @@ module FrontEndBuilds
         expect(json['app']['id']).to eq(app.id)
       end
     end
+
+    describe 'destroy' do
+      let(:deletable_app) { FactoryGirl.create :front_end_builds_app, name: 'forsaken' }
+
+      context 'a valid app' do
+        before(:each) do
+          post :destroy,
+            id: deletable_app.id,
+            format: :json
+        end
+
+        context 'the response' do
+          subject { response }
+          it { should be_success }
+        end
+
+        context 'the data' do
+          subject { json['app']['id'] }
+          it { should_not be_nil }
+        end
+
+        context 'the record' do
+          subject { FrontEndBuilds::App.where(id: deletable_app.id).first }
+          it { should be_nil }
+        end      
+      end      
+    end
   end
 end

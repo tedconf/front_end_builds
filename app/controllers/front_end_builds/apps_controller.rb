@@ -2,6 +2,7 @@ require_dependency "front_end_builds/application_controller"
 
 module FrontEndBuilds
   class AppsController < ApplicationController
+    before_filter :set_app , :only => [:show, :destroy]
     respond_to :json
 
     def index
@@ -20,8 +21,6 @@ module FrontEndBuilds
     end
 
     def show
-      @app = FrontEndBuilds::App.find params[:id]
-
       respond_with({
         app: serialize_app(@app),
         builds: serialize_builds(@app)
@@ -43,7 +42,24 @@ module FrontEndBuilds
       end
     end
 
+    def destroy
+      if @app.destroy
+        hash = { app: @app }
+        respond_with hash, location: nil
+
+      else
+        respond_with(
+          {errors: @app.errors},
+          status: :unprocessable_entity
+        )
+      end
+    end
+
     private
+
+    def set_app    
+      @app = FrontEndBuilds::App.find params[:id]
+    end
 
     def app_create_params
       params.require(:app).permit(
