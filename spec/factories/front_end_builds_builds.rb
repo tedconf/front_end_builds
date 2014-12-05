@@ -8,5 +8,9 @@ FactoryGirl.define do
     branch "master"
     html "hello world"
     association :app, factory: :front_end_builds_app
+
+    trait :fetched do
+      fetched true
+    end
   end
 end

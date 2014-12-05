@@ -5,30 +5,27 @@ module FrontEndBuilds
     respond_to :json
 
     def index
-      @apps = []
-      @builds = []
+      apps = []
+      builds = []
 
       FrontEndBuilds::App.all.each do |app|
-        # Add this app's builds to @builds
-        @builds.push app.builds
-
-        # Add this app's build IDs to app's hash
-        app = add_builds_to_app(app)
-
-        # Add app hash to @apps
-        @apps.push app
+        apps.push serialize_app(app)
+        builds.concat serialize_builds(app)
       end
 
-      respond_with ({
-        apps: @apps,
-        builds: @builds
+      respond_with({
+        apps: apps,
+        builds: builds
       })
     end
 
     def show
       @app = FrontEndBuilds::App.find params[:id]
-      app = add_builds_to_app @app
-      respond_with app: app
+
+      respond_with({
+        app: serialize_app(@app),
+        builds: serialize_builds(@app)
+      })
     end
 
     def create
@@ -54,10 +51,25 @@ module FrontEndBuilds
       )
     end
 
-    def add_builds_to_app(app)
+    def serialize_app(app)
       build_ids = app.builds.map {|build| build.id}
 
       app.as_json.merge( {build_ids: build_ids} )
+    end
+
+    def serialize_builds(app)
+      builds = app.builds.as_json
+      best_build = app.find_best_build
+
+      if best_build
+        builds.each do |build|
+          if build["id"] === best_build.id
+            build["is_best"] = true
+          end
+        end
+      end
+
+      return builds
     end
   end
 end
