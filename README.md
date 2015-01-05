@@ -2,6 +2,8 @@
 
 # FrontEndBuilds
 
+**Warning: alpha software!**
+
 Front-End Builds lets you easily serve remotely-hosted static (JS) applications from your Rails apps.
 
 Benefits:
