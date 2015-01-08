@@ -1,5 +1,3 @@
-require 'action_dispatch/middleware/static'
-
 module FrontEndBuilds
   class Engine < ::Rails::Engine
     isolate_namespace FrontEndBuilds
@@ -12,17 +10,17 @@ module FrontEndBuilds
     end
 
     # Initializer to combine this engines static assets with the static assets of the hosting site.
-    initializer "static assets" do |app|
-      app.middleware.insert_before(::ActionDispatch::Static, ::ActionDispatch::Static, "#{root}/public")
-    end
+    #initializer "static assets" do |app|
+      #app.middleware.insert_before(::ActionDispatch::Static, ::ActionDispatch::Static, "#{root}/public")
+    #end
 
-    initializer "front_end_assets.assets.precompile", group: :all do |app|
-      app.config.assets.precompile += %w(
-        front_end_builds/vendor.css
-        front_end_builds/admin.css
-        front_end_builds/vendor.js
-        front_end_builds/admin.js
-      )
-    end
+    #initializer "front_end_assets.assets.precompile", group: :all do |app|
+      #app.config.assets.precompile += %w(
+        #front_end_builds/vendor.css
+        #front_end_builds/admin.css
+        #front_end_builds/vendor.js
+        #front_end_builds/admin.js
+      #)
+    #end
   end
 end
