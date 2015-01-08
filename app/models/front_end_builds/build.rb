@@ -1,5 +1,4 @@
-require 'net/http'
-require 'uri'
+require 'open-uri'
 
 module FrontEndBuilds
   class Build < ActiveRecord::Base
