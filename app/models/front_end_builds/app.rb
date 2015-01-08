@@ -1,5 +1,9 @@
 module FrontEndBuilds
   class App < ActiveRecord::Base
+    if defined?(ProtectedAttributes) || ::ActiveRecord::VERSION::MAJOR < 4
+      attr_accessible :name
+    end
+
     has_many :builds, class_name: 'FrontEndBuilds::Build'
 
     validates :name, presence: true

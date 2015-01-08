@@ -3,6 +3,12 @@ require 'uri'
 
 module FrontEndBuilds
   class Build < ActiveRecord::Base
+    if defined?(ProtectedAttributes) || ::ActiveRecord::VERSION::MAJOR < 4
+      attr_accessible :branch,
+                      :sha,
+                      :endpoint
+    end
+
     belongs_to :app, class_name: "FrontEndBuilds::App"
 
     validates :app, presence: true
@@ -58,7 +64,7 @@ module FrontEndBuilds
     def fetch!
       return if fetched?
 
-      html = Net::HTTP.get(URI.parse(endpoint))
+      html = URI.parse(endpoint).read
 
       update_attributes(
         html: html,
