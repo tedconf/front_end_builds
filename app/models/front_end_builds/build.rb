@@ -66,14 +66,14 @@ module FrontEndBuilds
 
       html = URI.parse(endpoint).read
 
-      update_attributes(
-        html: html,
-        fetched: true
-      )
+      self.html = html
+      self.fetched = true
+      save
     end
 
     def activate!
-      update_attributes(active: true)
+      self.active = true
+      save
     end
 
     def with_head_tag(tag)
