@@ -5,6 +5,8 @@ module FrontEndBuilds
     end
 
     has_many :builds, class_name: 'FrontEndBuilds::Build'
+    has_many :recent_builds, -> { recent },
+      class_name: "FrontEndBuilds::Build"
 
     validates :name, presence: true
     validates :api_key, presence: true
@@ -16,9 +18,17 @@ module FrontEndBuilds
     end
 
     def find_best_build
-      FrontEndBuilds::Build.find_best({
-        app: self
-      })
+      builds.find_best
+    end
+
+    def serialize
+      {
+        id: id,
+        name: name,
+        api_key: api_key,
+        build_ids: builds.recent.map(&:id),
+        best_build_id: find_best_build.id,
+      }
     end
   end
 end

@@ -12,14 +12,9 @@ module FrontEndBuilds
       it "should find all apps" do
         get :index, format: :json
 
-        best_build = app.find_best_build
-        json_best_builds = json['builds'].select { |x| x['is_best'] }
-
         expect(response).to be_success
         expect(json['apps'].length).to eq(1)
         expect(json['builds'].length).to eq(3)
-        expect(json_best_builds.length).to eq(1)
-        expect(json_best_builds[0]['id']).to eq(best_build.id)
       end
     end
 
@@ -27,14 +22,10 @@ module FrontEndBuilds
       it "should find the requested app" do
         get :show, id: app.id, format: :json
 
-        best_build = app.find_best_build
-        json_best_builds = json['builds'].select { |x| x['is_best'] }
-
         expect(response).to be_success
         expect(json['app']['id']).to eq(app.id)
         expect(json['builds'].length).to eq(3)
-        expect(json_best_builds.length).to eq(1)
-        expect(json_best_builds[0]['id']).to eq(best_build.id)
+        expect(json['app']['best_build_id']). to eq(app.find_best_build.id)
       end
     end
 

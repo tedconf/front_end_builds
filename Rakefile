@@ -22,13 +22,23 @@ rescue LoadError
   # no rspec available
 end
 
-task :build_admin do
-  Dir.chdir('admin'){
-    cmd = 'ember build --output-path ../public --environment production'
-    system 'echo Running command: ' + cmd
-    system cmd
-    system 'rm ../public/index.html'
-  }
+namespace :admin do
+  task :build do
+    copy_files = {
+      'admin/dist/assets/admin.css' => 'app/assets/stylesheets/front_end_builds/admin.css',
+      'admin/dist/assets/vendor.css' => 'app/assets/stylesheets/front_end_builds/vendor.css',
+      'admin/dist/assets/admin.js' => 'app/assets/javascripts/front_end_builds/admin.js',
+      'admin/dist/assets/vendor.js' => 'app/assets/javascripts/front_end_builds/vendor.js',
+    }
+
+    Dir.chdir('admin') do
+      sh 'ember build  --environment production'
+    end
+
+    copy_files.each do |source, dest|
+      FileUtils.cp(source, dest)
+    end
+  end
 end
 
 APP_RAKEFILE = File.expand_path("../spec/dummy/Rakefile", __FILE__)

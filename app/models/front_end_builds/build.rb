@@ -15,6 +15,8 @@ module FrontEndBuilds
     validates :branch, presence: true
     validates :endpoint, presence: true
 
+    scope :recent, -> { limit(10).order('created_at desc') }
+
     def self.find_best(params = {})
       scope = self
 
@@ -77,6 +79,15 @@ module FrontEndBuilds
 
     def with_head_tag(tag)
       html.clone.insert(head_pos, tag)
+    end
+
+    def serialize
+      {
+        id: id,
+        app_id: app_id,
+        sha: sha,
+        branch: branch
+      }
     end
 
     private
