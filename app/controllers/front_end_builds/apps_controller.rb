@@ -42,7 +42,7 @@ module FrontEndBuilds
     def destroy
       if @app.destroy
         respond_with(
-          { id: @app.id },
+          { app: { id: @app.id } },
           location: nil
         )
 

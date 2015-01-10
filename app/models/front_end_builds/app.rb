@@ -5,8 +5,10 @@ module FrontEndBuilds
     end
 
     has_many :builds, class_name: 'FrontEndBuilds::Build'
-    has_many :recent_builds, -> { recent },
-      class_name: "FrontEndBuilds::Build"
+    has_many :recent_builds,
+      class_name: "FrontEndBuilds::Build",
+      limit: 10,
+      order: 'created_at'
 
     validates :name, presence: true
     validates :api_key, presence: true
