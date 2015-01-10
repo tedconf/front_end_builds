@@ -5,10 +5,18 @@ module FrontEndBuilds
     end
 
     has_many :builds, class_name: 'FrontEndBuilds::Build'
-    has_many :recent_builds,
-      class_name: "FrontEndBuilds::Build",
-      limit: 10,
-      order: 'created_at'
+
+    if ActiveRecord::VERSION::MAJOR < 4
+      # Rails 3
+      has_many :recent_builds,
+        class_name: "FrontEndBuilds::Build",
+        limit: 10,
+        order: 'created_at'
+    else
+      # Rails 4
+      has_many :recent_builds, -> { recent },
+        class_name: "FrontEndBuilds::Build"
+    end
 
     validates :name, presence: true
     validates :api_key, presence: true
