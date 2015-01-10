@@ -78,7 +78,7 @@ within the gem, and must be updated whenever admin code is updated.
 After changing the admin app, run
 
 ```
-rake build_admin
+rake admin:build
 ```
 
 to store a fresh distribution.
