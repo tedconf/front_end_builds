@@ -22,12 +22,14 @@ module FrontEndBuilds
     end
 
     def serialize
+      best = find_best_build
+
       {
         id: id,
         name: name,
         api_key: api_key,
-        build_ids: builds.recent.map(&:id),
-        best_build_id: find_best_build.id,
+        build_ids: recent_builds.map(&:id),
+        best_build_id: (best ? best.id : nil)
       }
     end
   end

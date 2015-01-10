@@ -28,7 +28,7 @@ module FrontEndBuilds
 
       if @app.save!
         respond_with(
-          { app: @app },
+          { app: @app.serialize },
           location: nil
         )
       else
@@ -41,8 +41,10 @@ module FrontEndBuilds
 
     def destroy
       if @app.destroy
-        hash = { app: @app }
-        respond_with hash, location: nil
+        respond_with(
+          { id: @app.id },
+          location: nil
+        )
 
       else
         respond_with(
