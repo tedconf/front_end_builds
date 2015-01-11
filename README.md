@@ -22,7 +22,7 @@ The motivation for this gem came from [Luke Melia's RailsConf2014 talk](http://w
 Add this line to your application's Gemfile:
 
 ```
-gem 'front_end_Builds' 
+gem 'front_end_builds' 
 ```
 
 And then execute:
