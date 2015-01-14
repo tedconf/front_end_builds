@@ -13,7 +13,8 @@ Router.map(function() {
       withParams: ['willDelete'],
       otherParams: {
         model: 'app'
-      }
+      },
+      actions: {deleted: 'appDeleted'}
     })
   });
 });

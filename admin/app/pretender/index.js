@@ -24,11 +24,15 @@ stubData.currentUser = {
 var config = function() {
   var _this = this;
 
+  this.prepareBody = function(body){
+    return body ? JSON.stringify(body) : '{"error": "not found"}';
+  }
+
   this.stubUrl = function(verb, url, data) {
     this[verb].call(this, '/api' + url, function(request) {
       console.log('Hitting ' + url);
       console.log(data);
-      return [200, {}, JSON.stringify(data)];
+      return [200, {}, data];
     });
   }.bind(this);
 
@@ -48,9 +52,18 @@ var config = function() {
       apps: data.apps,
       builds: data.builds
     });
-    this.stubUrl('get', '/apps/:id', {
-      app: data.apps[0],
-      builds: data.builds
+
+    this.get('/api/apps/:id', function(request) {
+      var id = +request.params.id;
+      var app = data.apps.findBy('id', id);
+      var builds = data.builds.findBy('app_id', id);
+
+      var response = {
+        app: app,
+        builds: builds
+      };
+
+      return [200, {}, response];
     });
 
     this.stubUrl('post', '/apps', {});

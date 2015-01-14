@@ -10,6 +10,6 @@
     {{input class='form-control' value=confirmedName}}
   </div>
 
-  <button {{bind-attr class='canDelete::disabled :btn :btn-block :btn-danger'}}>I understand, delete the app</button>
+  <button {{action 'deleteApp'}} {{bind-attr class='canDelete::disabled :btn :btn-block :btn-danger'}}>I understand, delete the app</button>
 
 </div>
