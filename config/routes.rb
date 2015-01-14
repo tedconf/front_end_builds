@@ -1,7 +1,9 @@
 # This is for the admin area.
 FrontEndBuilds::Engine.routes.draw do
-  resources :apps, only: [:index, :show, :create, :edit, :destroy]
-  resources :builds, only: [:index, :show, :edit]
+  scope :api do
+    resources :apps, only: [:index, :show, :create, :edit, :destroy]
+    resources :builds, only: [:index, :show, :edit]
+  end
 
   get '/(*path)', to: 'admin#index'
 end
