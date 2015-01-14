@@ -16,7 +16,7 @@ module ActionDispatch::Routing
       # Get a build for this app.
       constraints FrontEndBuilds::HtmlRoutingConstraint.new do
         get(
-          "/#{path}/(*path)" => "front_end_builds/builds#index",
+          "/#{path}/(*path)" => "front_end_builds/bests#show",
           defaults: {
             branch: 'master',
             app_name: name

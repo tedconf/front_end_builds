@@ -4,16 +4,6 @@ module FrontEndBuilds
   class BuildsController < ApplicationController
     before_filter :set_app!, only: :create
 
-    def index
-      front_end = FrontEndBuilds::Build.find_best(build_search_params)
-
-      if front_end
-        render text: front_end.with_head_tag(csrf_tag)
-      else
-        render text: "not found", status: 404
-      end
-    end
-
     def create
       build = @app.builds.new(build_create_params)
 
@@ -40,17 +30,6 @@ module FrontEndBuilds
           status: :unprocessable_entity
         )
       end
-    end
-
-    def csrf_tag
-      [
-        "<meta name='csrf-param' content='#{request_forgery_protection_token}' />",
-        "<meta name='csrf-token' content='#{form_authenticity_token}' />"
-      ].join('').to_s
-    end
-
-    def build_search_params
-      params.permit(:app_name, :branch, :sha, :job)
     end
 
     def build_create_params
