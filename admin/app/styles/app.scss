@@ -1,7 +1,11 @@
 @import 'bourbon';
 
-@import 'base';
-@import 'utilities';
+@import 'core/base';
+
+@import 'settings/utilities';
+@import 'settings/mixins';
+
+@import 'lib/bootstrap_overrides';
 
 @import 'components/links';
 @import 'components/panel';
