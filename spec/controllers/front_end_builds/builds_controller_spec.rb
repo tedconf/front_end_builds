@@ -4,6 +4,33 @@ module FrontEndBuilds
   RSpec.describe BuildsController, :type => :controller do
     let(:app) { FactoryGirl.create :front_end_builds_app, name: 'dummy' }
 
+    describe "index" do
+      routes { FrontEndBuilds::Engine.routes }
+
+      it "should list all the builds for an app" do
+        FactoryGirl.create_list(:front_end_builds_build, 3, app: app)
+
+        get :index, app_id: app.id, format: :json
+        expect(json['builds'].length).to eq(3)
+      end
+
+      it 'should be scoped to the requested app' do
+        build1 = FactoryGirl.create(:front_end_builds_build, app: app)
+        FactoryGirl.create(:front_end_builds_build)
+
+        get :index, app_id: app.id, format: :json
+        expect(json['builds'].length).to eq(1)
+        expect(json['builds'].first['id']).to eq(build1.id)
+      end
+
+      it "should not list any builds if the app is not present" do
+        FactoryGirl.create_list(:front_end_builds_build, 3)
+
+        get :index, format: :json
+        expect(json['builds'].length).to eq(0)
+      end
+    end
+
     describe "create" do
       before(:each) do
         FactoryGirl.create :front_end_builds_build,

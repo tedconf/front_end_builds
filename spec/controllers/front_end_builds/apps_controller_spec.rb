@@ -68,8 +68,8 @@ module FrontEndBuilds
         context 'the record' do
           subject { FrontEndBuilds::App.where(id: deletable_app.id).first }
           it { should be_nil }
-        end      
-      end      
+        end
+      end
     end
   end
 end
