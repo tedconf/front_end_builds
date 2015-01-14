@@ -1,7 +1,6 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-  hostApp: DS.belongsTo('hostApp'),
   builds: DS.hasMany('build'),
 
   name: DS.attr('string', {defaultValue: ''}),
