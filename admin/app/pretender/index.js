@@ -41,11 +41,13 @@ var config = function() {
     var _this = this;
 
     this.stubUrl('get', '/host_apps/current', {
-      host_app: data.hostApp,
+      host_app: data.hostApp
+    });
+
+    this.stubUrl('get', '/apps', {
       apps: data.apps,
       builds: data.builds
     });
-
     this.stubUrl('get', '/apps/:id', {
       app: data.apps[0],
       builds: data.builds
