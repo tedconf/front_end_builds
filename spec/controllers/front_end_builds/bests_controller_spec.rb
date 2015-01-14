@@ -54,6 +54,11 @@ module FrontEndBuilds
          expect(response).to_not be_success
          expect(response.status).to eq(404)
        end
+
+       it "should be able to get the version of the best build" do
+         get :show, app_name: app.name, branch: 'master', format: :json
+         expect(json['version']).to eq(latest.id)
+       end
      end
 
   end

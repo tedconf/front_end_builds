@@ -45,7 +45,6 @@ module FrontEndBuilds
           { app: { id: @app.id } },
           location: nil
         )
-
       else
         respond_with(
           {errors: @app.errors},
