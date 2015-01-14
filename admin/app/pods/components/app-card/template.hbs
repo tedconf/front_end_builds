@@ -1,4 +1,4 @@
-<div class="appCard panel panel-primary">
+<div class="App-card panel panel-primary">
   <div class="panel-heading">
     <h3 class="panel-title">
       {{link-to app.name 'app' app}}
@@ -9,15 +9,15 @@
     {{#if app.bestBuild}}
       <div class="row">
         <div class="col-xs-4">
-          <p class='appCard-infoLabel'>Branch</p>
+          <p class='App-card__info-label'>Branch</p>
           <p>{{app.bestBuild.branch}}</p>
         </div>
         <div class="col-xs-4">
-          <p class='appCard-infoLabel'>Sha</p>
+          <p class='App-card__info-label'>Sha</p>
           <p>{{app.bestBuild.shortSha}}</p>
         </div>
         <div class="col-xs-4">
-          <p class='appCard-infoLabel'>Job</p>
+          <p class='App-card__info-label'>Job</p>
           <p>{{app.bestBuild.job}}</p>
         </div>
       </div>
@@ -26,9 +26,9 @@
 
       <p class='u-no-margin-bottom'>
         API key:
-        <span class='appCard-api'>
+        <span class='App-card__api'>
           ********
-          <small class='appCard-copyApiButton'>copy</small>
+          <small class='App-card__copy-api-button'>copy</small>
         </span>
       </p>
 
@@ -37,10 +37,12 @@
       <div class="text-muted">
         <p class='text-center'>No active build.</p>
         <hr class='short-divider'>
-        <p>
-          <small>To push a new active build, POST to
-          <pre>/front-end-builds?app_name={{app.name}}&api_key={{app.apiKey}}</pre>
-          </small>
+        <p class='App-card__instructions'>
+          To start pushing builds, install <a href="https://github.com/tedconf/ember-cli-front-end-builds" target="_blank">Ember CLI FrontEndBuilds</a> and deploy with <code>ember deploy</code>.
+        </p>
+        <p class="App-card__instructions">
+          <strong>API key:</strong> <br>
+          <pre>{{app.apiKey}}</pre>
         </p>
       </div>
 

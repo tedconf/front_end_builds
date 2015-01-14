@@ -22,9 +22,11 @@
         <p class='lead'>No active build.</p>
 
         <p>
-          <small>To push a new active build, POST to
-          <pre>/front-end-builds?app_name={{attrs.app.name}}&api_key={{attrs.app.apiKey}}</pre>
-          </small>
+          To start pushing builds, install <a href="https://github.com/tedconf/ember-cli-front-end-builds" target="_blank">Ember CLI FrontEndBuilds</a> and deploy with <code>ember deploy</code>.
+        </p>
+        <p>
+          <strong>API key:</strong> <br>
+          <pre>{{{attrs.app.apiKey}}}</pre>
         </p>
       </div>
     {{/if}}
