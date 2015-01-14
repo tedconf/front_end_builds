@@ -11,6 +11,7 @@ module FrontEndBuilds
         FactoryGirl.create_list(:front_end_builds_build, 3, app: app)
 
         get :index, app_id: app.id, format: :json
+        expect(response).to be_success
         expect(json['builds'].length).to eq(3)
       end
 
@@ -19,6 +20,7 @@ module FrontEndBuilds
         FactoryGirl.create(:front_end_builds_build)
 
         get :index, app_id: app.id, format: :json
+        expect(response).to be_success
         expect(json['builds'].length).to eq(1)
         expect(json['builds'].first['id']).to eq(build1.id)
       end
@@ -27,7 +29,20 @@ module FrontEndBuilds
         FactoryGirl.create_list(:front_end_builds_build, 3)
 
         get :index, format: :json
+        expect(response).to be_success
         expect(json['builds'].length).to eq(0)
+      end
+    end
+
+    describe "show" do
+      routes { FrontEndBuilds::Engine.routes }
+
+      let(:build) { FactoryGirl.create :front_end_builds_build }
+
+      it "should load the app" do
+        get :show, id: build.id, format: :json
+        expect(response).to be_success
+        expect(json['build']['id']).to eq(build.id)
       end
     end
 

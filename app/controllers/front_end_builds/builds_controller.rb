@@ -28,6 +28,13 @@ module FrontEndBuilds
       end
     end
 
+    def show
+      build = FrontEndBuilds::Build.find(params[:id])
+      respond_with({
+        build: build.serialize
+      })
+    end
+
     private
 
     def set_app!
