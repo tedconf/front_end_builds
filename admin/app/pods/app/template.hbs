@@ -4,44 +4,45 @@
   </h1>
 </div>
 
-{{#if attrs.app.bestBuild}}
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class='panel-title'>Current live build</h3>
-    </div>
-    <div class="panel-body">
-      <p>Branch: <strong>{{attrs.app.bestBuild.branch}}</strong></p>
-      <p>Sha: <strong>{{attrs.app.bestBuild.sha}}</strong></p>
-      <p>Job: <strong>{{attrs.app.bestBuild.job}}</strong></p>
-    </div>
-  </div>
-{{else}}
-  <div class="text-muted">
-    <p class='lead'>No active build.</p>
+<div class="row">
+  <div class="col-sm-8">
+    {{#if attrs.app.bestBuild}}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class='panel-title'>Current live build</h3>
+        </div>
+        <div class="panel-body">
+          <p>Branch: <strong>{{attrs.app.bestBuild.branch}}</strong></p>
+          <p>Sha: <strong>{{attrs.app.bestBuild.sha}}</strong></p>
+          <p>Job: <strong>{{attrs.app.bestBuild.job}}</strong></p>
+        </div>
+      </div>
+    {{else}}
+      <div class="text-muted">
+        <p class='lead'>No active build.</p>
 
-    <p>
-      <small>To push a new active build, POST to
-      <pre>/front-end-builds?app_name={{attrs.app.name}}&api_key={{attrs.app.apiKey}}</pre>
-      </small>
-    </p>
+        <p>
+          <small>To push a new active build, POST to
+          <pre>/front-end-builds?app_name={{attrs.app.name}}&api_key={{attrs.app.apiKey}}</pre>
+          </small>
+        </p>
+      </div>
+    {{/if}}
+
   </div>
-{{/if}}
+
+  <div class="col-sm-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">Options</div>
+      <div class="list-group">
+        <a href='#' class="list-group-item">Rename</a>
+        <a href='#' class="list-group-item">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 {{#if attrs.app.builds}}
   <h3 class='appDetail-buildListTitle'>All builds</h3>
   {{build-list builds=attrs.app.builds}}
 {{/if}}
-
-<div class="panel panel-danger">
-  <div class="panel-heading">
-    <div class="panel-title">Danger</div>
-  </div>
-  <div class="panel-body">
-    <p>Careful, this is permanent.</p>
-
-    {{async-button action='deleteApp'
-      class='btn btn-danger'
-      default="Delete this app"
-      pending="Deleting..."}}
-  </div>
-</div>

@@ -9,3 +9,9 @@
     @content;
   }
 }
+
+@mixin between($lower, $upper) {
+  @media screen and (min-width: $lower) and (max-width: $upper) {
+    @content;
+  }
+}

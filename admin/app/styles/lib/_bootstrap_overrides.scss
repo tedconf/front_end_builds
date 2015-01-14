@@ -2,6 +2,13 @@
   max-width: 1000px;
   margin: 0 auto;
 }
+@include between(600px, 1000px) {
+  .container-fluid {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+}
+
 .navbar-inverse {
   background-color: #1D4160;
 }
@@ -17,3 +24,4 @@
     margin-top: 0;
   }
 }
+
