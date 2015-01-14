@@ -1,10 +1,12 @@
 /* global jQuery  */
 import Pretender from 'pretender';
 
+import hostApp from './data/hostApp';
 import apps from './data/apps';
 import builds from './data/builds';
 
 var stubData = {
+  hostApp: hostApp,
   apps: apps,
   builds: builds,
 };
@@ -19,13 +21,11 @@ stubData.currentUser = {
   lastname: "Selikoff"
 };
 
-/*
-*/
 var config = function() {
   var _this = this;
 
   this.stubUrl = function(verb, url, data) {
-    this[verb].call(this, '' + url, function(request) {
+    this[verb].call(this, '/api' + url, function(request) {
       console.log('Hitting ' + url);
       console.log(data);
       return [200, {}, JSON.stringify(data)];
@@ -40,7 +40,8 @@ var config = function() {
   this.setupGlobalRoutes = function(data) {
     var _this = this;
 
-    this.stubUrl('get', '/apps', {
+    this.stubUrl('get', '/host_apps/current', {
+      host_app: data.hostApp,
       apps: data.apps,
       builds: data.builds
     });
@@ -52,7 +53,7 @@ var config = function() {
 
     this.stubUrl('post', '/apps', {});
 
-    this.delete('/apps/:id', function(request) {
+    this.delete('/api/apps/:id', function(request) {
       var appId = +request.params.id;
       data.apps = data.apps.rejectBy('id', appId);
       data.builds = data.builds.rejectBy('app_id', appId);
