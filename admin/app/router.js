@@ -8,7 +8,14 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
   this.resource('apps', {path: '/'});
-  this.resource('app', {path: '/:app_id'});
+  this.resource('app', {path: '/:app_id'}, function() {
+    this.modal('delete-app-form', {
+      withParams: ['willDelete'],
+      otherParams: {
+        model: 'app'
+      }
+    })
+  });
 });
 
 export default Router;

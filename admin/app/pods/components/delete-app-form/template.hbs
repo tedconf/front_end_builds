@@ -1,0 +1,15 @@
+<div class="modal-header">
+  <button {{action 'dismiss'}} type="button" class="close"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title">Are you sure?</h4>
+</div>
+<div class="modal-body">
+  <p>This action <strong>CANNOT</strong> be undone. If you delete the <strong>{{app.name}}</strong> app, users will no longer be able to view it when they visit <a {{bind-attr href='app.location'}} target='_blank'>{{app.location}}</a>.</p>
+  <p>Please type in the name of this app to confirm.</p>
+
+  <div class="form-group">
+    {{input class='form-control' value=confirmedName}}
+  </div>
+
+  <button {{bind-attr class='canDelete::disabled :btn :btn-block :btn-danger'}}>I understand, delete the app</button>
+
+</div>

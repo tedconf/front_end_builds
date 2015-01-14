@@ -6,6 +6,7 @@ export default DS.Model.extend({
   bestBuildId: DS.attr('string'),
   name: DS.attr('string', {defaultValue: ''}),
   apiKey: DS.attr('string'),
+  location: DS.attr('string'),
 
   bestBuild: function() {
     return this.get('builds').findBy('id', this.get('bestBuildId'));

@@ -1,5 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  attrs: {}
+  actions: {
+    willDeleteApp: function() {
+      this.set('willDelete', true);
+    }
+  }
 });
