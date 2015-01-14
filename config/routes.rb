@@ -3,6 +3,7 @@ FrontEndBuilds::Engine.routes.draw do
   scope :api do
     resources :apps, only: [:index, :show, :create, :edit, :destroy]
     resources :builds, only: [:index, :show, :edit]
+    resources :host_apps, only: [:show]
   end
 
   get '/(*path)', to: 'admin#index'
