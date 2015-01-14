@@ -1,9 +1,0 @@
-{{#each app in apps}}
-  {{#if app.isNew}}
-    {{new-app-card app=app onCancelNewApp=handleCancelNewApp}}
-
-  {{else}}
-    {{app-card app=app}}
-
-  {{/if}}
-{{/each}}

@@ -11,7 +11,7 @@ export default Ember.Route.extend({
       var _this = this;
 
       return this.get('controller.attrs.app').destroyRecord().then(function() {
-        return _this.transitionTo('index');
+        return _this.transitionTo('apps');
 
       }, function(reason) {
 

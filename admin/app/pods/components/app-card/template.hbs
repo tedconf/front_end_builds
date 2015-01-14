@@ -1,52 +1,50 @@
-<div class="col-sm-4">
-  <div class="appCard panel panel-primary">
-    <div class="panel-heading">
-      <h3 class="panel-title">
-        {{link-to app.name 'app' app}}
-      </h3>
-    </div>
-    <div class="panel-body">
+<div class="appCard panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+      {{link-to app.name 'app' app}}
+    </h3>
+  </div>
+  <div class="panel-body">
 
-      {{#if app.bestBuild}}
-        <div class="row">
-          <div class="col-xs-4">
-            <p class='appCard-infoLabel'>Branch</p>
-            <p>{{app.bestBuild.branch}}</p>
-          </div>
-          <div class="col-xs-4">
-            <p class='appCard-infoLabel'>Sha</p>
-            <p>{{app.bestBuild.shortSha}}</p>
-          </div>
-          <div class="col-xs-4">
-            <p class='appCard-infoLabel'>Job</p>
-            <p>{{app.bestBuild.job}}</p>
-          </div>
+    {{#if app.bestBuild}}
+      <div class="row">
+        <div class="col-xs-4">
+          <p class='appCard-infoLabel'>Branch</p>
+          <p>{{app.bestBuild.branch}}</p>
         </div>
+        <div class="col-xs-4">
+          <p class='appCard-infoLabel'>Sha</p>
+          <p>{{app.bestBuild.shortSha}}</p>
+        </div>
+        <div class="col-xs-4">
+          <p class='appCard-infoLabel'>Job</p>
+          <p>{{app.bestBuild.job}}</p>
+        </div>
+      </div>
 
+      <hr class='short-divider'>
+
+      <p class='u-no-margin-bottom'>
+        API key:
+        <span class='appCard-api'>
+          ********
+          <small class='appCard-copyApiButton'>copy</small>
+        </span>
+      </p>
+
+    {{else}}
+
+      <div class="text-muted">
+        <p class='text-center'>No active build.</p>
         <hr class='short-divider'>
-
-        <p class='u-no-margin-bottom'>
-          API key:
-          <span class='appCard-api'>
-            ********
-            <small class='appCard-copyApiButton'>copy</small>
-          </span>
+        <p>
+          <small>To push a new active build, POST to
+          <pre>/front-end-builds?app_name={{app.name}}&api_key={{app.apiKey}}</pre>
+          </small>
         </p>
+      </div>
 
-      {{else}}
+    {{/if}}
 
-        <div class="text-muted">
-          <p class='text-center'>No active build.</p>
-          <hr class='short-divider'>
-          <p>
-            <small>To push a new active build, POST to
-            <pre>/front-end-builds?app_name={{app.name}}&api_key={{app.apiKey}}</pre>
-            </small>
-          </p>
-        </div>
-
-      {{/if}}
-
-    </div>
   </div>
 </div>

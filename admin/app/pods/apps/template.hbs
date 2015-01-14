@@ -10,5 +10,17 @@
 </div>
 
 <div class="row">
-  {{app-card-list apps=attrs.apps}}
+  {{#each app in savedApps}}
+    <div class="col-sm-4">
+      {{app-card app=app}}
+    </div>
+  {{/each}}
+
+  {{#if newApp}}
+    <div class="col-sm-4">
+      {{new-app-card app=newApp}}
+    </div>
+  {{/if}}
 </div>
+
+{{liquid-modal}}

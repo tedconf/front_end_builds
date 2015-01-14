@@ -82,7 +82,7 @@ test("I can delete an app", function() {
   click('button:contains("Delete")');
 
   andThen(function() {
-    equal(currentRouteName(), 'index');
+    equal(currentRouteName(), 'apps');
     equal(find('.appCard').length, 0);
   });
 });

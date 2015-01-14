@@ -10,16 +10,8 @@ export default Ember.Component.extend({
       return this.get('app').save();
     },
 
-    cancelNewApp: function() {
-      // debugger;
+    discardNewApp: function() {
       this.get('app').deleteRecord();
-
-      // Ember.run(function() {
-      //   app.deleteRecord();
-      // });
-      // return this.get('app').unloadRecord();
-      // var app = this.get('app');
-      // this.get('onCancelNewApp')(app);
     }
   }
 });

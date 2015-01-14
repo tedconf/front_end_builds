@@ -3,7 +3,7 @@ import startApp from '../helpers/start-app';
 
 var App;
 
-module('Acceptance: Index', {
+module('Acceptance: Apps', {
   setup: function() {
     App = startApp();
     App.pretender.resetGlobalRoutes();
@@ -17,7 +17,7 @@ test("I can view the admin overview", function() {
   visit('/');
 
   andThen(function() {
-    equal(currentRouteName(), 'index');
+    equal(currentRouteName(), 'apps');
   });
 });
 
