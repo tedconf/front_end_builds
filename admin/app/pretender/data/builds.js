@@ -12,7 +12,6 @@ export default [
     sha: '83jnbj',
     job: 2,
     branch: 'master',
-    is_best: true
   },
   {
     id: 3,

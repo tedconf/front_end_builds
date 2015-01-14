@@ -12,7 +12,9 @@ export default DS.Model.extend({
   endpoint: DS.attr('string'),
   createdAt: DS.attr('date'),
 
-  isBest: DS.attr('boolean'),
+  isBest: function() {
+    return this.get('id') == this.get('app.bestBuildId');
+  }.property('app.bestBuildId'),
 
   shortSha: function() {
     return this.get('sha').slice(0, 6);
