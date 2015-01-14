@@ -1,4 +1,9 @@
 /* jshint node: true */
+function usingProxy() {
+  return !!process.argv.filter(function (arg) {
+    return arg.indexOf('--proxy') === 0;
+  }).length;
+}
 
 module.exports = function(environment) {
   var ENV = {
@@ -18,6 +23,8 @@ module.exports = function(environment) {
       // when it is created
     }
   };
+
+  ENV['usePretender'] = (environment !== 'production' && !usingProxy());
 
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;

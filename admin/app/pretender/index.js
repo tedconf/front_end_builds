@@ -1,8 +1,8 @@
 /* global jQuery  */
 import Pretender from 'pretender';
 
-import apps from './stub-data/apps';
-import builds from './stub-data/builds';
+import apps from './data/apps';
+import builds from './data/builds';
 
 var stubData = {
   apps: apps,
@@ -21,11 +21,11 @@ stubData.currentUser = {
 
 /*
 */
-var pretender = new Pretender(function() {
+var config = function() {
   var _this = this;
 
   this.stubUrl = function(verb, url, data) {
-    this[verb].call(this, '/api' + url, function(request) {
+    this[verb].call(this, '' + url, function(request) {
       console.log('Hitting ' + url);
       console.log(data);
       return [200, {}, JSON.stringify(data)];
@@ -52,7 +52,7 @@ var pretender = new Pretender(function() {
 
     this.stubUrl('post', '/apps', {});
 
-    this.delete('/api/apps/:id', function(request) {
+    this.delete('/apps/:id', function(request) {
       var appId = +request.params.id;
       data.apps = data.apps.rejectBy('id', appId);
       data.builds = data.builds.rejectBy('app_id', appId);
@@ -70,6 +70,11 @@ var pretender = new Pretender(function() {
     this.setupGlobalRoutes(data);
   };
 
-});
+  this.resetGlobalRoutes();
+};
 
-export default pretender;
+export default {
+  initialize: function() {
+    return new Pretender(config);
+  }
+};
