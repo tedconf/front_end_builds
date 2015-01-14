@@ -23,6 +23,20 @@ module FrontEndBuilds
 
     before_validation :ensure_api_key!
 
+    def self.register_url(name, url)
+      @_url ||= {}
+      @_url[name.to_sym] = url
+    end
+
+    def self.get_url(name)
+      @_url ||= {}
+      @_url[name.to_sym]
+    end
+
+    def get_url
+      self.class.get_url(name)
+    end
+
     def ensure_api_key!
       self.api_key = SecureRandom.uuid if api_key.blank?
     end
@@ -39,7 +53,8 @@ module FrontEndBuilds
         name: name,
         api_key: api_key,
         build_ids: recent_builds.map(&:id),
-        best_build_id: (best ? best.id : nil)
+        best_build_id: (best ? best.id : nil),
+        location: get_url
       }
     end
   end

@@ -15,14 +15,27 @@ module ActionDispatch::Routing
 
       # Get a build for this app.
       constraints FrontEndBuilds::HtmlRoutingConstraint.new do
-        get(
-          "/#{path}/(*path)" => "front_end_builds/bests#show",
-          defaults: {
+        defaults = {
             branch: 'master',
             app_name: name
           }.merge(options)
+
+        get(
+          "/#{path}/(*path)" => "front_end_builds/bests#show",
+          defaults: defaults
         )
+
+        # Need a better way to do this
+        front_end_route = Rails.application.routes.routes.routes.find do |route|
+          route.defaults == defaults.merge(
+            controller: "front_end_builds/bests",
+            action: "show"
+          )
+        end
+
+        FrontEndBuilds::App.register_url(name, front_end_route.format({}))
       end
+
     end
 
   end

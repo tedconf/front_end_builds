@@ -5,7 +5,17 @@ module FrontEndBuilds
     it { should have_many(:builds) }
     it { should validate_presence_of(:name) }
 
-    describe "ensure_api_key!" do
+    describe '.register_url / get_url' do
+      before(:each) do
+        App.register_url('testing', '/testing')
+      end
+
+      it 'should set the url hash' do
+        expect(App.get_url('testing')).to eq('/testing')
+      end
+    end
+
+    describe "#ensure_api_key!" do
       let(:app) { App.new(name: 'testing') }
 
       context "a new app" do
@@ -20,7 +30,7 @@ module FrontEndBuilds
       end
     end
 
-    describe :find_best_build do
+    describe '#find_best_build' do
       let(:app) { FactoryGirl.create :front_end_builds_app }
 
       let!(:latest) do
@@ -47,6 +57,14 @@ module FrontEndBuilds
 
       it "should find the best build" do
         expect(app.find_best_build).to eq(latest)
+      end
+    end
+
+    describe '#get_url' do
+      it 'should lookup the url in the Apps url hash' do
+        App.register_url('testing', '/testing')
+        app = FactoryGirl.create(:front_end_builds_app, name: 'testing')
+        expect(app.get_url).to eq('/testing')
       end
     end
   end
