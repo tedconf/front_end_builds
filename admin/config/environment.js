@@ -11,6 +11,8 @@ module.exports = function(environment) {
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
+    usePodsByDefault: true,
+    podModulePrefix: 'admin/pods',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
