@@ -2,7 +2,13 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   didInsertElement: function() {
-    this.$('input').focus();
+    this.$('input')
+      .focus()
+      .on('keyup', (e) => {
+        if (e.keyCode == 27) {
+          this.send('discardNewApp');
+        }
+      });
   },
 
   actions: {
