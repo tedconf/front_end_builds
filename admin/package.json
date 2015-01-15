@@ -22,6 +22,7 @@
     "broccoli-asset-rev": "^2.0.0",
     "broccoli-ember-hbs-template-compiler": "^1.6.1",
     "broccoli-sass": "^0.3.3",
+    "ember-buffered-proxy": "0.2.3",
     "ember-cli": "0.1.7",
     "ember-cli-6to5": "0.2.1",
     "ember-cli-async-button": "^0.3.1",

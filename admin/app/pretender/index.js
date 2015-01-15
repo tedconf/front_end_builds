@@ -53,6 +53,7 @@ var config = function() {
       builds: data.builds
     });
 
+    this.stubUrl('post', '/apps', {});
     this.get('/api/apps/:id', function(request) {
       var id = +request.params.id;
       var app = data.apps.findBy('id', id);
@@ -67,9 +68,19 @@ var config = function() {
       console.log(response);
       return [200, {}, response];
     });
+    this.put('/api/apps/:id', function(request) {
+      var id = +request.params.id;
+      var oldApp = data.apps.findBy('id', id);
+      var index = data.apps.indexOf(oldApp);
 
-    this.stubUrl('post', '/apps', {});
+      var newApp = JSON.parse(request.requestBody);
+      newApp.app.id = id;
+      data.apps[index] = newApp;
 
+      console.log('PUT /api/apps/:id');
+      console.log(newApp);
+      return [200, {}, newApp];
+    });
     this.delete('/api/apps/:id', function(request) {
       var appId = +request.params.id;
       data.apps = data.apps.rejectBy('id', appId);
