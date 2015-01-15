@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe "Front end builds new version", type: :request do
   let(:front_end_app) { FactoryGirl.create :front_end_builds_app, name: "dummy" }
+  let(:version_url) { "/front_end_builds/best?app_name=dummy&branch=master" }
 
   before(:each) do
     FactoryGirl.create(
@@ -20,7 +21,7 @@ describe "Front end builds new version", type: :request do
 
   it "gets a different version when a new build is created" do
     # get the current version
-    get "/dummy", format: :json
+    get version_url, format: :json
     expect(response).to be_success
     expect(json['version']).to_not be_nil
 
@@ -36,7 +37,7 @@ describe "Front end builds new version", type: :request do
     expect(response).to be_success
 
     # now we should get a new version
-    get "/dummy", format: :json
+    get version_url, format: :json
     expect(response).to be_success
     expect(json['version']).to_not be_nil
 

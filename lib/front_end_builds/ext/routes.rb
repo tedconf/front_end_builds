@@ -18,13 +18,6 @@ module ActionDispatch::Routing
         }
       )
 
-      # Get the version for this app
-      get(
-        "#{path}" => "front_end_builds/bests#show",
-        defaults: defaults,
-        format: :json
-      )
-
       # Get a build for this app.
       constraints FrontEndBuilds::HtmlRoutingConstraint.new do
         get(

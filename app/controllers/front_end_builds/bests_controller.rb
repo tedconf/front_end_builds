@@ -9,12 +9,14 @@ module FrontEndBuilds
   # Best is not a resource, but we are going to isolate serving the
   # best build to its own controller.
   class BestsController < ApplicationController
+    include Rails.application.routes.url_helpers
+
     before_filter :find_front_end, only: [:show]
 
     def show
       if @front_end
         respond_to do |format|
-          format.html { render text: @front_end.with_head_tag(csrf_tag) }
+          format.html { render text: @front_end.with_head_tag(meta_tags) }
           format.json { render json: { version: @front_end.id } }
         end
       else
@@ -26,12 +28,21 @@ module FrontEndBuilds
 
     private
 
-    def csrf_tag
-      [
-        "<meta name='csrf-param' content='#{request_forgery_protection_token}' />",
-        "<meta name='csrf-token' content='#{form_authenticity_token}' />",
-        "<meta name='front-end-build-version' content='#{@front_end.id}' />"
-      ].join('').to_s
+    def meta_tags
+      tags = {
+        csrf_param: request_forgery_protection_token,
+        csrf_token: form_authenticity_token,
+        front_end_build_version: @front_end.id,
+        front_end_build_params: build_search_params.to_json,
+        front_end_build_url: front_end_builds_best_path(build_search_params)
+      }
+
+      tags
+        .map { |name, content|
+          "<meta name='#{name.to_s.dasherize}' content='#{content}' />"
+        }
+        .join('')
+        .to_s
     end
 
     def find_front_end
