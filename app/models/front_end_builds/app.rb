@@ -1,7 +1,8 @@
 module FrontEndBuilds
   class App < ActiveRecord::Base
     if defined?(ProtectedAttributes) || ::ActiveRecord::VERSION::MAJOR < 4
-      attr_accessible :name
+      attr_accessible :name,
+                      :require_manual_activation
     end
 
     has_many :builds, class_name: 'FrontEndBuilds::Build'
