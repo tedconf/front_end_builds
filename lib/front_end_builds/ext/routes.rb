@@ -5,6 +5,11 @@ module ActionDispatch::Routing
 
     # Create a front end in your rails router.
     def front_end(name, path = name, options = {})
+      defaults = {
+          branch: 'master',
+          app_name: name
+        }.merge(options)
+
       # Create a new build for this app.
       post(
         "#{path}" => "front_end_builds/builds#create",
@@ -13,13 +18,15 @@ module ActionDispatch::Routing
         }
       )
 
+      # Get the version for this app
+      get(
+        "#{path}" => "front_end_builds/bests#show",
+        defaults: defaults,
+        format: :json
+      )
+
       # Get a build for this app.
       constraints FrontEndBuilds::HtmlRoutingConstraint.new do
-        defaults = {
-            branch: 'master',
-            app_name: name
-          }.merge(options)
-
         get(
           "/#{path}/(*path)" => "front_end_builds/bests#show",
           defaults: defaults
