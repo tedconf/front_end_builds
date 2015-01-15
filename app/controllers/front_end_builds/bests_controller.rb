@@ -34,7 +34,9 @@ module FrontEndBuilds
         csrf_token: form_authenticity_token,
         front_end_build_version: @front_end.id,
         front_end_build_params: build_search_params.to_query,
-        front_end_build_url: front_end_builds_best_path(build_search_params)
+        front_end_build_url: front_end_builds_best_path(
+            build_search_params.merge(format: :json)
+          )
       }
 
       tags
