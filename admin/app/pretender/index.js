@@ -56,13 +56,15 @@ var config = function() {
     this.get('/api/apps/:id', function(request) {
       var id = +request.params.id;
       var app = data.apps.findBy('id', id);
-      var builds = data.builds.findBy('app_id', id);
+      var builds = data.builds.filterBy('app_id', id);
 
       var response = {
         app: app,
         builds: builds
       };
 
+      console.log('Hitting /api/apps/:id');
+      console.log(response);
       return [200, {}, response];
     });
 

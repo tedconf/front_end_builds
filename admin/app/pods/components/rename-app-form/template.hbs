@@ -1,0 +1,28 @@
+<div class="modal-header">
+  <button {{action 'dismiss'}} type="button" class="close"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title">Rename this app?</h4>
+</div>
+<div class="modal-body">
+  <p>If you rename your <strong>{{app.name}}</strong> app, you'll need to update the <code>routes.rb</code> file in your Rails app. Currently it probably looks something like this:</p>
+
+<pre>
+Rails.application.routes.draw do
+  front_end '{{app.name}}', '/some-url'
+end
+</pre>
+
+  <p>You'll need to change the <code>'{{app.name}}'</code> portion to match the updated app name.</p>
+
+  <hr>
+
+  <div class="clearfix">
+    <div class="row">
+      <div class="col-sm-8">
+        {{input class='form-control' value=proxy.name}}
+      </div>
+      <div class="col-sm-4">
+        <button {{action 'renameApp'}} {{bind-attr class='isDifferent::disabled :btn :btn-block :btn-default'}}>Rename</button>
+      </div>
+    </div>
+  </div>
+</div>

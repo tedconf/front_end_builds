@@ -1,11 +1,13 @@
 .lm-container {
-  height: 40%;
+  @include justify-content(flex-start);
 }
 .lf-dialog {
+  margin-top: 7%;
   width: 480px;
   max-width: 100%;
   padding: 0;
   border: none;
   border-radius: 4px;
   box-shadow: 0 0 18px rgba(0,0,0,0.4);
+  overflow: scroll;
 }

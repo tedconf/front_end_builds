@@ -16,6 +16,13 @@ Router.map(function() {
       },
       actions: {deleted: 'appDeleted'}
     })
+
+    this.modal('rename-app-form', {
+      withParams: ['willRename'],
+      otherParams: {
+        model: 'app'
+      }
+    })
   });
 });
 
