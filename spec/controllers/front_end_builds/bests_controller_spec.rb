@@ -43,10 +43,18 @@ module FrontEndBuilds
          expect(response.body).to match(older.html)
        end
 
-       it "should have a csrf tag" do
-         get :show, app_name: app.name, branch: 'master'
-         expect(response).to be_success
-         expect(response.body).to match(/csrf-token/)
+
+       context "meta tags" do
+         before(:each) do
+           get :show, app_name: app.name, branch: 'master'
+           expect(response).to be_success
+         end
+
+         subject { response.body }
+         it { should match(/csrf-token/) }
+         it { should match(/front-end-build-version/) }
+         it { should match(/front-end-build-params/) }
+         it { should match(/front-end-build-url/) }
        end
 
        it "should be 404 when nothing is found" do

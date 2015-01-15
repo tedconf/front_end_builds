@@ -33,7 +33,7 @@ module FrontEndBuilds
         csrf_param: request_forgery_protection_token,
         csrf_token: form_authenticity_token,
         front_end_build_version: @front_end.id,
-        front_end_build_params: build_search_params.to_json,
+        front_end_build_params: build_search_params.to_query,
         front_end_build_url: front_end_builds_best_path(build_search_params)
       }
 
@@ -41,7 +41,7 @@ module FrontEndBuilds
         .map { |name, content|
           "<meta name='#{name.to_s.dasherize}' content='#{content}' />"
         }
-        .join('')
+        .join("\n")
         .to_s
     end
 
