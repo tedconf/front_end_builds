@@ -54,7 +54,8 @@ module FrontEndBuilds
         api_key: api_key,
         build_ids: recent_builds.map(&:id),
         best_build_id: (best ? best.id : nil),
-        location: get_url
+        location: get_url,
+        require_manual_activation: require_manual_activation
       }
     end
   end

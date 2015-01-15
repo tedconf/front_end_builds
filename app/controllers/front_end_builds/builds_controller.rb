@@ -17,7 +17,7 @@ module FrontEndBuilds
 
       if build.save
         build.fetch!
-        build.activate!
+        build.activate! if build.automatic_activiation?
         head :ok
 
       else

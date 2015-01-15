@@ -51,7 +51,10 @@ module FrontEndBuilds
         FactoryGirl.create :front_end_builds_build,
           app: app,
           endpoint: 'http://www.ted.com/testing/build',
-          created_at: 1.day.ago
+          created_at: 1.day.ago,
+          active: true,
+          fetched: true,
+          html: 'the old build'
 
         stub_request(
           :get,
@@ -72,6 +75,22 @@ module FrontEndBuilds
         }
 
         expect(app.builds.find_best.html).to eq('fetched html')
+      end
+
+      it "should not active a build if the app requires manual activiation" do
+        app.update_attributes(require_manual_activation: true)
+
+        post :create, {
+          app_name: app.name,
+          api_key: app.api_key,
+          branch: 'master',
+          sha: 'some-sha',
+          job: '1',
+          endpoint: 'http://www.ted.com/testing/build'
+        }
+
+        expect(response).to be_success
+        expect(app.builds.find_best.html).to eq('the old build')
       end
 
       it "should error if the api key does not match" do

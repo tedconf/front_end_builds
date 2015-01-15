@@ -21,7 +21,8 @@ module FrontEndBuilds
       scope = self
 
       query = {
-        fetched: true
+        fetched: true,
+        active: true
       }
 
       if params[:app]
@@ -36,18 +37,19 @@ module FrontEndBuilds
           )
       end
 
+      # If job or sha is passed in we won't require the
+      # best build to be active. This allows us to smoke
+      # test non active builds
       if params[:sha]
         query[:sha] = params[:sha]
+        query.delete(:active)
 
       elsif params[:job]
         query[:job] = params[:job]
+        query.delete(:active)
 
       elsif params[:branch]
-        # only force activeness on branch based searched. Anyone who
-        # is searching by sha or build# is probably debugging/testing,
-        # so they would want non active builds
         query[:branch] = params[:branch]
-        query[:active] = true
 
       end
 
@@ -77,6 +79,10 @@ module FrontEndBuilds
       save
     end
 
+    def automatic_activiation?
+      !app.require_manual_activation?
+    end
+
     def with_head_tag(tag)
       html.clone.insert(head_pos, tag)
     end
@@ -86,7 +92,8 @@ module FrontEndBuilds
         id: id,
         app_id: app_id,
         sha: sha,
-        branch: branch
+        branch: branch,
+        active: active
       }
     end
 

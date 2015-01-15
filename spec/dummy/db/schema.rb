@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141123044341) do
+ActiveRecord::Schema.define(version: 20150114202950) do
 
   create_table "front_end_builds_apps", force: true do |t|
     t.string   "name"
     t.string   "api_key"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "require_manual_activation", default: false
   end
 
   add_index "front_end_builds_apps", ["api_key"], name: "index_front_end_builds_apps_on_api_key"
