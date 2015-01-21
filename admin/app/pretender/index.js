@@ -91,6 +91,20 @@ var config = function() {
       return [204, {}];
     });
 
+    this.put('/api/builds/:id', function(request) {
+      var id = +request.params.id;
+      var oldBuild = data.builds.findBy('id', id);
+      var index = data.builds.indexOf(oldBuild);
+
+      var newBuild = JSON.parse(request.requestBody);
+      newBuild.build.id = id;
+      data.builds[index] = newBuild;
+
+      console.log('PUT /api/builds/:id');
+      console.log(newBuild);
+      return [200, {}, newBuild];
+    });
+
   }.bind(this);
 
   this.resetGlobalRoutes = function() {

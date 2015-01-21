@@ -3,12 +3,14 @@
     <tr>
       <th class='appDetail-buildListItemCell'>ID</th>
       <th class='appDetail-buildListItemCell'>Built</th>
+      <th class='appDetail-buildListItemCell'>Branch</th>
       <th class='appDetail-buildListItemCell'>Commit</th>
+      <th class='appDetail-buildListItemCell'>Status</th>
       <th class='appDetail-buildListItemCell'></th>
     </tr>
   </thead>
   <tbody>
-    {{#each build in orderedBuilds}}
+    {{#each build in builds}}
       <tr {{bind-attr class='build.isBest:success :appDetail-buildListItem'}}>
         <td class='appDetail-buildListItemCell'>
           #{{build.id}}
@@ -21,12 +23,14 @@
         <td class='appDetail-buildListItemCell'>
           <p>{{ago build.createdAt}}</p>
         </td>
+        <td class='appDetail-buildListItemCell'>{{build.branch}}</td>
         <td class='appDetail-buildListItemCell'>#{{build.shortSha}}</td>
+        <td class='appDetail-buildListItemCell'>{{build.active}}</td>
         <td class='appDetail-buildListItemCell text-right'>
-          {{#if build.isBest}}
-            <button class="btn btn-danger btn-xs">Deactivate</button>
+          {{#if build.active}}
+            <button {{action 'deactivate' build}} class="btn btn-danger btn-xs">Deactivate</button>
           {{else}}
-            <button class="btn btn-warning btn-xs">Make live</button>
+            <button {{action 'activate' build}} class="btn btn-warning btn-xs">Activate</button>
           {{/if}}
         </td>
       </tr>
