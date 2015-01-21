@@ -4,12 +4,15 @@ export default Ember.Component.extend({
 
   actions: {
     activate: function(build) {
-      build.set('active', true)
-        .save();
+      return build.set('active', true).save().then(null, function(reason) {
+        console.error(reason);
+      });
     },
+
     deactivate: function(build) {
-      build.set('active', false)
-        .save();
+      return build.set('active', false).save().then(null, function(reason) {
+        console.error(reason);
+      });
     },
   }
 

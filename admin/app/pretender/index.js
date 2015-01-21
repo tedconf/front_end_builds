@@ -75,7 +75,7 @@ var config = function() {
 
       var newApp = JSON.parse(request.requestBody);
       newApp.app.id = id;
-      data.apps[index] = newApp;
+      data.apps[index] = newApp.app;
 
       console.log('PUT /api/apps/:id');
       console.log(newApp);
@@ -98,7 +98,7 @@ var config = function() {
 
       var newBuild = JSON.parse(request.requestBody);
       newBuild.build.id = id;
-      data.builds[index] = newBuild;
+      data.builds[index] = newBuild.build;
 
       console.log('PUT /api/builds/:id');
       console.log(newBuild);
