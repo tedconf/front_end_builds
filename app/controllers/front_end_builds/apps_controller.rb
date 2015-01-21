@@ -24,7 +24,7 @@ module FrontEndBuilds
     end
 
     def create
-      @app = FrontEndBuilds::App.new(app_create_params)
+      @app = FrontEndBuilds::App.new( use_params(:app_create_params) )
 
       if @app.save!
         respond_with(
@@ -59,7 +59,11 @@ module FrontEndBuilds
       @app = FrontEndBuilds::App.find(params[:id])
     end
 
-    def app_create_params
+    def app_create_params_rails_3
+      params[:app].slice(:name)
+    end
+
+    def app_create_params_rails_4
       params.require(:app).permit(
         :name
       )
