@@ -33,6 +33,7 @@ module FrontEndBuilds
       it "should create a new app" do
         post :create, app: {
             name: 'my-new-app',
+            api_key: nil
           },
           format: :json
 

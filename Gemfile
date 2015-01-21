@@ -14,7 +14,3 @@ else
 end
 
 gem 'rails', rails
-
-if rails[3] == "3"
-  gem 'strong_parameters'
-end

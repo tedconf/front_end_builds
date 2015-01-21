@@ -13,7 +13,7 @@ module FrontEndBuilds
     end
 
     def create
-      build = @app.builds.new(build_create_params)
+      build = @app.builds.new(use_params(:build_create_params))
 
       if build.save
         build.fetch!
@@ -47,7 +47,16 @@ module FrontEndBuilds
       end
     end
 
-    def build_create_params
+    def build_create_params_rails_3
+      params.slice(
+        :branch,
+        :sha,
+        :job,
+        :endpoint
+      )
+    end
+
+    def build_create_params_rails_4
       params.permit(
         :branch,
         :sha,
