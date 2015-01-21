@@ -27,4 +27,11 @@ app.import("bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.s
 app.import("bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf");
 app.import("bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff");
 
+if (app.env === 'production') {
+  app.import('vendor/production-pretender/shim.js', {
+    type: 'vendor',
+    exports: { 'pretender': ['default'] }
+  });
+}
+
 module.exports = app.toTree();
