@@ -3,12 +3,11 @@ require_dependency "front_end_builds/application_controller"
 module FrontEndBuilds
   class AppsController < ApplicationController
     before_filter :set_app , :only => [:show, :destroy]
-    respond_to :json
 
     def index
       apps = App.includes(:recent_builds)
 
-      respond_with({
+      respond_with_json({
         apps: apps.map(&:serialize),
         builds: apps.map(&:recent_builds)
                   .flat_map(&:to_a)
@@ -17,7 +16,7 @@ module FrontEndBuilds
     end
 
     def show
-      respond_with({
+      respond_with_json({
         app: @app.serialize,
         builds: @app.recent_builds.map(&:serialize)
       })
@@ -27,12 +26,12 @@ module FrontEndBuilds
       @app = FrontEndBuilds::App.new( use_params(:app_create_params) )
 
       if @app.save!
-        respond_with(
+        respond_with_json(
           { app: @app.serialize },
           location: nil
         )
       else
-        respond_with(
+        respond_with_json(
           { errors: @app.errors },
           status: :unprocessable_entity
         )
@@ -41,12 +40,12 @@ module FrontEndBuilds
 
     def destroy
       if @app.destroy
-        respond_with(
+        respond_with_json(
           { app: { id: @app.id } },
           location: nil
         )
       else
-        respond_with(
+        respond_with_json(
           {errors: @app.errors},
           status: :unprocessable_entity
         )
