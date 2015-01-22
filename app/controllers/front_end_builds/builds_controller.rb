@@ -3,13 +3,12 @@ require_dependency "front_end_builds/application_controller"
 module FrontEndBuilds
   class BuildsController < ApplicationController
     before_filter :set_app!, only: :create
-    respond_to :json
 
     def index
       builds = FrontEndBuilds::Build.where(app_id: params[:app_id])
-      respond_with({
-        builds: builds.map(&:serialize)
-      })
+      respond_with_json({
+          builds: builds.map(&:serialize)
+        })
     end
 
     def create
@@ -30,7 +29,7 @@ module FrontEndBuilds
 
     def show
       build = FrontEndBuilds::Build.find(params[:id])
-      respond_with({
+      respond_with_json({
         build: build.serialize
       })
     end
