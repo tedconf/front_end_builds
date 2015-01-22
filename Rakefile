@@ -32,7 +32,7 @@ namespace :admin do
     }
 
     Dir.chdir('admin') do
-      sh 'ember build  --environment production'
+      sh 'ember build  --environment=production'
     end
 
     copy_files.each do |source, dest|
