@@ -1,5 +1,8 @@
 @import 'bourbon';
 
+$fa-font-path: "../fonts/front_end_builds";
+@import 'bower_components/font-awesome/scss/font-awesome';
+
 @import 'core/base';
 
 @import 'settings/utilities';
