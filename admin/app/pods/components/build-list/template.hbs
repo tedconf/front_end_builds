@@ -1,8 +1,10 @@
 <table class='table table-hover appDetail-buildList'>
   <thead>
     <tr>
-      <th class='appDetail-buildListItemCell'>ID</th>
-      <th class='appDetail-buildListItemCell'>Built</th>
+      <th class='appDetail-buildListItemCell__id'>ID</th>
+      <th class='appDetail-buildListItemCell__live'></th>
+      <th class='appDetail-buildListItemCell__link'></th>
+      <th class='appDetail-buildListItemCell__built'>Built</th>
       <th class='appDetail-buildListItemCell'>Branch</th>
       <th class='appDetail-buildListItemCell'>Commit</th>
       <th class='appDetail-buildListItemCell'>Status</th>
@@ -12,20 +14,25 @@
   <tbody>
     {{#each build in builds}}
       <tr {{bind-attr class='build.isBest:success :appDetail-buildListItem'}}>
-        <td class='appDetail-buildListItemCell'>
-          #{{build.id}}
+        <td class='appDetail-buildListItemCell__id'>#{{build.id}}</td>
+        <td class='appDetail-buildListItemCell__live'>
           {{#if build.isBest}}
             <span class='pull-right'>
               <span class='label label-success'>Live</span>
             </span>
           {{/if}}
         </td>
+        <td class='appDetail-buildListItemCell__link'>
+          <a {{bind-attr href=build.location}}>
+            {{fa-icon 'external-link'}}
+          </a>
+        </td>
         <td class='appDetail-buildListItemCell'>
           <p>{{ago build.createdAt}}</p>
         </td>
         <td class='appDetail-buildListItemCell'>{{build.branch}}</td>
         <td class='appDetail-buildListItemCell'>#{{build.shortSha}}</td>
-        <td class='appDetail-buildListItemCell'>{{build.active}}</td>
+        <td class='appDetail-buildListItemCell'>{{#if build.active}}Active{{else}}Not active{{/if}}</td>
         <td class='appDetail-buildListItemCell text-right'>
           {{#if build.active}}
             <button {{action 'deactivate' build}} class="btn btn-danger btn-xs">Deactivate</button>

@@ -25,12 +25,20 @@
 .success.appDetail-buildListItem {
   color: #333;
 }
-.appDetail-buildList > tbody > .appDetail-buildListItem > .appDetail-buildListItemCell {
+.appDetail-buildList > tbody > .appDetail-buildListItem > [class^="appDetail-buildListItemCell"] {
   padding: 15px 13px;
 }
-.appDetail-buildListItemCell:nth-child(1) {
-  width: 110px;
-}
-.appDetail-buildListItemCell:nth-child(2) {
-  // width: 60px;
+.appDetail-buildListItemCell {
+  &__id {
+    width: 75px;
+  }
+  &__live {
+    width: 40px;
+  }
+  &__built {
+    width: 110px;
+  }
+  &__link {
+    width: 40px;
+  }
 }

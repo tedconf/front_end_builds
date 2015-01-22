@@ -9,7 +9,12 @@
     {{#if model.bestBuild}}
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class='panel-title'>Current live build</h3>
+          <h3 class='panel-title'>
+            Current live build
+            <a class='App-detail__link' {{bind-attr href=model.location}}>
+              {{fa-icon 'external-link'}}
+            </a>
+          </h3>
         </div>
         <div class="panel-body">
           <p>Branch: <strong>{{model.bestBuild.branch}}</strong></p>
