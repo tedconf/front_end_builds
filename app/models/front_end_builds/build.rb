@@ -21,8 +21,7 @@ module FrontEndBuilds
       scope = self
 
       query = {
-        fetched: true,
-        active: true
+        fetched: true
       }
 
       if params[:app]
@@ -37,16 +36,11 @@ module FrontEndBuilds
           )
       end
 
-      # If job or sha is passed in we won't require the
-      # best build to be active. This allows us to smoke
-      # test non active builds
       if params[:sha]
         query[:sha] = params[:sha]
-        query.delete(:active)
 
       elsif params[:job]
         query[:job] = params[:job]
-        query.delete(:active)
 
       elsif params[:branch]
         query[:branch] = params[:branch]
@@ -61,7 +55,7 @@ module FrontEndBuilds
     end
 
     def live?
-      self == app.find_best_build
+      self == app.live_build
     end
 
     def fetch!
@@ -71,11 +65,6 @@ module FrontEndBuilds
 
       self.html = html
       self.fetched = true
-      save
-    end
-
-    def activate!
-      self.active = true
       save
     end
 
@@ -93,7 +82,6 @@ module FrontEndBuilds
         app_id: app_id,
         sha: sha,
         branch: branch,
-        active: active
       }
     end
 

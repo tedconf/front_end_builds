@@ -20,7 +20,6 @@ module FrontEndBuilds
           job: 'number1',
           branch: 'master',
           fetched: true,
-          active: true,
           created_at: 1.day.ago
       end
 
@@ -31,11 +30,19 @@ module FrontEndBuilds
           job: 'number2',
           branch: 'master',
           fetched: true,
-          active: true,
           created_at: 2.weeks.ago
       end
 
       context "when finding the branch" do
+        before(:each) do
+          FactoryGirl.create :front_end_builds_build,
+            app: app,
+            sha: 'sha3',
+            branch: 'master',
+            fetched: true,
+            created_at: 2.days.ago
+        end
+
         subject { Build.find_best(app: app, branch: 'master') }
         it { should eq(latest) }
       end
@@ -43,21 +50,6 @@ module FrontEndBuilds
       context "when finding the job" do
         subject { Build.find_best(app: app, job: 'number2') }
         it { should eq(older) }
-      end
-
-      context "when finding and active branch" do
-        before(:each) do
-          FactoryGirl.create :front_end_builds_build,
-            app: app,
-            sha: 'sha3',
-            branch: 'master',
-            fetched: true,
-            active: false,
-            created_at: 1.minute.ago
-        end
-
-        subject { Build.find_best(app: app, branch: 'master') }
-        it { should eq(latest) }
       end
 
       context "when finding the sha" do
@@ -85,7 +77,6 @@ module FrontEndBuilds
             sha: 'sha4',
             branch: 'master',
             fetched: true,
-            active: true,
             created_at: 1.minute.ago
         end
 
@@ -108,7 +99,6 @@ module FrontEndBuilds
           job: 'number1',
           branch: 'master',
           fetched: true,
-          active: true,
           created_at: 1.day.ago
       end
 
@@ -119,7 +109,6 @@ module FrontEndBuilds
           job: 'number2',
           branch: 'master',
           fetched: true,
-          active: true,
           created_at: 2.weeks.ago
       end
 
