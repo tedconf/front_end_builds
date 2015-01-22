@@ -5,7 +5,7 @@ export default Ember.Component.extend({
     this.$('input')
       .focus()
       .on('keyup', (e) => {
-        if (e.keyCode == 27) {
+        if (e.keyCode === 27) {
           this.send('discardNewApp');
         }
       });

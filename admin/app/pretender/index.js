@@ -22,21 +22,19 @@ stubData.currentUser = {
 };
 
 var config = function() {
-  var _this = this;
-
   this.prepareBody = function(body){
     return body ? JSON.stringify(body) : '{"error": "not found"}';
-  }
+  };
 
   this.stubUrl = function(verb, url, data) {
-    this[verb].call(this, '/api' + url, function(request) {
+    this[verb].call(this, '/api' + url, function() {
       console.log('Hitting ' + url);
       console.log(data);
       return [200, {}, data];
     });
   }.bind(this);
 
-  this.unhandledRequest = function(verb, path, request) {
+  this.unhandledRequest = function(verb, path) {
     console.error("FAILED REQUEST");
     console.error(verb, path);
   };

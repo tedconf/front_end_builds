@@ -15,14 +15,14 @@ Router.map(function() {
         model: 'app'
       },
       actions: {deleted: 'appDeleted'}
-    })
+    });
 
     this.modal('rename-app-form', {
       withParams: ['willRename'],
       otherParams: {
         model: 'app'
       }
-    })
+    });
   });
 });
 
