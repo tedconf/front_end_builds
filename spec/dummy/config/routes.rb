@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :items, only: [:show]
 
-  mount FrontEndBuilds::Engine, at: '/a/frontend-config'
+  mount FrontEndBuilds::Engine, at: '/frontend-config'
 
   get '/123' => 'welcome#index'
 end

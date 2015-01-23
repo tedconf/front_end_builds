@@ -9,6 +9,9 @@ var path_join = function(){
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 var app = new EmberApp({
+  fingerprint: {
+    prepend: '/front_end_builds/'
+  },
   emberCliFontAwesome: { includeFontAwesomeAssets: false }
 });
 
@@ -36,8 +39,9 @@ var fonts = [
   "fontawesome-webfont.woff2",
   "FontAwesome.otf"
 ];
+var fontDestDir = (app.env === 'production') ? '/assets' : '/front_end_builds/assets/';
 fonts.forEach(function(font) {
-  app.import('bower_components/font-awesome/fonts/' + font, { destDir: "/assets" });
+  app.import('bower_components/font-awesome/fonts/' + font, { destDir: fontDestDir });
 });
 
 if (app.env === 'production') {
