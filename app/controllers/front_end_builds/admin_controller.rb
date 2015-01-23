@@ -8,9 +8,13 @@ module FrontEndBuilds
       # engine to into index.html.erb, so the ember app's router
       # will work appropriately.
 
-      # Trim leading/trailing slash marks...
-      @baseURL = request.fullpath[1..request.fullpath.length-2]
-      render :index, layout: false
+      # Trim trailing slash marks
+      baseURL = admin_path[1..-2]
+
+      html = render_to_string
+      html = html.gsub('BASEURL', baseURL)
+
+      render text: html
     end
 
   end

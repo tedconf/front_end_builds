@@ -9,14 +9,8 @@ module FrontEndBuilds
       g.helper false
     end
 
-    initializer "front_end_assets.assets.precompile", group: :all do |app|
-      app.config.assets.precompile += %w(
-        front_end_builds/vendor.css
-        front_end_builds/admin.css
-        front_end_builds/vendor.js
-        front_end_builds/admin.js
-        front_end_builds/admin.js
-      )
+    initializer "static assets" do |app|
+      app.middleware.insert_before(::ActionDispatch::Static, ::ActionDispatch::Static, "#{root}/public")
     end
   end
 end

@@ -11,19 +11,19 @@
 
     <script>
       window.RAILS_ENV = {
-        baseURL: ''
+        baseURL: 'BASEURL'
       }
     </script>
-    <link rel="stylesheet" href="assets/vendor.css">
-    <link rel="stylesheet" href="assets/admin.css">
+    <link rel="stylesheet" href="/front_end_builds/assets/vendor.css">
+    <link rel="stylesheet" href="/front_end_builds/assets/admin.css">
 
     {{content-for 'head-footer'}}
   </head>
   <body>
     {{content-for 'body'}}
 
-    <script src="assets/vendor.js"></script>
-    <script src="assets/admin.js"></script>
+    <script src="/front_end_builds/assets/vendor.js"></script>
+    <script src="/front_end_builds/assets/admin.js"></script>
 
     {{content-for 'body-footer'}}
   </body>

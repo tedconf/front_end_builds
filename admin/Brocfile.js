@@ -9,9 +9,6 @@ var path_join = function(){
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 var app = new EmberApp({
-  fingerprint: {
-    enabled: false
-  },
   emberCliFontAwesome: { includeFontAwesomeAssets: false }
 });
 
@@ -31,14 +28,17 @@ app.import("bower_components/bootstrap/dist/css/bootstrap.css");
 app.import("bower_components/bootstrap/dist/js/bootstrap.js");
 
 // Font Awesome
-var faDir = 'bower_components/font-awesome';
-app.import(faDir + "/fonts/fontawesome-webfont.eot", { destDir: "fonts/front_end_builds" });
-app.import(faDir + "/fonts/fontawesome-webfont.svg", { destDir: "fonts/front_end_builds" });
-app.import(faDir + "/fonts/fontawesome-webfont.ttf", { destDir: "fonts/front_end_builds" });
-app.import(faDir + "/fonts/fontawesome-webfont.woff", { destDir: "fonts/front_end_builds" });
-app.import(faDir + "/fonts/fontawesome-webfont.woff2", { destDir: "fonts/front_end_builds" });
-app.import(faDir + "/fonts/FontAwesome.otf", { destDir: "fonts/front_end_builds" });
-
+var fonts = [
+  "fontawesome-webfont.eot",
+  "fontawesome-webfont.svg",
+  "fontawesome-webfont.ttf",
+  "fontawesome-webfont.woff",
+  "fontawesome-webfont.woff2",
+  "FontAwesome.otf"
+];
+fonts.forEach(function(font) {
+  app.import('bower_components/font-awesome/fonts/' + font, { destDir: "/assets" });
+});
 
 if (app.env === 'production') {
   app.import('vendor/production-pretender/shim.js', {

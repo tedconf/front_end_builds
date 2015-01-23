@@ -24,20 +24,16 @@ end
 
 namespace :admin do
   task :build do
-    copy_files = {
-      'admin/dist/assets/admin.css' => 'app/assets/stylesheets/front_end_builds/admin.css',
-      'admin/dist/assets/vendor.css' => 'app/assets/stylesheets/front_end_builds/vendor.css',
-      'admin/dist/assets/admin.js' => 'app/assets/javascripts/front_end_builds/admin.js',
-      'admin/dist/assets/vendor.js' => 'app/assets/javascripts/front_end_builds/vendor.js',
-    }
-
     Dir.chdir('admin') do
       sh 'ember build  --environment=production'
     end
 
-    copy_files.each do |source, dest|
-      FileUtils.cp(source, dest)
-    end
+    # Copy the dist to public
+    FileUtils.rm_r 'public/front_end_builds'
+    FileUtils.mv 'admin/dist', 'public/front_end_builds'
+
+    # Move the index out of public
+    FileUtils.mv 'public/front_end_builds/index.html', 'app/views/front_end_builds/admin/index.html.erb'
   end
 end
 

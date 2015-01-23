@@ -6,7 +6,7 @@ FrontEndBuilds::Engine.routes.draw do
     resources :host_apps, only: [:show]
   end
 
-  get '/(*path)', to: 'admin#index'
+  get '/(*path)', to: 'admin#index', as: :admin
 end
 
 # This is for the posting of new apps.

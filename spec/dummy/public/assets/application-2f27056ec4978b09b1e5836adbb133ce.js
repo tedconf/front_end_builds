@@ -10,6 +10,5 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require 'front_end_builds/vendor.js' 
-//= require 'front_end_builds/admin.js' 
-//= require_self
+
+;
