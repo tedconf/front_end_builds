@@ -29,10 +29,6 @@ var app = new EmberApp({
 // along with the exports of each module as its value.
 app.import("bower_components/bootstrap/dist/css/bootstrap.css");
 app.import("bower_components/bootstrap/dist/js/bootstrap.js");
-app.import("bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.eot");
-app.import("bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.svg");
-app.import("bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf");
-app.import("bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff");
 
 // Font Awesome
 var faDir = 'bower_components/font-awesome';

@@ -15,6 +15,7 @@ module FrontEndBuilds
         front_end_builds/admin.css
         front_end_builds/vendor.js
         front_end_builds/admin.js
+        front_end_builds/admin.js
       )
     end
   end
