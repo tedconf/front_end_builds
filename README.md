@@ -2,7 +2,7 @@
 
 # FrontEndBuilds
 
-**Warning: alpha software!**
+**Warning: alpha software!** Track progress to beta here: [Road to Beta](https://github.com/tedconf/front_end_builds/issues/44)
 
 Front-End Builds lets you easily serve remotely-hosted static (JS) applications from your Rails apps.
 
