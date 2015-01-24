@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.description = "Rails engine to manage front end builds and deployments"
   s.license     = "MIT"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{admin,app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
   s.add_development_dependency "sqlite3"
