@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/tedconf/front_end_builds.svg)](https://travis-ci.org/tedconf/front_end_builds) [![Code
-Climate](https://codeclimate.com/github/tedconf/front_end_builds/badges/gpa.svg)](https://codeclimate.com/github/tedconf/front_end_builds)
+Climate](https://codeclimate.com/github/tedconf/front_end_builds/badges/gpa.svg)](https://codeclimate.com/github/tedconf/front_end_builds) [![Gem Version](https://badge.fury.io/rb/front_end_builds.svg)](http://badge.fury.io/rb/front_end_builds)
 
 # FrontEndBuilds
 
