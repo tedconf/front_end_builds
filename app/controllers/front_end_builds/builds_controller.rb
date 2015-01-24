@@ -2,7 +2,6 @@ require_dependency "front_end_builds/application_controller"
 
 module FrontEndBuilds
   class BuildsController < ApplicationController
-    before_filter :set_app!, only: :create
 
     def index
       builds = FrontEndBuilds::Build.where(app_id: params[:app_id])
@@ -12,14 +11,25 @@ module FrontEndBuilds
     end
 
     def create
-      build = @app.builds.new(use_params(:build_create_params))
+      app = FrontEndBuilds::App
+        .where(name: params[:app_name])
+        .limit(1)
+        .first
 
-      if build.save
+      build = app.builds.new(use_params(:build_create_params))
+
+      if build.verify && build.save
         build.fetch!
-        build.activate! if build.automatic_activation? and build.master?
+
+        if build.automatic_activation? && build.master?
+          build.activate!
+        end
+
         head :ok
 
       else
+        build.errors[:base] << 'No access - invalid SSH key' if !build.verify
+
         render(
           text: 'Could not create the build: ' + build.errors.full_messages.to_s,
           status: :unprocessable_entity
@@ -36,22 +46,13 @@ module FrontEndBuilds
 
     private
 
-    def set_app!
-      @app = find_app
-      if @app.nil?
-        render(
-          text: 'That app name/API combination was not found.',
-          status: :unprocessable_entity
-        )
-      end
-    end
-
     def build_create_params_rails_3
       params.slice(
         :branch,
         :sha,
         :job,
-        :endpoint
+        :endpoint,
+        :signature
       )
     end
 
@@ -60,15 +61,9 @@ module FrontEndBuilds
         :branch,
         :sha,
         :job,
-        :endpoint
+        :endpoint,
+        :signature
       )
-    end
-
-    def find_app
-      FrontEndBuilds::App.where(
-        name: params[:app_name],
-        api_key: params[:api_key]
-      ).limit(1).first
     end
   end
 end

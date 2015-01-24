@@ -9,11 +9,13 @@ module FrontEndBuilds
     end
 
     belongs_to :app, class_name: "FrontEndBuilds::App"
+    belongs_to :pubkey, class_name: "FrontEndBuilds::Pubkey"
 
     validates :app, presence: true
     validates :sha, presence: true
     validates :branch, presence: true
     validates :endpoint, presence: true
+    validates :signature, presence: true
 
     scope :recent, -> { limit(10).order('created_at desc') }
 
@@ -60,6 +62,13 @@ module FrontEndBuilds
         .limit(1)
         .order('created_at desc')
         .first
+    end
+
+    # Public: Is the signature is valid for the build.
+    #
+    # Returns boolean.
+    def verify
+      Pubkey.any? { |key| key.verify(self) }
     end
 
     def live?

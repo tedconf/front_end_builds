@@ -3,6 +3,7 @@ FrontEndBuilds::Engine.routes.draw do
   scope :api, path: '/api' do
     resources :apps, only: [:index, :show, :create, :update, :destroy]
     resources :builds, only: [:index, :show]
+    resources :pubkeys, only: [:index, :create, :destroy]
     resources :host_apps, only: [:show]
   end
 

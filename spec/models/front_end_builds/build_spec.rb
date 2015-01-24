@@ -4,6 +4,7 @@ module FrontEndBuilds
   RSpec.describe Build, :type => :model do
 
     it { should belong_to(:app) }
+    it { should belong_to(:pubkey) }
 
     it { should validate_presence_of(:app) }
     it { should validate_presence_of(:sha) }
@@ -119,6 +120,35 @@ module FrontEndBuilds
       end
     end
 
+    describe '#verify' do
+      let(:app) { FactoryGirl.create(:front_end_builds_app, name: 'app') }
+      let(:endpoint) { 'http://some.external.url.ted.com/index.html' }
+
+      let(:build) do
+        FactoryGirl.build(:front_end_builds_build, {
+          app: app,
+          endpoint: endpoint,
+          signature: create_signature(app.name, endpoint)
+        })
+      end
+
+      let(:ssh_pubkey) do
+        File.read(Rails.root.join('..', 'fixtures', 'id_rsa.pub'))
+      end
+
+      it 'should be true if the signature can be verifed by a pubkey' do
+        FactoryGirl.create(:front_end_builds_pubkey, {
+          pubkey: ssh_pubkey
+        })
+
+        expect(build.verify).to be_truthy
+      end
+
+      it 'should not be true if the signature cannot be veriried' do
+        expect(build.verify).to be_falsey
+      end
+    end
+
     describe :live? do
       let(:app) { FactoryGirl.create(:front_end_builds_app) }
       let!(:latest) do
@@ -148,7 +178,7 @@ module FrontEndBuilds
       it "should not be live if it's not the live build" do
         expect(older.live?).to be_falsey
       end
-    end 
+    end
 
     describe :master? do
       let(:app) { FactoryGirl.create(:front_end_builds_app) }

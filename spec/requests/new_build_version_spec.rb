@@ -3,6 +3,7 @@ require 'rails_helper'
 describe "Front end builds new version", type: :request do
   let(:front_end_app) { FactoryGirl.create :front_end_builds_app, name: "dummy" }
   let(:version_url) { "/front_end_builds/best?app_name=dummy&branch=master" }
+  let(:endpoint) { "http://www.ted.com/builds/1" }
 
   before(:each) do
     FactoryGirl.create(
@@ -11,12 +12,10 @@ describe "Front end builds new version", type: :request do
       app: front_end_app,
     )
 
-    stub_request(
-      :get,
-      "www.ted.com/builds/1"
-    ).to_return(
-      body: 'your app!'
-    )
+    FactoryGirl.create(:front_end_builds_pubkey, :fixture_pubkey)
+
+    stub_request(:get, endpoint)
+      .to_return(body: 'your app!')
   end
 
   it "gets a different version when a new build is created" do
@@ -28,11 +27,11 @@ describe "Front end builds new version", type: :request do
     original_version = json['version']
 
     post "/dummy",
-      api_key: front_end_app.api_key,
       branch: "master",
       sha: "a1b2c3",
       job: "jenkins-build-1",
-      endpoint: "http://www.ted.com/builds/1"
+      endpoint: endpoint,
+      signature: create_signature('dummy', endpoint)
 
     expect(response).to be_success
 

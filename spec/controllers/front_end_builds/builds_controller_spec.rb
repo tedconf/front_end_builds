@@ -47,6 +47,8 @@ module FrontEndBuilds
     end
 
     describe "create" do
+      let(:endpoint) { 'http://www.ted.com/testing/build' }
+
       before(:each) do
         FactoryGirl.create :front_end_builds_build, :live,
           app: app,
@@ -55,12 +57,10 @@ module FrontEndBuilds
           fetched: true,
           html: 'the old build'
 
-        stub_request(
-          :get,
-          'http://www.ted.com/testing/build'
-        ).to_return(
-          body: 'fetched html'
-        )
+        FactoryGirl.create(:front_end_builds_pubkey, :fixture_pubkey)
+
+        stub_request(:get, endpoint)
+          .to_return(body: 'fetched html')
       end
 
       it "should create the new build, and make it live" do
@@ -68,15 +68,15 @@ module FrontEndBuilds
 
         post :create, {
           app_name: app.name,
-          api_key: app.api_key,
           branch: 'master',
           sha: 'some-sha',
           job: '1',
-          endpoint: 'http://www.ted.com/testing/build'
+          endpoint: endpoint,
+          signature: create_signature(app.name, endpoint)
         }
-        app.reload
 
-        expect(app.live_build.html).to eq('fetched html')
+        expect(response).to be_success
+        expect(app.reload.live_build.html).to eq('fetched html')
       end
 
       it "should not make a new build live if it's non-master" do
@@ -84,15 +84,15 @@ module FrontEndBuilds
 
         post :create, {
           app_name: app.name,
-          api_key: app.api_key,
           branch: 'some-feature',
           sha: 'some-sha',
           job: '1',
-          endpoint: 'http://www.ted.com/testing/build'
+          endpoint: endpoint,
+          signature: create_signature(app.name, endpoint)
         }
-        app.reload
 
-        expect(app.live_build.html).to eq('the old build')
+        expect(response).to be_success
+        expect(app.reload.live_build.html).to eq('the old build')
       end
 
       it "should not active a build if the app requires manual activiation" do
@@ -100,35 +100,40 @@ module FrontEndBuilds
 
         post :create, {
           app_name: app.name,
-          api_key: app.api_key,
           branch: 'master',
           sha: 'some-sha',
           job: '1',
-          endpoint: 'http://www.ted.com/testing/build'
+          endpoint: endpoint,
+          signature: create_signature(app.name, endpoint)
         }
 
         expect(response).to be_success
         expect(app.live_build.html).to eq('the old build')
       end
 
-      it "should error if the api key does not match" do
+      it "should error if the signature is not valid" do
+        pkey = OpenSSL::PKey::RSA.new(2048)
+        digest = OpenSSL::Digest::SHA256.new
+        signature = pkey.sign(digest, "#{app.name}-#{endpoint}")
+
         post :create, {
           app_name: app.name,
-          api_key: 'a-bad-api-key',
           branch: 'master',
           sha: 'some-sha',
           job: '1',
-          endpoint: 'http://www.ted.com/testing/build'
+          endpoint: endpoint,
+          signature: Base64.encode64(signature)
         }
 
         expect(response).to_not be_success
-        expect(response.body).to eq('That app name/API combination was not found.')
+        expect(response.body).to match("No access - invalid SSH key")
       end
 
       it "should error if not all fields are present" do
         post :create, {
           app_name: app.name,
-          api_key: app.api_key
+          endpoint: endpoint,
+          signature: create_signature(app.name, endpoint)
         }
         expect(response).to_not be_success
         expect(response.body).to match("Sha can't be blank")

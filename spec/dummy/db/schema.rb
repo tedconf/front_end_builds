@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150127042538) do
+ActiveRecord::Schema.define(version: 20150126123348) do
 
   create_table "front_end_builds_apps", force: :cascade do |t|
     t.string   "name"
@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(version: 20150127042538) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "endpoint",   limit: 2038
+    t.integer  "pubkey_id"
+    t.text     "signature"
   end
 
   add_index "front_end_builds_builds", ["active"], name: "index_front_end_builds_builds_on_active"
@@ -44,5 +46,12 @@ ActiveRecord::Schema.define(version: 20150127042538) do
   add_index "front_end_builds_builds", ["app_id", "sha"], name: "index_front_end_builds_builds_on_app_id_and_sha"
   add_index "front_end_builds_builds", ["created_at"], name: "index_front_end_builds_builds_on_created_at"
   add_index "front_end_builds_builds", ["fetched"], name: "index_front_end_builds_builds_on_fetched"
+
+  create_table "front_end_builds_pubkeys", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.string   "pubkey",     null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
 end
