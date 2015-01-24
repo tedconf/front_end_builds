@@ -12,7 +12,7 @@ module FrontEndBuilds
       baseURL = admin_path[1..-2]
 
       html = render_to_string
-      html = html.sub('BASEURL', baseURL)
+      html = html.sub('BASEURL/', baseURL)
       html = html.sub("baseURL: ''", "baseURL: '#{baseURL}'")
 
       render text: html
