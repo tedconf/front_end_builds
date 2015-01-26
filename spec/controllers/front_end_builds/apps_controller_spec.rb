@@ -25,7 +25,7 @@ module FrontEndBuilds
         expect(response).to be_success
         expect(json['app']['id']).to eq(app.id)
         expect(json['builds'].length).to eq(3)
-        expect(json['app']['best_build_id']). to eq(app.find_best_build.id)
+        expect(json['app']['live_build_id']). to eq(app.live_build.id)
       end
     end
 

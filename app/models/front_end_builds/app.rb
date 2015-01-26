@@ -49,7 +49,7 @@ module FrontEndBuilds
         name: name,
         api_key: api_key,
         build_ids: recent_builds.map(&:id),
-        best_build_id: (live_build ? live_build.id : nil),
+        live_build_id: (live_build ? live_build.id : nil),
         location: get_url,
         require_manual_activation: require_manual_activation
       }
