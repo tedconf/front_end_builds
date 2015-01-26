@@ -11,24 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150114202950) do
+ActiveRecord::Schema.define(version: 20150126123348) do
 
-  create_table "front_end_builds_apps", force: true do |t|
-    t.string   "name"
-    t.string   "api_key"
+  create_table "front_end_builds_apps", force: :cascade do |t|
+    t.string   "name",                      limit: 255
+    t.string   "api_key",                   limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "require_manual_activation", default: false
+    t.boolean  "require_manual_activation",             default: false
+    t.integer  "best_build_id"
   end
 
   add_index "front_end_builds_apps", ["api_key"], name: "index_front_end_builds_apps_on_api_key"
   add_index "front_end_builds_apps", ["name"], name: "index_front_end_builds_apps_on_name"
 
-  create_table "front_end_builds_builds", force: true do |t|
+  create_table "front_end_builds_builds", force: :cascade do |t|
     t.integer  "app_id"
-    t.string   "sha"
-    t.string   "job"
-    t.string   "branch"
+    t.string   "sha",        limit: 255
+    t.string   "job",        limit: 255
+    t.string   "branch",     limit: 255
     t.text     "html"
     t.boolean  "fetched",                 default: false
     t.boolean  "active",                  default: false

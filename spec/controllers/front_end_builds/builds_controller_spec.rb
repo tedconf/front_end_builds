@@ -75,7 +75,7 @@ module FrontEndBuilds
           endpoint: 'http://www.ted.com/testing/build'
         }
 
-        expect(app.builds.find_best.html).to eq('fetched html')
+        expect(app.live_build.html).to eq('fetched html')
       end
 
       it "should not active a build if the app requires manual activiation" do
@@ -91,7 +91,7 @@ module FrontEndBuilds
         }
 
         expect(response).to be_success
-        expect(app.builds.find_best.html).to eq('the old build')
+        expect(app.live_build.html).to eq('the old build')
       end
 
       it "should error if the api key does not match" do

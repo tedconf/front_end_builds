@@ -68,6 +68,13 @@ module FrontEndBuilds
       save
     end
 
+    def activate!
+      require 'pry'
+      binding.pry
+      app.live_build = self
+      app.save
+    end
+
     def automatic_activiation?
       !app.require_manual_activation?
     end
