@@ -54,7 +54,7 @@ module FrontEndBuilds
             created_at: 2.days.ago
         end
 
-        subject { Build.find_best(live_app: app) }
+        subject { Build.find_best(app: app) }
         it { should eq(live_build) }
       end
 
