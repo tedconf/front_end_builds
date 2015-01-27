@@ -3,7 +3,7 @@ require 'rails_helper'
 module FrontEndBuilds
   describe App, :type => :model do
     it { should have_many(:builds) }
-    it { should have_one(:live_build) }
+    it { should belong_to(:live_build) }
     it { should validate_presence_of(:name) }
 
     describe '.register_url / get_url' do
