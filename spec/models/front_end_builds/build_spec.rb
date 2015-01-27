@@ -23,14 +23,39 @@ module FrontEndBuilds
           created_at: 1.day.ago
       end
 
+      let!(:live_build) do
+        FactoryGirl.create :front_end_builds_build,
+          app: app,
+          live_app: app,
+          sha: 'sha2',
+          job: 'number2',
+          branch: 'anything',
+          fetched: true,
+          created_at: 1.week.ago
+      end
+
       let!(:older) do
         FactoryGirl.create :front_end_builds_build,
           app: app,
-          sha: 'sha2',
-          job: 'number2',
+          sha: 'sha3',
+          job: 'number3',
           branch: 'master',
           fetched: true,
           created_at: 2.weeks.ago
+      end
+
+      context "with no query" do
+        before(:each) do
+          FactoryGirl.create :front_end_builds_build,
+            app: app,
+            sha: 'sha4',
+            branch: 'nonmaster',
+            fetched: true,
+            created_at: 2.days.ago
+        end
+
+        subject { Build.find_best(live_app: app) }
+        it { should eq(live_build) }
       end
 
       context "when finding the branch" do
@@ -48,12 +73,12 @@ module FrontEndBuilds
       end
 
       context "when finding the job" do
-        subject { Build.find_best(app: app, job: 'number2') }
+        subject { Build.find_best(app: app, job: 'number3') }
         it { should eq(older) }
       end
 
       context "when finding the sha" do
-        subject { Build.find_best(app: app, sha: 'sha2') }
+        subject { Build.find_best(app: app, sha: 'sha3') }
         it { should eq(older) }
       end
 

@@ -6,7 +6,6 @@ module ActionDispatch::Routing
     # Create a front end in your rails router.
     def front_end(name, path = name, options = {})
       defaults = {
-          branch: 'master',
           app_name: name
         }.merge(options)
 

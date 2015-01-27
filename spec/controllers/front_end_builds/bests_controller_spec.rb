@@ -13,31 +13,41 @@ module FrontEndBuilds
            branch: 'master',
            html: 'the newest build',
            fetched: true,
-           active: true,
            created_at: 1.day.ago
+       end
+
+       let!(:live) do
+         FactoryGirl.create :front_end_builds_build,
+           app: app,
+           live_app: app,
+           sha: 'sha2',
+           job: 'number2',
+           branch: 'anything',
+           html: 'the live build',
+           fetched: true,
+           created_at: 1.weeks.ago
        end
 
        let!(:older) do
          FactoryGirl.create :front_end_builds_build,
            app: app,
-           sha: 'sha2',
-           job: 'number2',
+           sha: 'sha3',
+           job: 'number3',
            branch: 'master',
            html: 'an old build',
            fetched: true,
-           active: true,
            created_at: 2.weeks.ago
        end
 
-       it "should find the latest build" do
-         get :show, app_name: app.name, branch: 'master'
+       it "should find the live build" do
+         get :show, app_name: app.name
 
          expect(response).to be_success
-         expect(response.body).to match(latest.html)
+         expect(response.body).to match(live.html)
        end
 
        it "should find the build by job" do
-         get :show, app_name: app.name, job: 'number2'
+         get :show, app_name: app.name, job: 'number3'
 
          expect(response).to be_success
          expect(response.body).to match(older.html)

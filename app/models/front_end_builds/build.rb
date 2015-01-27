@@ -27,6 +27,7 @@ module FrontEndBuilds
 
       if params[:app]
         query[:app_id] = params[:app].id
+        app = App.find( params[:app].id )
       end
 
       if params[:app_name]
@@ -35,6 +36,7 @@ module FrontEndBuilds
           .where(
             front_end_builds_apps: { name: params[:app_name] }
           )
+        app = App.where( name: params[:app_name] ).first
       end
 
       if params[:sha]
@@ -45,6 +47,9 @@ module FrontEndBuilds
 
       elsif params[:branch]
         query[:branch] = params[:branch]
+
+      elsif app
+        query[:id] = app.live_build_id
 
       end
 
