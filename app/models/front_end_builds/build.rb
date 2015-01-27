@@ -8,6 +8,7 @@ module FrontEndBuilds
                       :endpoint
     end
 
+    has_one :live_app, class_name: "FrontEndBuilds::App", foreign_key: :live_build_id
     belongs_to :app, class_name: "FrontEndBuilds::App"
 
     validates :app, presence: true
@@ -69,13 +70,11 @@ module FrontEndBuilds
     end
 
     def activate!
-      require 'pry'
-      binding.pry
       app.live_build = self
       app.save
     end
 
-    def automatic_activiation?
+    def automatic_activation?
       !app.require_manual_activation?
     end
 

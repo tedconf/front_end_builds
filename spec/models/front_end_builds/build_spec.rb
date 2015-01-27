@@ -95,6 +95,7 @@ module FrontEndBuilds
       let!(:latest) do
         FactoryGirl.create :front_end_builds_build,
           app: app,
+          live_app: app,
           sha: 'sha1',
           job: 'number1',
           branch: 'master',
@@ -112,11 +113,11 @@ module FrontEndBuilds
           created_at: 2.weeks.ago
       end
 
-      it "should be live if it's the best" do
+      it "should be live if it's the live build" do
         expect(latest.live?).to be_truthy
       end
 
-      it "should not be live the best if it's not the best" do
+      it "should not be live if it's not the live build" do
         expect(older.live?).to be_falsey
       end
     end 

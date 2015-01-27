@@ -66,6 +66,8 @@ module FrontEndBuilds
       end
 
       it "should create the newest build" do
+        expect(app.live_build.html).to eq('the old build')
+
         post :create, {
           app_name: app.name,
           api_key: app.api_key,
@@ -74,6 +76,7 @@ module FrontEndBuilds
           job: '1',
           endpoint: 'http://www.ted.com/testing/build'
         }
+        app.reload
 
         expect(app.live_build.html).to eq('fetched html')
       end

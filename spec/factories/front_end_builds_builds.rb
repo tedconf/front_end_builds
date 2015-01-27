@@ -12,9 +12,5 @@ FactoryGirl.define do
     trait :fetched do
       fetched true
     end
-
-    trait :active do
-      active true
-    end
   end
 end

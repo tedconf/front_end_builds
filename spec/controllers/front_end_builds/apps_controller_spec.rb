@@ -6,7 +6,7 @@ module FrontEndBuilds
 
     let(:app) { FactoryGirl.create :front_end_builds_app, name: 'dummy' }
     let!(:builds) { FactoryGirl.create_list :front_end_builds_build, 2, app: app }
-    let!(:build) { FactoryGirl.create :front_end_builds_build, :active, :fetched, app: app }
+    let!(:build) { FactoryGirl.create :front_end_builds_build, :fetched, app: app }
 
     describe 'index' do
       it "should find all apps" do

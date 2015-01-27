@@ -5,8 +5,8 @@ module FrontEndBuilds
                       :require_manual_activation
     end
 
+    belongs_to :live_build, class_name: 'FrontEndBuilds::Build'
     has_many :builds, class_name: 'FrontEndBuilds::Build'
-    has_one :live_build, class_name: 'FrontEndBuilds::Build'
 
     if ActiveRecord::VERSION::MAJOR < 4
       # Rails 3
