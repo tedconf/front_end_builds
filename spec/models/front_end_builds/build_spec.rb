@@ -122,6 +122,28 @@ module FrontEndBuilds
       end
     end 
 
+    describe :is_master? do
+      let(:app) { FactoryGirl.create(:front_end_builds_app) }
+      let(:build1) do
+        FactoryGirl.create :front_end_builds_build,
+          app: app,
+          branch: 'master'
+      end
+      let(:build2) do
+        FactoryGirl.create :front_end_builds_build,
+          app: app,
+          branch: 'feature'
+      end
+
+      it "should be truthy if the branch is 'master'" do
+        expect(build1.is_master?).to be_truthy
+      end
+
+      it "should be false if the branch is not 'master'" do
+        expect(build2.is_master?).to be_falsey
+      end
+    end 
+
     describe :fetch! do
       let(:app) do
         FactoryGirl.create(:front_end_builds_app)

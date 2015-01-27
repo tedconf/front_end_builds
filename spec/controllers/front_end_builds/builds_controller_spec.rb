@@ -48,14 +48,13 @@ module FrontEndBuilds
 
     describe "create" do
       before(:each) do
-        oldbuild = FactoryGirl.create :front_end_builds_build,
+        FactoryGirl.create :front_end_builds_build,
           app: app,
+          live_app: app,
           endpoint: 'http://www.ted.com/testing/build',
           created_at: 1.day.ago,
           fetched: true,
           html: 'the old build'
-
-        app.live_build = oldbuild
 
         stub_request(
           :get,
@@ -65,7 +64,7 @@ module FrontEndBuilds
         )
       end
 
-      it "should create the newest build" do
+      it "should create the new build, and make it live" do
         expect(app.live_build.html).to eq('the old build')
 
         post :create, {
@@ -79,6 +78,22 @@ module FrontEndBuilds
         app.reload
 
         expect(app.live_build.html).to eq('fetched html')
+      end
+
+      it "should not make a new build live if it's non-master" do
+        expect(app.live_build.html).to eq('the old build')
+
+        post :create, {
+          app_name: app.name,
+          api_key: app.api_key,
+          branch: 'some-feature',
+          sha: 'some-sha',
+          job: '1',
+          endpoint: 'http://www.ted.com/testing/build'
+        }
+        app.reload
+
+        expect(app.live_build.html).to eq('the old build')
       end
 
       it "should not active a build if the app requires manual activiation" do

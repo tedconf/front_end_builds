@@ -7,7 +7,7 @@ describe "Front end builds new version", type: :request do
   before(:each) do
     FactoryGirl.create(
       :front_end_builds_build,
-      :active, :fetched,
+      :fetched,
       app: front_end_app,
     )
 

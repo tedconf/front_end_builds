@@ -59,6 +59,10 @@ module FrontEndBuilds
       self == app.live_build
     end
 
+    def is_master?
+      branch == 'master'
+    end
+
     def fetch!
       return if fetched?
 
