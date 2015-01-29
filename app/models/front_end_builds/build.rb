@@ -8,7 +8,6 @@ module FrontEndBuilds
                       :endpoint
     end
 
-    has_one :live_app, class_name: "FrontEndBuilds::App", foreign_key: :live_build_id
     belongs_to :app, class_name: "FrontEndBuilds::App"
 
     validates :app, presence: true

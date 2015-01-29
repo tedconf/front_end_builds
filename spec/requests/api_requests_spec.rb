@@ -4,10 +4,14 @@ describe 'It should not intercept API requests', type: :request do
   let!(:build) do
     FactoryGirl.create(:front_end_builds_build,
       app: front_end_app,
-      live_app: front_end_app,
       fetched: true,
       active: true
     )
+  end
+
+  before(:each) do
+    front_end_app.live_build = build
+    front_end_app.save
   end
 
   it "should get the build" do

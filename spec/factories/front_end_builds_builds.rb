@@ -12,5 +12,9 @@ FactoryGirl.define do
     trait :fetched do
       fetched true
     end
+
+    # trait :live do
+    #   app.live_build = self
+    # end
   end
 end

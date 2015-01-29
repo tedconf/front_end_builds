@@ -26,7 +26,6 @@ module FrontEndBuilds
       let!(:live_build) do
         FactoryGirl.create :front_end_builds_build,
           app: app,
-          live_app: app,
           sha: 'sha2',
           job: 'number2',
           branch: 'anything',
@@ -42,6 +41,11 @@ module FrontEndBuilds
           branch: 'master',
           fetched: true,
           created_at: 2.weeks.ago
+      end
+
+      before(:each) do
+        app.live_build = live_build
+        app.save
       end
 
       context "with no query" do
@@ -120,7 +124,6 @@ module FrontEndBuilds
       let!(:latest) do
         FactoryGirl.create :front_end_builds_build,
           app: app,
-          live_app: app,
           sha: 'sha1',
           job: 'number1',
           branch: 'master',
@@ -136,6 +139,11 @@ module FrontEndBuilds
           branch: 'master',
           fetched: true,
           created_at: 2.weeks.ago
+      end
+      
+      before(:each) do
+        app.live_build = latest
+        app.save
       end
 
       it "should be live if it's the live build" do
