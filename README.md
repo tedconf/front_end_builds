@@ -23,13 +23,13 @@ The motivation for this gem came from [Luke Melia's RailsConf2014 talk](http://w
 Add this line to your application's Gemfile:
 
 ```
-gem 'front_end_builds' 
+gem 'front_end_builds'
 ```
 
 And then execute:
 
 ```
-$ bundle 
+$ bundle
 ```
 
 Front-End Builds brings some migrations along with it. To run, execute
@@ -68,6 +68,19 @@ Visit the admin (at whatever URL you mounted the engine above), create a new app
 named `app-name`, and you'll receive an API key with instructions on how to start
 pushing builds.
 
+Note:
+If you're using this engine to serve an ember app at the Root, be sure
+to put all other Rails routes above the `front_end` route - as this take priority
+over all routes below it!
+
+```rb
+Rails.application.routes.draw do
+  # All other Rails routes here
+
+  front_end 'app-name', '/'
+end
+```
+
 
 ## Development
 
@@ -88,7 +101,7 @@ to store a fresh distribution.
 
 ```
 # Rails tests
-rspec  
+rspec
 
 # Admin tests, from /admin dir
 ember test
