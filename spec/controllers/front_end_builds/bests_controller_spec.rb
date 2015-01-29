@@ -17,7 +17,7 @@ module FrontEndBuilds
       end
 
       let!(:live) do
-        FactoryGirl.create :front_end_builds_build,
+        FactoryGirl.create :front_end_builds_build, :live,
           app: app,
           sha: 'sha2',
           job: 'number2',
@@ -36,11 +36,6 @@ module FrontEndBuilds
           html: 'an old build',
           fetched: true,
           created_at: 2.weeks.ago
-      end
-
-      before(:each) do
-        app.live_build = live
-        app.save
       end
 
       it "should find the live build" do

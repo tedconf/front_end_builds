@@ -13,8 +13,8 @@ FactoryGirl.define do
       fetched true
     end
 
-    # trait :live do
-    #   app.live_build = self
-    # end
+    trait :live do
+      after :create, &:activate!
+    end
   end
 end

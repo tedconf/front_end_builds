@@ -48,15 +48,12 @@ module FrontEndBuilds
 
     describe "create" do
       before(:each) do
-        build = FactoryGirl.create :front_end_builds_build,
+        FactoryGirl.create :front_end_builds_build, :live,
           app: app,
           endpoint: 'http://www.ted.com/testing/build',
           created_at: 1.day.ago,
           fetched: true,
           html: 'the old build'
-
-        app.live_build = build
-        app.save
 
         stub_request(
           :get,
