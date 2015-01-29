@@ -69,10 +69,9 @@ named `app-name`, and you'll receive an API key with instructions on how to star
 pushing builds.
 
 Note:
-If you're using this engine to serve an ember app at the Root of your app, be sure
-to put all other Rails routes about the `front_end` route - as this take priority
+If you're using this engine to serve an ember app at the Root, be sure
+to put all other Rails routes above the `front_end` route - as this take priority
 over all routes below it!
-
 
 ```rb
 Rails.application.routes.draw do
