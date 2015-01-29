@@ -20,48 +20,64 @@ module FrontEndBuilds
           job: 'number1',
           branch: 'master',
           fetched: true,
-          active: true,
           created_at: 1.day.ago
+      end
+
+      let!(:live_build) do
+        FactoryGirl.create :front_end_builds_build, :live,
+          app: app,
+          sha: 'sha2',
+          job: 'number2',
+          branch: 'anything',
+          fetched: true,
+          created_at: 1.week.ago
       end
 
       let!(:older) do
         FactoryGirl.create :front_end_builds_build,
           app: app,
-          sha: 'sha2',
-          job: 'number2',
+          sha: 'sha3',
+          job: 'number3',
           branch: 'master',
           fetched: true,
-          active: true,
           created_at: 2.weeks.ago
       end
 
+      context "with no query" do
+        before(:each) do
+          FactoryGirl.create :front_end_builds_build,
+            app: app,
+            sha: 'sha4',
+            branch: 'nonmaster',
+            fetched: true,
+            created_at: 2.days.ago
+        end
+
+        subject { Build.find_best(app: app) }
+        it { should eq(live_build) }
+      end
+
       context "when finding the branch" do
-        subject { Build.find_best(app: app, branch: 'master') }
-        it { should eq(latest) }
-      end
-
-      context "when finding the job" do
-        subject { Build.find_best(app: app, job: 'number2') }
-        it { should eq(older) }
-      end
-
-      context "when finding and active branch" do
         before(:each) do
           FactoryGirl.create :front_end_builds_build,
             app: app,
             sha: 'sha3',
             branch: 'master',
             fetched: true,
-            active: false,
-            created_at: 1.minute.ago
+            created_at: 2.days.ago
         end
 
         subject { Build.find_best(app: app, branch: 'master') }
         it { should eq(latest) }
       end
 
+      context "when finding the job" do
+        subject { Build.find_best(app: app, job: 'number3') }
+        it { should eq(older) }
+      end
+
       context "when finding the sha" do
-        subject { Build.find_best(app: app, sha: 'sha2') }
+        subject { Build.find_best(app: app, sha: 'sha3') }
         it { should eq(older) }
       end
 
@@ -85,7 +101,6 @@ module FrontEndBuilds
             sha: 'sha4',
             branch: 'master',
             fetched: true,
-            active: true,
             created_at: 1.minute.ago
         end
 
@@ -102,13 +117,12 @@ module FrontEndBuilds
     describe :live? do
       let(:app) { FactoryGirl.create(:front_end_builds_app) }
       let!(:latest) do
-        FactoryGirl.create :front_end_builds_build,
+        FactoryGirl.create :front_end_builds_build, :live,
           app: app,
           sha: 'sha1',
           job: 'number1',
           branch: 'master',
           fetched: true,
-          active: true,
           created_at: 1.day.ago
       end
 
@@ -119,16 +133,37 @@ module FrontEndBuilds
           job: 'number2',
           branch: 'master',
           fetched: true,
-          active: true,
           created_at: 2.weeks.ago
       end
 
-      it "should be live if it's the best" do
+      it "should be live if it's the live build" do
         expect(latest.live?).to be_truthy
       end
 
-      it "should not be live the best if it's not the best" do
+      it "should not be live if it's not the live build" do
         expect(older.live?).to be_falsey
+      end
+    end 
+
+    describe :master? do
+      let(:app) { FactoryGirl.create(:front_end_builds_app) }
+      let(:build1) do
+        FactoryGirl.create :front_end_builds_build,
+          app: app,
+          branch: 'master'
+      end
+      let(:build2) do
+        FactoryGirl.create :front_end_builds_build,
+          app: app,
+          branch: 'feature'
+      end
+
+      it "should be truthy if the branch is 'master'" do
+        expect(build1.master?).to be_truthy
+      end
+
+      it "should be false if the branch is not 'master'" do
+        expect(build2.master?).to be_falsey
       end
     end 
 

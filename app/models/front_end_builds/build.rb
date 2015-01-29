@@ -21,12 +21,12 @@ module FrontEndBuilds
       scope = self
 
       query = {
-        fetched: true,
-        active: true
+        fetched: true
       }
 
       if params[:app]
         query[:app_id] = params[:app].id
+        app = App.find( params[:app].id )
       end
 
       if params[:app_name]
@@ -35,21 +35,20 @@ module FrontEndBuilds
           .where(
             front_end_builds_apps: { name: params[:app_name] }
           )
+        app = App.where( name: params[:app_name] ).first
       end
 
-      # If job or sha is passed in we won't require the
-      # best build to be active. This allows us to smoke
-      # test non active builds
       if params[:sha]
         query[:sha] = params[:sha]
-        query.delete(:active)
 
       elsif params[:job]
         query[:job] = params[:job]
-        query.delete(:active)
 
       elsif params[:branch]
         query[:branch] = params[:branch]
+
+      elsif app
+        query[:id] = app.live_build_id
 
       end
 
@@ -61,7 +60,11 @@ module FrontEndBuilds
     end
 
     def live?
-      self == app.find_best_build
+      self == app.live_build
+    end
+
+    def master?
+      branch == 'master'
     end
 
     def fetch!
@@ -75,11 +78,11 @@ module FrontEndBuilds
     end
 
     def activate!
-      self.active = true
-      save
+      app.live_build = self
+      app.save
     end
 
-    def automatic_activiation?
+    def automatic_activation?
       !app.require_manual_activation?
     end
 
@@ -93,7 +96,6 @@ module FrontEndBuilds
         app_id: app_id,
         sha: sha,
         branch: branch,
-        active: active
       }
     end
 

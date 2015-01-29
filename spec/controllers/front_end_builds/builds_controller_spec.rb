@@ -48,11 +48,10 @@ module FrontEndBuilds
 
     describe "create" do
       before(:each) do
-        FactoryGirl.create :front_end_builds_build,
+        FactoryGirl.create :front_end_builds_build, :live,
           app: app,
           endpoint: 'http://www.ted.com/testing/build',
           created_at: 1.day.ago,
-          active: true,
           fetched: true,
           html: 'the old build'
 
@@ -64,7 +63,9 @@ module FrontEndBuilds
         )
       end
 
-      it "should create the newest build" do
+      it "should create the new build, and make it live" do
+        expect(app.live_build.html).to eq('the old build')
+
         post :create, {
           app_name: app.name,
           api_key: app.api_key,
@@ -73,8 +74,25 @@ module FrontEndBuilds
           job: '1',
           endpoint: 'http://www.ted.com/testing/build'
         }
+        app.reload
 
-        expect(app.builds.find_best.html).to eq('fetched html')
+        expect(app.live_build.html).to eq('fetched html')
+      end
+
+      it "should not make a new build live if it's non-master" do
+        expect(app.live_build.html).to eq('the old build')
+
+        post :create, {
+          app_name: app.name,
+          api_key: app.api_key,
+          branch: 'some-feature',
+          sha: 'some-sha',
+          job: '1',
+          endpoint: 'http://www.ted.com/testing/build'
+        }
+        app.reload
+
+        expect(app.live_build.html).to eq('the old build')
       end
 
       it "should not active a build if the app requires manual activiation" do
@@ -90,7 +108,7 @@ module FrontEndBuilds
         }
 
         expect(response).to be_success
-        expect(app.builds.find_best.html).to eq('the old build')
+        expect(app.live_build.html).to eq('the old build')
       end
 
       it "should error if the api key does not match" do

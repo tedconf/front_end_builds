@@ -6,7 +6,7 @@ module FrontEndBuilds
 
     let(:app) { FactoryGirl.create :front_end_builds_app, name: 'dummy' }
     let!(:builds) { FactoryGirl.create_list :front_end_builds_build, 2, app: app }
-    let!(:build) { FactoryGirl.create :front_end_builds_build, :active, :fetched, app: app }
+    let!(:live_build) { FactoryGirl.create :front_end_builds_build, :live, :fetched, app: app }
 
     describe 'index' do
       it "should find all apps" do
@@ -25,7 +25,7 @@ module FrontEndBuilds
         expect(response).to be_success
         expect(json['app']['id']).to eq(app.id)
         expect(json['builds'].length).to eq(3)
-        expect(json['app']['best_build_id']). to eq(app.find_best_build.id)
+        expect(json['app']['live_build_id']).to eq(app.live_build.id)
       end
     end
 

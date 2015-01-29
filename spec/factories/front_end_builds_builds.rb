@@ -13,8 +13,8 @@ FactoryGirl.define do
       fetched true
     end
 
-    trait :active do
-      active true
+    trait :live do
+      after :create, &:activate!
     end
   end
 end
