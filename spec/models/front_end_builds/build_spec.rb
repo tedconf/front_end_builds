@@ -147,7 +147,7 @@ module FrontEndBuilds
       end
     end 
 
-    describe :is_master? do
+    describe :master? do
       let(:app) { FactoryGirl.create(:front_end_builds_app) }
       let(:build1) do
         FactoryGirl.create :front_end_builds_build,
@@ -161,11 +161,11 @@ module FrontEndBuilds
       end
 
       it "should be truthy if the branch is 'master'" do
-        expect(build1.is_master?).to be_truthy
+        expect(build1.master?).to be_truthy
       end
 
       it "should be false if the branch is not 'master'" do
-        expect(build2.is_master?).to be_falsey
+        expect(build2.master?).to be_falsey
       end
     end 
 

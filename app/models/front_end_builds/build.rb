@@ -64,7 +64,7 @@ module FrontEndBuilds
       self == app.live_build
     end
 
-    def is_master?
+    def master?
       branch == 'master'
     end
 
