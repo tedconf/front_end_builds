@@ -5,7 +5,8 @@ export default [
     api_key: 'f6db3e76-8f6a-4591-9231-28c271aca36b',
     location: '/engineering/blog',
     require_manual_activation: true,
-    build_ids: [1, 2, 3, 4]
+    build_ids: [1, 2, 3, 4],
+    live_build_id: 2
   },
   {
     id: 2,

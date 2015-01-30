@@ -6,19 +6,19 @@
   </div>
   <div class="panel-body">
 
-    {{#if app.bestBuild}}
+    {{#if app.liveBuild}}
       <div class="row">
         <div class="col-xs-4">
           <p class='App-card__info-label'>Branch</p>
-          <p>{{app.bestBuild.branch}}</p>
+          <p>{{app.liveBuild.branch}}</p>
         </div>
         <div class="col-xs-4">
           <p class='App-card__info-label'>Sha</p>
-          <p>{{app.bestBuild.shortSha}}</p>
+          <p>{{app.liveBuild.shortSha}}</p>
         </div>
         <div class="col-xs-4">
           <p class='App-card__info-label'>Job</p>
-          <p>{{app.bestBuild.job}}</p>
+          <p>{{app.liveBuild.job}}</p>
         </div>
       </div>
 

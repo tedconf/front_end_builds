@@ -6,7 +6,7 @@
 
 <div class="row">
   <div class="col-sm-8">
-    {{#if model.bestBuild}}
+    {{#if model.liveBuild}}
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class='panel-title'>
@@ -17,9 +17,9 @@
           </h3>
         </div>
         <div class="panel-body">
-          <p>Branch: <strong>{{model.bestBuild.branch}}</strong></p>
-          <p>Sha: <strong>{{model.bestBuild.sha}}</strong></p>
-          <p>Job: <strong>{{model.bestBuild.job}}</strong></p>
+          <p>Branch: <strong>{{model.liveBuild.branch}}</strong></p>
+          <p>Sha: <strong>{{model.liveBuild.sha}}</strong></p>
+          <p>Job: <strong>{{model.liveBuild.job}}</strong></p>
         </div>
       </div>
     {{else}}

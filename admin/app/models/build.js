@@ -1,17 +1,20 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-  app: DS.belongsTo('app'),
+  app: DS.belongsTo('app', {inverse: 'builds'}),
 
   sha: DS.attr('string'),
   job: DS.attr('string'),
   branch: DS.attr('string'),
-  active: DS.attr('boolean'),
   createdAt: DS.attr('date'),
 
-  isBest: function() {
-    return this === this.get('app.bestBuild');
-  }.property('app.bestBuild'),
+  isLive: function() {
+    return this === this.get('app.liveBuild');
+  }.property('app.liveBuild'),
+
+  activate: function() {
+    return this.get('app').set('liveBuild', this).save();
+  },
 
   shortSha: function() {
     return this.get('sha').slice(0, 6);
@@ -19,9 +22,9 @@ export default DS.Model.extend({
 
   location: function() {
     var base = this.get('app.location');
-    var isBest = this.get('isBest');
+    var isLive = this.get('isLive');
     var sha = this.get('sha');
 
-    return isBest ? base : `${base}?sha=${sha}`;
-  }.property('app.location', 'isBest', 'sha')
+    return isLive ? base : `${base}?sha=${sha}`;
+  }.property('app.location', 'isLive', 'sha')
 });
