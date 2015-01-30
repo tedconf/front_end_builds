@@ -52,7 +52,7 @@ module FrontEndBuilds
       let!(:new_build) { FactoryGirl.create :front_end_builds_build, :fetched, app: app }
 
       it "should edit an existing app" do
-        post :edit,
+        post :update,
           id: app.id,
           app: {
             live_build_id: new_build.id
