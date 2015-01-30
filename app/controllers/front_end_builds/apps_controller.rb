@@ -2,7 +2,7 @@ require_dependency "front_end_builds/application_controller"
 
 module FrontEndBuilds
   class AppsController < ApplicationController
-    before_filter :set_app , :only => [:show, :destroy]
+    before_filter :set_app , :only => [:show, :destroy, :edit]
 
     def index
       apps = App.includes(:recent_builds)
@@ -26,6 +26,21 @@ module FrontEndBuilds
       @app = FrontEndBuilds::App.new( use_params(:app_create_params) )
 
       if @app.save!
+        respond_with_json(
+          { app: @app.serialize },
+          location: nil
+        )
+      else
+        respond_with_json(
+          { errors: @app.errors },
+          status: :unprocessable_entity
+        )
+      end
+    end
+
+    def edit
+      if @app.update_attributes( use_params(:app_update_params) )
+
         respond_with_json(
           { app: @app.serialize },
           location: nil
@@ -65,6 +80,22 @@ module FrontEndBuilds
     def app_create_params_rails_4
       params.require(:app).permit(
         :name
+      )
+    end
+
+    def app_update_params_rails_3
+      params[:app].slice(
+        :name,
+        :require_manual_activation,
+        :live_build_id
+        )
+    end
+
+    def app_update_params_rails_4
+      params.require(:app).permit(
+        :name,
+        :require_manual_activation,
+        :live_build_id
       )
     end
 

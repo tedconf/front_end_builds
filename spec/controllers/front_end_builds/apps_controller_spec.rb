@@ -46,6 +46,28 @@ module FrontEndBuilds
       end
     end
 
+    describe 'update' do
+      let(:app) { FactoryGirl.create :front_end_builds_app, name: 'forsaken' }
+      let!(:live_build) { FactoryGirl.create :front_end_builds_build, :live, :fetched, app: app }
+      let!(:new_build) { FactoryGirl.create :front_end_builds_build, :fetched, app: app }
+
+      it "should edit an existing app" do
+        post :edit,
+          id: app.id,
+          app: {
+            live_build_id: new_build.id
+          },
+          format: :json
+
+        expect(response).to be_success
+
+        app.reload
+
+        expect(app.live_build).to eq(new_build)
+        expect(json['app']['id']).to eq(app.id)
+      end
+    end
+
     describe 'destroy' do
       let(:deletable_app) { FactoryGirl.create :front_end_builds_app, name: 'forsaken' }
 
