@@ -23,8 +23,8 @@ export default DS.Model.extend({
   location: function() {
     var base = this.get('app.location');
     var isLive = this.get('isLive');
-    var sha = this.get('sha');
+    var id = this.get('id');
 
-    return isLive ? base : `${base}?sha=${sha}`;
-  }.property('app.location', 'isLive', 'sha')
+    return isLive ? base : `${base}?id=${id}`;
+  }.property('app.location', 'isLive', 'id')
 });
