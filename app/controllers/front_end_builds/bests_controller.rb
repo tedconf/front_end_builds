@@ -52,11 +52,11 @@ module FrontEndBuilds
     end
 
     def build_search_params_rails_3
-      params.slice(:app_name, :branch, :sha, :job)
+      params.slice(:app_name, :id, :branch, :sha, :job)
     end
 
     def build_search_params_rails_4
-      params.permit(:app_name, :branch, :sha, :job)
+      params.permit(:app_name, :id, :branch, :sha, :job)
     end
   end
 end

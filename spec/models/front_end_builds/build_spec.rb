@@ -57,6 +57,11 @@ module FrontEndBuilds
         it { should eq(live_build) }
       end
 
+      context "when finding the id" do
+        subject { Build.find_best(id: older.id) }
+        it { should eq(older) }
+      end
+
       context "when finding the branch" do
         before(:each) do
           FactoryGirl.create :front_end_builds_build,

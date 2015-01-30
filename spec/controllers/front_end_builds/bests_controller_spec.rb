@@ -50,6 +50,18 @@ module FrontEndBuilds
         expect(response.body).to match(older.html)
       end
 
+      it "should find the build by build_id" do
+        get :show, id: older.id
+        expect(response).to be_success
+        expect(response.body).to match(older.html)
+      end
+
+      it "should find the build by branch" do
+        get :show, app_name: app.name, branch: 'master'
+        expect(response).to be_success
+        expect(response.body).to match(latest.html)
+      end
+
       context "meta tags" do
         before(:each) do
           get :show, app_name: app.name, branch: 'master'

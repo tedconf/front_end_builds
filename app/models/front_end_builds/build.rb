@@ -38,7 +38,10 @@ module FrontEndBuilds
         app = App.where( name: params[:app_name] ).first
       end
 
-      if params[:sha]
+      if params[:id]
+        query[:id] = params[:id]
+
+      elsif params[:sha]
         query[:sha] = params[:sha]
 
       elsif params[:job]
