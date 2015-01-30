@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    front_end_builds (0.0.23)
+    front_end_builds (0.0.24)
 
 GEM
   remote: https://rubygems.org/
