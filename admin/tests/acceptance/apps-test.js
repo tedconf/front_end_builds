@@ -24,11 +24,11 @@ test("I can view the admin overview", function() {
 test("The overview summarizes an apps current live build", function() {
   App.pretender.stubUrl('get', '/apps', {
     apps: [
-      {id: 1, name: 'first-app', api_key: '123', build_ids: [1, 2]}
+      {id: 1, name: 'first-app', api_key: '123', build_ids: [1, 2], live_build_id: 2}
     ],
     builds: [
       {id: 1, app_id: 1, sha: '123', job: 1, branch: 'nonmaster'},
-      {id: 2, app_id: 1, sha: '456', job: 2, branch: 'latest', is_best: true }
+      {id: 2, app_id: 1, sha: '456', job: 2, branch: 'latest' }
     ]
   });
 

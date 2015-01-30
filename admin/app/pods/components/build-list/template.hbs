@@ -7,16 +7,15 @@
       <th class='appDetail-buildListItemCell__built'>Built</th>
       <th class='appDetail-buildListItemCell'>Branch</th>
       <th class='appDetail-buildListItemCell'>Commit</th>
-      <th class='appDetail-buildListItemCell'>Status</th>
       <th class='appDetail-buildListItemCell'></th>
     </tr>
   </thead>
   <tbody>
     {{#each build in builds}}
-      <tr {{bind-attr class='build.isBest:success :appDetail-buildListItem'}}>
+      <tr {{bind-attr class='build.isLive:success :appDetail-buildListItem'}}>
         <td class='appDetail-buildListItemCell__id'>#{{build.id}}</td>
         <td class='appDetail-buildListItemCell__live'>
-          {{#if build.isBest}}
+          {{#if build.isLive}}
             <span class='pull-right'>
               <span class='label label-success'>Live</span>
             </span>
@@ -32,13 +31,10 @@
         </td>
         <td class='appDetail-buildListItemCell'>{{build.branch}}</td>
         <td class='appDetail-buildListItemCell'>#{{build.shortSha}}</td>
-        <td class='appDetail-buildListItemCell'>{{#if build.active}}Active{{else}}Not active{{/if}}</td>
         <td class='appDetail-buildListItemCell text-right'>
-          {{#if build.active}}
-            <button {{action 'deactivate' build}} class="btn btn-danger btn-xs">Deactivate</button>
-          {{else}}
-            <button {{action 'activate' build}} class="btn btn-warning btn-xs">Activate</button>
-          {{/if}}
+          {{#unless build.isLive}}
+            <button {{action 'activate' build}} class="btn btn-warning btn-xs">Make live</button>
+          {{/unless}}
         </td>
       </tr>
     {{/each}}
