@@ -42,8 +42,11 @@
         </p>
         <p class="App-card__instructions">
           <strong>API key:</strong> <br>
-          <pre>{{app.apiKey}}</pre>
+          <span class='App-card__api'>
+            {{zero-clipboard class='zero-clipboard' text=app.apiKey label=app.apiKey}}
+          </span>
         </p>
+
       </div>
 
     {{/if}}
