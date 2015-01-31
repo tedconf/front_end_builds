@@ -1,3 +1,5 @@
+require 'front_end_builds/middleware/admin_assets'
+
 module FrontEndBuilds
   class Engine < ::Rails::Engine
     isolate_namespace FrontEndBuilds
@@ -10,7 +12,7 @@ module FrontEndBuilds
     end
 
     initializer "static assets" do |app|
-      app.middleware.insert_before(::ActionDispatch::Static, ::ActionDispatch::Static, "#{root}/public")
+      app.middleware.use(FrontEndBuilds::Middleware::AdminAssets, "#{root}/public")
     end
   end
 end
