@@ -1,6 +1,6 @@
 # This is for the admin area.
 FrontEndBuilds::Engine.routes.draw do
-  scope :api do
+  scope :api, path: '/api' do
     resources :apps, only: [:index, :show, :create, :update, :destroy]
     resources :builds, only: [:index, :show]
     resources :host_apps, only: [:show]
