@@ -39,14 +39,6 @@ module FrontEndBuilds
     end
 
     def update
-      # if use_params(:app_update_params)[:live_build_id]
-      #   new_build_id = use_params(:app_update_params)[:live_build_id]
-      #   build = FrontEndBuilds::Build.find new_build_id
-      #   @app.live_build = build
-      # end
-      # require 'pry'
-      # binding.pry
-
       if @app.update_attributes( use_params(:app_update_params) )
 
         respond_with_json(
