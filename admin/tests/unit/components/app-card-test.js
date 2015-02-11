@@ -5,7 +5,7 @@ import {
 
 moduleForComponent('app-card', 'AppCardComponent', {
   // specify the other units that are required for this test
-  // needs: ['component:emptyAppMessage']
+  needs: ['component:zero-clipboard']
 });
 
 test('it renders', function() {
