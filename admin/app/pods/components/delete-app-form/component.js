@@ -13,6 +13,7 @@ export default Ember.Component.extend({
     deleteApp: function() {
       this.get('app').destroyRecord().then(() => {
         this.sendAction('deleted');
+
       }, function() {
         console.error('something happened');
       });

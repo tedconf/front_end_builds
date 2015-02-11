@@ -44,11 +44,4 @@ fonts.forEach(function(font) {
   app.import('bower_components/font-awesome/fonts/' + font, { destDir: fontDestDir });
 });
 
-if (app.env === 'production') {
-  app.import('vendor/production-pretender/shim.js', {
-    type: 'vendor',
-    exports: { 'pretender': ['default'] }
-  });
-}
-
 module.exports = app.toTree();

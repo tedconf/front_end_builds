@@ -6,7 +6,6 @@ var App;
 module('Acceptance: Apps', {
   setup: function() {
     App = startApp();
-    App.pretender.resetGlobalRoutes();
   },
   teardown: function() {
     Ember.run(App, 'destroy');
