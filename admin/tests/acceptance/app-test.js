@@ -6,82 +6,105 @@ var App;
 module('Acceptance: App', {
   setup: function() {
     App = startApp();
+    serverData.hostApps = [ {id: 'current', name: 'acme_portal'} ];
   },
   teardown: function() {
     Ember.run(App, 'destroy');
   }
 });
 
-// test("I can view an app's overview", function() {
-//   visit('/1');
+test("I can view an app's overview", function() {
+  serverData.apps = [ {id: 1, name: 'blog'} ];
 
-//   andThen(function() {
-//     equal(currentRouteName(), 'app');
-//     assertText('h1', 'Apps/first-app');
-//   });
-// });
+  visit('/1');
 
-// test("I see an info message if an app has no builds", function() {
-//   App.pretender.stubUrl('get', '/apps/:id', {
-//     app: {id: 1, name: 'first-app', api_key: '123'}
-//   });
+  andThen(function() {
+    equal(currentRouteName(), 'app.index');
+    assertText('h1', 'Apps/blog');
+  });
+});
 
-//   visit('/1');
+test("I see an info message if an app has no builds", function() {
+  serverData.apps = [ {id: 1, name: 'blog'} ];
 
-//   andThen(function() {
-//     assertPageContainsText('No active build');
-//     assertPageContainsText('To push a new active build');
-//   });
-// });
+  visit('/1');
 
-// test("I see an info message if an app has builds, but none are active", function() {
-//   App.pretender.stubUrl('get', '/apps/:id', {
-//     app: {id: 1, name: 'first-app', api_key: '123', build_ids: [1]},
-//     builds: [ {id: 1, app_id: 1, sha: '83jnbj', job: 1, branch: 'master'} ]
-//   });
+  andThen(function() {
+    assertPageContainsText('No active build');
+  });
+});
 
-//   visit('/1');
+test("I see an info message if an app has builds, but none are live", function() {
+  serverData.apps = [ {id: 1, name: 'blog', build_ids: [1]} ];
+  serverData.builds = [ {id: 1, app_id: 1, sha: '123'} ];
 
-//   andThen(function() {
-//     assertPageContainsText('No active build');
-//     equal(find('.appDetail-buildListItem').length, 1);
-//   });
-// });
+  visit('/1');
 
-// test("I can view summary information about the app's current live build", function() {
-//   visit('/1');
+  andThen(function() {
+    assertPageContainsText('No active build');
+    equal(find('.appDetail-buildListItem').length, 1);
+  });
+});
 
-//   andThen(function() {
-//     var summaryPanel = find('.panel:contains("Current live build")');
+test("I can view summary information about the app's current live build", function() {
+  serverData.apps = [ {id: 1, name: 'blog', build_ids: [1], live_build_id: 1} ];
+  serverData.builds = [ {id: 1, app_id: 1, branch: 'master', sha: '123'} ];
 
-//     ok(summaryPanel.text().match('master').length);
-//     ok(summaryPanel.text().match('83jnbj').length);
-//   });
-// });
+  visit('/1');
 
-// test("In the builds list, I can see all an app's builds", function() {
-//   visit('/1');
+  andThen(function() {
+    var summaryPanel = find('.panel:contains("Current live build")');
 
-//   andThen(function() {
-//     equal(find('.appDetail-buildListItem').length, 3);
-//     ok(find('.appDetail-buildListItem').eq(1).find(':contains("Live")').length > 0);
-//   });
-// });
+    ok(summaryPanel.text().match('master').length);
+    ok(summaryPanel.text().match('123').length);
+  });
+});
 
-// test("In the builds list, I can which build is live", function() {
-//   visit('/1');
+test("In the builds list, I can see all an app's builds", function() {
+  serverData.apps = [ {id: 1, name: 'blog', build_ids: [1, 2, 3] } ];
+  serverData.builds = [
+    {id: 1, app_id: 1, branch: 'master', sha: '123'},
+    {id: 2, app_id: 1, branch: 'master', sha: '456'},
+    {id: 3, app_id: 1, branch: 'master', sha: '789'}
+  ];
 
-//   andThen(function() {
-//     ok(find('.appDetail-buildListItem').eq(1).find(':contains("Live")').length > 0);
-//   });
-// });
+  visit('/1');
 
-// test("I can delete an app", function() {
-//   visit('/1');
-//   click('button:contains("Delete")');
+  andThen(function() {
+    equal(find('.appDetail-buildListItem').length, 3);
+  });
+});
 
-//   andThen(function() {
-//     equal(currentRouteName(), 'apps');
-//     equal(find('.appCard').length, 0);
-//   });
-// });
+test("In the builds list, I can view which build is live", function() {
+  serverData.apps = [ {id: 1, name: 'blog', build_ids: [1, 2, 3], live_build_id: 1 } ];
+  serverData.builds = [
+    {id: 1, app_id: 1, branch: 'master', sha: '123'},
+    {id: 2, app_id: 1, branch: 'master', sha: '456'},
+    {id: 3, app_id: 1, branch: 'master', sha: '789'}
+  ];
+
+  visit('/1');
+
+  andThen(function() {
+    ok(find('.appDetail-buildListItem').eq(0).find(':contains("Live")').length > 0);
+  });
+});
+
+test("I can delete an app", function() {
+  serverData.apps = [ {id: 1, name: 'blog'} ];
+
+  visit('/1');
+  click('a:contains("Delete")');
+  fillIn('input', 'blog');
+  Ember.run.next(this, function() {
+
+    click('button:contains("I understand")');
+
+  });
+
+  andThen(function() {
+    debugger;
+    equal(currentRouteName(), 'apps.index');
+    equal(find('.appCard').length, 0);
+  });
+});
