@@ -47,7 +47,8 @@
     "currentRouteName",
     "assertExists",
     "assertText",
-    "assertPageContainsText"
+    "assertPageContainsText",
+    "serverData"
   ],
   "node": false,
   "browser": false,
