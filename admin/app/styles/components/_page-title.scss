@@ -1,0 +1,16 @@
+$page-title-size: 36px;
+
+.Page-title {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+
+  &__name {
+    margin: 0;
+    line-height: $page-title-size;
+  }
+
+  &__misc {
+    line-height: $page-title-size;
+  }
+}

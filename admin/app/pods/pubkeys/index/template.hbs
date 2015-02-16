@@ -1,0 +1,38 @@
+{{#page-title name="SSH keys"}}
+  {{! dont show the add button if they do not
+      have keys because we are going to inline the
+      form in that scenario. }}
+  {{#if hasKeys}}
+    <button {{action 'openPubkeyModal'}}
+      class='btn btn-default btn-sm new-pubkey'>
+        {{fa-icon 'plus'}} Add SSH key
+    </button>
+  {{/if}}
+{{/page-title}}
+
+
+{{#if hasKeys}}
+  <p>
+    SSH keys are used to grant deployment access. Simply add your SSH
+    public key here to start deploying.
+  <p>
+
+  {{pubkey-table
+    pubkeys=displayableKeys
+    removeAction="openRemoveModal"}}
+{{else}}
+
+  <h4>Add an SSH public key</h4>
+  <p>
+    Front end builds uses SSH keys to control which machines can
+    deploy new builds. To get started we'll need to first add
+    an SSH key.
+  </p>
+
+  {{pubkey-form
+    pubkey=newPubkey
+    saveAction="save"
+    cancelRoute="apps"}}
+{{/if}}
+
+<table>

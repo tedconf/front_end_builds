@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <a href="#" {{action 'dismiss'}} class="close">
+    <span aria-hidden="true">&times;</span>
+  </a>
+
+  <h4 class="modal-title">Delete SSH key?</h4>
+</div>
+
+<div class="modal-body">
+  <p>
+    Are you sure you want to remove the
+    <strong>{{pubkey.name}}</strong> SSH key?
+  </p>
+
+  <div>
+    <a class="Delete-pubkey-modal__cancel btn btn-default"
+      href="#" {{action "dismiss"}}>Cancel</a>
+
+    <a class="Delete-pubkey-modal__confirm-delete pull-right btn btn-danger"
+      href="#" {{action "remove"}}>Yes, delete SSH key</a>
+  </div>
+</div>

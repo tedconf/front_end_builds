@@ -16,4 +16,13 @@ export default function() {
   this.put('/apps/:id');
 
   this.del('/apps/:id', ['app', 'builds']);
+
+  this.get('/pubkeys');
+  this.post('/pubkeys', function(store, request) {
+    var data = JSON.parse(request.requestBody).pubkey;
+    data.fingerprint = 'A1:B2:C3';
+    var model = store.push('pubkey', data);
+    return model;
+  });
+  this.del('/pubkeys/:id');
 }

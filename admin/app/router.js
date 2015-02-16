@@ -6,8 +6,9 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.resource('apps', {path: '/'});
-  this.resource('app', {path: '/:app_id'}, function() {
+  this.resource('apps', { path: '/' });
+
+  this.resource('app', { path: '/apps/:app_id' }, function() {
     this.modal('delete-app-form', {
       withParams: ['willDelete'],
       otherParams: {
@@ -20,6 +21,29 @@ Router.map(function() {
       withParams: ['willRename'],
       otherParams: {
         model: 'app'
+      }
+    });
+  });
+
+  this.resource("pubkeys", { path: '/ssh-keys' }, function() {
+    this.modal('pubkey-form', {
+      withParams: ['isAdding'],
+      otherParams: {
+        newPubkey: "pubkey"
+      },
+      actions: {
+        saveAction: 'save',
+        cancelAction: 'hideAddModal'
+      }
+    });
+
+    this.modal('delete-pubkey-modal', {
+      withParams: ['willDelete'],
+      otherParams: {
+        pubkey: "pubkey"
+      },
+      actions: {
+        removeAction: 'remove',
       }
     });
   });
