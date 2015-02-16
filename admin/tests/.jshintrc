@@ -48,7 +48,7 @@
     "assertExists",
     "assertText",
     "assertPageContainsText",
-    "serverData"
+    "store"
   ],
   "node": false,
   "browser": false,

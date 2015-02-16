@@ -6,7 +6,11 @@ var App;
 module('Acceptance: Apps', {
   setup: function() {
     App = startApp();
-    serverData.hostApps = [ {id: 'current', name: 'acme_portal'} ];
+    store.loadData({
+      hostApps: [{id: 'current', name: 'acme_portal'}],
+      apps: [],
+      builds: []
+    });
   },
   teardown: function() {
     Ember.run(App, 'destroy');
@@ -22,11 +26,11 @@ test("I can view the admin overview", function() {
 });
 
 test("The overview summarizes an apps current live build", function() {
-  serverData.apps = [{id: 1, name: 'first-app', api_key: '123', build_ids: [1, 2], live_build_id: 2}];
-  serverData.builds = [
+  store.loadData([{id: 1, name: 'first-app', api_key: '123', build_ids: [1, 2], live_build_id: 2}], 'apps');
+  store.loadData([
     {id: 1, app_id: 1, sha: '123', job: 1, branch: 'nonmaster'},
     {id: 2, app_id: 1, sha: '456', job: 2, branch: 'latest' }
-  ];
+  ], 'builds');
 
   visit('/');
 
@@ -36,19 +40,15 @@ test("The overview summarizes an apps current live build", function() {
   });
 });
 
-// test("The overview displays an info message if an app has no live build", function() {
-//   App.pretender.stubUrl('get', '/apps', {
-//     apps: [
-//       {id: 1, name: 'first-app', api_key: '123'}
-//     ],
-//   });
+test("The overview displays an info message if an app has no live build", function() {
+  store.loadData([{id: 1, name: 'first-app', api_key: '123'}], 'apps');
 
-//   visit('/');
+  visit('/');
 
-//   andThen(function() {
-//     assertPageContainsText('No active build');
-//   });
-// });
+  andThen(function() {
+    assertPageContainsText('No active build');
+  });
+});
 
 // test('I can start creating a new app, but then cancel', function() {
 //   visit('/');

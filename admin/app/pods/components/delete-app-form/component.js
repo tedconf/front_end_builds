@@ -16,6 +16,7 @@ export default Ember.Component.extend({
         this.sendAction('deleted');
 
       }, function() {
+        debugger;
         console.error('something happened');
       });
     }
