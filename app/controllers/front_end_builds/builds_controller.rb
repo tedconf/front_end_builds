@@ -46,24 +46,22 @@ module FrontEndBuilds
 
     private
 
-    def build_create_params_rails_3
-      params.slice(
+    def _create_params
+      [
         :branch,
         :sha,
         :job,
         :endpoint,
         :signature
-      )
+      ]
+    end
+
+    def build_create_params_rails_3
+      params.slice(*_create_params)
     end
 
     def build_create_params_rails_4
-      params.permit(
-        :branch,
-        :sha,
-        :job,
-        :endpoint,
-        :signature
-      )
+      params.permit(*_create_params)
     end
   end
 end

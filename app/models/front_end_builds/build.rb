@@ -5,7 +5,8 @@ module FrontEndBuilds
     if defined?(ProtectedAttributes) || ::ActiveRecord::VERSION::MAJOR < 4
       attr_accessible :branch,
                       :sha,
-                      :endpoint
+                      :endpoint,
+                      :signature
     end
 
     belongs_to :app, class_name: "FrontEndBuilds::App"
@@ -68,7 +69,15 @@ module FrontEndBuilds
     #
     # Returns boolean.
     def verify
-      Pubkey.any? { |key| key.verify(self) }
+      !!matching_pubkey
+    end
+
+    # Public: Find the pubkey that can verify the builds
+    # signature.
+    def matching_pubkey
+      Pubkey.all
+        .detect { |key| key.verify(self) }
+        .tap { |key| self.pubkey = key }
     end
 
     def live?
