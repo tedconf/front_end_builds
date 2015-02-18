@@ -2,6 +2,7 @@ require_dependency "front_end_builds/application_controller"
 
 module FrontEndBuilds
   class BuildsController < ApplicationController
+    before_action :set_app!, only: [:create]
 
     def index
       builds = FrontEndBuilds::Build.where(app_id: params[:app_id])
@@ -11,20 +12,10 @@ module FrontEndBuilds
     end
 
     def create
-      app = FrontEndBuilds::App
-        .where(name: params[:app_name])
-        .limit(1)
-        .first
-
-      build = app.builds.new(use_params(:build_create_params))
+      build = @app.builds.new(use_params(:build_create_params))
 
       if build.verify && build.save
-        build.fetch!
-
-        if build.automatic_activation? && build.master?
-          build.activate!
-        end
-
+        build.setup!
         head :ok
 
       else
@@ -45,6 +36,22 @@ module FrontEndBuilds
     end
 
     private
+
+    def set_app!
+      @app = FrontEndBuilds::App
+        .where(name: params[:app_name])
+        .limit(1)
+        .first
+
+      if @app.nil?
+        render(
+          text: "No app named #{params[:app_name]}.",
+          status: :unprocessable_entity
+        )
+
+        return false
+      end
+    end
 
     def _create_params
       [

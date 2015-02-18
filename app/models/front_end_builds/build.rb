@@ -80,6 +80,14 @@ module FrontEndBuilds
         .tap { |key| self.pubkey = key }
     end
 
+    def setup!
+      fetch!
+
+      if automatic_activation? && master?
+        activate!
+      end
+    end
+
     def live?
       self == app.live_build
     end

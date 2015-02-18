@@ -149,6 +149,35 @@ module FrontEndBuilds
       end
     end
 
+    describe '#matching_pubkey' do
+      let(:app) { FactoryGirl.create(:front_end_builds_app, name: 'app') }
+      let(:endpoint) { 'http://some.external.url.ted.com/index.html' }
+
+      let(:build) do
+        FactoryGirl.build(:front_end_builds_build, {
+          app: app,
+          endpoint: endpoint,
+          signature: create_signature(app.name, endpoint)
+        })
+      end
+
+      let(:ssh_pubkey) do
+        File.read(Rails.root.join('..', 'fixtures', 'id_rsa.pub'))
+      end
+
+      it 'should have a pubkey if the signature can be verifed by a pubkey' do
+        pubkey = FactoryGirl.create(:front_end_builds_pubkey, {
+          pubkey: ssh_pubkey
+        })
+
+        expect(build.matching_pubkey).to eq(pubkey)
+      end
+
+      it 'should not have a pubkey if the signature cannot be veriried' do
+        expect(build.matching_pubkey).to be_nil
+      end
+    end
+
     describe :live? do
       let(:app) { FactoryGirl.create(:front_end_builds_app) }
       let!(:latest) do
@@ -200,7 +229,47 @@ module FrontEndBuilds
       it "should be false if the branch is not 'master'" do
         expect(build2.master?).to be_falsey
       end
-    end 
+    end
+
+    describe '#setup!' do
+      let(:build) do
+        FactoryGirl.create(:front_end_builds_build)
+      end
+
+      before(:each) do
+        allow(build).to receive(:fetch!)
+        allow(build).to receive(:automatic_activiation?)
+        allow(build).to receive(:master?)
+      end
+
+      it 'should fetch the new build' do
+        expect(build).to receive(:fetch!)
+        build.setup!
+      end
+
+      it 'should autoamtically activate a master/automatic activation build' do
+        expect(build).to receive(:automatic_activation?).and_return(true)
+        expect(build).to receive(:master?).and_return(true)
+        expect(build).to receive(:activate!)
+
+        build.setup!
+      end
+
+      it 'should not active the build if it is not master' do
+        expect(build).to receive(:automatic_activation?).and_return(true)
+        expect(build).to receive(:master?).and_return(false)
+        expect(build).to_not receive(:activate!)
+
+        build.setup!
+      end
+
+      it 'should not activate the build if it does not have automatic activiation' do
+        expect(build).to receive(:automatic_activation?).and_return(false)
+        expect(build).to_not receive(:activate!)
+
+        build.setup!
+      end
+    end
 
     describe :fetch! do
       let(:app) do

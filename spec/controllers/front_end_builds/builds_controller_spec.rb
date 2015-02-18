@@ -111,6 +111,22 @@ module FrontEndBuilds
         expect(app.live_build.html).to eq('the old build')
       end
 
+      it 'should error if the app cannot be found' do
+        app.update_attributes(require_manual_activation: true)
+
+        post :create, {
+          app_name: 'this-does-not-exist',
+          branch: 'master',
+          sha: 'some-sha',
+          job: '1',
+          endpoint: endpoint,
+          signature: create_signature('this-does-not-exist', endpoint)
+        }
+
+        expect(response).to_not be_success
+        expect(response.body).to eq('No app named this-does-not-exist.')
+      end
+
       it "should error if the signature is not valid" do
         pkey = OpenSSL::PKey::RSA.new(2048)
         digest = OpenSSL::Digest::SHA256.new
