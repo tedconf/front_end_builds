@@ -35,7 +35,6 @@ describe "Front end builds API", type: :request do
   it "should be able to create a build from a generic endpoint" do
     post "/front_end_builds/builds",
       app_name: 'dummy',
-      api_key: front_end_app.api_key,
       branch: "master",
       sha: "a1b2c3",
       job: "jenkins-build-1",

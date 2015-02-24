@@ -22,9 +22,6 @@ module FrontEndBuilds
     end
 
     validates :name, presence: true
-    validates :api_key, presence: true
-
-    before_validation :ensure_api_key!
 
     def self.register_url(name, url)
       @_url ||= {}
@@ -40,15 +37,10 @@ module FrontEndBuilds
       self.class.get_url(name)
     end
 
-    def ensure_api_key!
-      self.api_key = SecureRandom.uuid if api_key.blank?
-    end
-
     def serialize
       {
         id: id,
         name: name,
-        api_key: api_key,
         build_ids: recent_builds.map(&:id),
         live_build_id: (live_build ? live_build.id : nil),
         location: get_url,

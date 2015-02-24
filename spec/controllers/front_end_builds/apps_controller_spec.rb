@@ -32,16 +32,13 @@ module FrontEndBuilds
     describe 'create' do
       it "should create a new app" do
         post :create, app: {
-            name: 'my-new-app',
-            api_key: nil
+            name: 'my-new-app'
           },
           format: :json
 
         expect(response).to be_success
 
-        # app = FrontEndBuilds::App.find_by(name: 'my-new-app')
         app = FrontEndBuilds::App.where(name: 'my-new-app').limit(1).first
-        expect(app.api_key).to be_truthy
         expect(json['app']['id']).to eq(app.id)
       end
     end
