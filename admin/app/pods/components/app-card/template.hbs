@@ -22,16 +22,6 @@
         </div>
       </div>
 
-      <hr class='short-divider'>
-
-      <p class='u-no-margin-bottom'>
-        API key:
-        <span class='App-card__api'>
-          ********
-          <small class='App-card__copy-api-button'>copy</small>
-        </span>
-      </p>
-
     {{else}}
 
       <div class="text-muted">
@@ -40,13 +30,6 @@
         <p class='App-card__instructions'>
           To start pushing builds, install <a href="https://github.com/tedconf/ember-cli-front-end-builds" target="_blank">Ember CLI FrontEndBuilds</a> and deploy with <code>ember deploy</code>.
         </p>
-        <p class="App-card__instructions">
-          <strong>API key:</strong> <br>
-          <span class='App-card__api'>
-            {{zero-clipboard class='zero-clipboard' text=app.apiKey label=app.apiKey}}
-          </span>
-        </p>
-
       </div>
 
     {{/if}}
