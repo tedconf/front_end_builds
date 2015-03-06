@@ -4,6 +4,11 @@ require 'openssl'
 
 module FrontEndBuilds
   class Pubkey < ActiveRecord::Base
+    if defined?(ProtectedAttributes) || ::ActiveRecord::VERSION::MAJOR < 4
+      attr_accessible :name,
+                      :pubkey
+    end
+
     validates :name, presence: true
     validates :pubkey, presence: true
 
