@@ -3,6 +3,7 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 
 require 'rspec/rails'
+require 'rspec/its'
 require 'factory_girl_rails'
 require 'shoulda/matchers'
 require 'webmock/rspec'
@@ -22,4 +23,5 @@ RSpec.configure do |config|
   config.order = "random"
   config.include JsonParser, type: :controller
   config.include JsonParser, type: :request
+  config.include CreateSignature
 end

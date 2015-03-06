@@ -17,5 +17,9 @@ module FrontEndBuilds
       end
     end
 
+    def error!(errors, status = :unprocessable_entity)
+      respond_with_json({ errors: errors }, status: status)
+    end
+
   end
 end

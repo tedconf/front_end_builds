@@ -6,6 +6,7 @@ FactoryGirl.define do
     sequence(:job) { |n| n }
     sequence(:endpoint) { |n| "http://ted.bucket.ted.com/#{n}/index.html" }
     branch "master"
+    signature "some signature"
     html "hello world"
     association :app, factory: :front_end_builds_app
 
@@ -15,6 +16,12 @@ FactoryGirl.define do
 
     trait :live do
       after :create, &:activate!
+    end
+
+    trait :signed do
+      after(:build) do |build|
+        create_signature(build.app.name, build.endpoint)
+      end
     end
   end
 end

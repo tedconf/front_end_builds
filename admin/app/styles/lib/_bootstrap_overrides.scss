@@ -18,10 +18,3 @@
     color: #eee;
   }
 }
-
-@include below(768px) {
-  .page-header {
-    margin-top: 0;
-  }
-}
-

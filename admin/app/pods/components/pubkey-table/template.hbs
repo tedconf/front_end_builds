@@ -1,0 +1,34 @@
+<thead>
+  <tr>
+    <th>Name</th>
+    <th>Last used</th>
+    <th>&nbsp;</td>
+  </tr>
+</thead>
+<tbody>
+  {{#each pubkey in displayKeys}}
+    <tr class="Pubkey-table__pubkey">
+      <td>
+        <div>
+          {{pubkey.name}}
+        </div>
+        <div>
+          <small>{{pubkey.fingerprint}}</small>
+        </div>
+      </td>
+      <td>
+        {{#if pubkey.lastUsedAt}}
+          {{moment pubkey.lastUsedAt "MMM D YYYY"}}
+        {{else}}
+          This key has never been used
+        {{/if}}
+      </td>
+      <td>
+        <div class="pull-right">
+          <a {{action "remove" pubkey}}
+            class="Pubkey-table__delete btn btn-danger btn-xs">Delete</a>
+        </div>
+      </td>
+    </tr>
+  {{/each}}
+</tbody>

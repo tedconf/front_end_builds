@@ -26,7 +26,7 @@ test("I can view the admin overview", function() {
 });
 
 test("The overview summarizes an apps current live build", function() {
-  store.loadData([{id: 1, name: 'first-app', api_key: '123', build_ids: [1, 2], live_build_id: 2}], 'apps');
+  store.loadData([{id: 1, name: 'first-app', build_ids: [1, 2], live_build_id: 2}], 'apps');
   store.loadData([
     {id: 1, app_id: 1, sha: '123', job: 1, branch: 'nonmaster'},
     {id: 2, app_id: 1, sha: '456', job: 2, branch: 'latest' }
@@ -41,7 +41,7 @@ test("The overview summarizes an apps current live build", function() {
 });
 
 test("The overview displays an info message if an app has no live build", function() {
-  store.loadData([{id: 1, name: 'first-app', api_key: '123'}], 'apps');
+  store.loadData([{id: 1, name: 'first-app'}], 'apps');
 
   visit('/');
 

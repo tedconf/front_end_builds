@@ -25,7 +25,7 @@ module FrontEndBuilds
     def create
       @app = FrontEndBuilds::App.new( use_params(:app_create_params) )
 
-      if @app.save!
+      if @app.save
         respond_with_json(
           { app: @app.serialize },
           location: nil

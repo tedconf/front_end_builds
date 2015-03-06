@@ -1,10 +1,27 @@
-<nav class="navbar navbar-inverse" role="navigation">
+<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
   <div class="container-fluid">
     <div class="navbar-header">
       {{#link-to 'apps' class='navbar-brand'}}
         <strong>{{model.friendlyName}}'s</strong> frontend apps
       {{/link-to}}
     </div>
+
+    <ul class="Navigation-links nav navbar-nav navbar-right">
+      <li>
+        {{link-to "Apps" "apps"
+          classNames="Navigation-links__apps"}}
+      </li>
+      <li>
+        {{link-to "SSH keys" "pubkeys"
+          classNames="Navigation-links__pubkeys"}}
+      </li>
+      <li>
+        <a href="https://github.com/tedconf/front_end_builds/issues" target="_blank">
+          Support
+        </a>
+      </li>
+    </ul>
+
   </div>
 </nav>
 

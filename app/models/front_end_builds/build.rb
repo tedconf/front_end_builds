@@ -5,15 +5,18 @@ module FrontEndBuilds
     if defined?(ProtectedAttributes) || ::ActiveRecord::VERSION::MAJOR < 4
       attr_accessible :branch,
                       :sha,
-                      :endpoint
+                      :endpoint,
+                      :signature
     end
 
     belongs_to :app, class_name: "FrontEndBuilds::App"
+    belongs_to :pubkey, class_name: "FrontEndBuilds::Pubkey"
 
     validates :app, presence: true
     validates :sha, presence: true
     validates :branch, presence: true
     validates :endpoint, presence: true
+    validates :signature, presence: true
 
     scope :recent, -> { limit(10).order('created_at desc') }
 
@@ -60,6 +63,29 @@ module FrontEndBuilds
         .limit(1)
         .order('created_at desc')
         .first
+    end
+
+    # Public: Is the signature is valid for the build.
+    #
+    # Returns boolean.
+    def verify
+      !!matching_pubkey
+    end
+
+    # Public: Find the pubkey that can verify the builds
+    # signature.
+    def matching_pubkey
+      Pubkey.all
+        .detect { |key| key.verify(self) }
+        .tap { |key| self.pubkey = key }
+    end
+
+    def setup!
+      fetch!
+
+      if automatic_activation? && master?
+        activate!
+      end
     end
 
     def live?

@@ -64,9 +64,9 @@ Rails.application.routes.draw do
 end
 ```
 
-Visit the admin (at whatever URL you mounted the engine above), create a new app
-named `app-name`, and you'll receive an API key with instructions on how to start
-pushing builds.
+Visit the admin (at whatever URL you mounted the engine above), create a
+new app named `app-name`, and you'll receive  instructions on how to
+start pushing builds.
 
 Note:
 If you're using this engine to serve an ember app at the Root, be sure

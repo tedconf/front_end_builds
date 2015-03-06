@@ -16,21 +16,6 @@ module FrontEndBuilds
       end
     end
 
-    describe "#ensure_api_key!" do
-      let(:app) { App.new(name: 'testing') }
-
-      context "a new app" do
-        subject { app.api_key }
-        it { should be_nil }
-      end
-
-      context "a saved app" do
-        before(:each) { app.save }
-        subject { app.api_key }
-        it { should_not be_nil }
-      end
-    end
-
     describe '#get_url' do
       it 'should lookup the url in the Apps url hash' do
         App.register_url('testing', '/testing')

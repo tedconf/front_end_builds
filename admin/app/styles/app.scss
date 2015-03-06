@@ -3,8 +3,6 @@
 $fa-font-path: "/front_end_builds/assets";
 @import 'bower_components/font-awesome/scss/font-awesome';
 
-@import 'core/base';
-
 @import 'settings/utilities';
 @import 'settings/mixins';
 
@@ -16,3 +14,5 @@ $fa-font-path: "/front_end_builds/assets";
 @import 'components/app-card';
 @import 'components/app-detail';
 @import 'components/dividers';
+@import 'components/page-title';
+@import 'components/pubkey-table';
