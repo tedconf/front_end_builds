@@ -14,7 +14,7 @@ module FrontEndBuilds
       has_many :recent_builds,
         class_name: "FrontEndBuilds::Build",
         limit: 10,
-        order: 'created_at'
+        order: 'created_at desc'
     else
       # Rails 4
       has_many :recent_builds, -> { recent },
