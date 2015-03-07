@@ -1,5 +1,4 @@
 export default function() {
-
   this.namespace = 'api';
 
   this.get('/host_apps/current', function(store, request) {
@@ -24,5 +23,6 @@ export default function() {
     var model = store.push('pubkey', data);
     return model;
   });
+
   this.del('/pubkeys/:id');
 }
