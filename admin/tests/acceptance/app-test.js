@@ -1,13 +1,16 @@
 import Ember from 'ember';
 import startApp from '../helpers/start-app';
+/* global server */
 
 var App;
 
 module('Acceptance: App', {
   setup: function() {
     App = startApp();
-    store.loadData({
-      hostApps: [ {id: 'current', name: 'acme_portal'} ]
+    server.loadData({
+      hostApps: [ {id: 'current', name: 'acme_portal'} ],
+      apps: [],
+      builds: []
     });
   },
   teardown: function() {
@@ -16,20 +19,20 @@ module('Acceptance: App', {
 });
 
 test("I can view an app's overview", function() {
-  store.loadData([{id: 1, name: 'blog'}], 'apps');
+  server.create('app', { name: 'CRM' });
 
-  visit('/1');
+  visit('/apps/1');
 
   andThen(function() {
     equal(currentRouteName(), 'app.index');
-    assertText('h1', 'Apps/blog');
+    assertText('h1', 'CRM');
   });
 });
 
 test("I see an info message if an app has no builds", function() {
-  store.loadData([{id: 1, name: 'blog'}], 'apps');
+  server.create('app');
 
-  visit('/1');
+  visit('/apps/1');
 
   andThen(function() {
     assertPageContainsText('No active build');
@@ -37,10 +40,10 @@ test("I see an info message if an app has no builds", function() {
 });
 
 test("I see an info message if an app has builds, but none are live", function() {
-  store.loadData([ {id: 1, name: 'blog', build_ids: [1]} ], 'apps');
-  store.loadData([ {id: 1, app_id: 1, sha: '123'} ], 'builds');
+  server.create('app', { build_ids: [1] });
+  server.create('build', { app_id: 1 });
 
-  visit('/1');
+  visit('/apps/1');
 
   andThen(function() {
     assertPageContainsText('No active build');
@@ -49,10 +52,18 @@ test("I see an info message if an app has builds, but none are live", function()
 });
 
 test("I can view summary information about the app's current live build", function() {
-  store.loadData([ {id: 1, name: 'blog', build_ids: [1], live_build_id: 1} ], 'apps');
-  store.loadData([ {id: 1, app_id: 1, branch: 'master', sha: '123'} ], 'builds');
+  server.create('app', {
+    build_ids: [1],
+    live_build_id: 1
+  });
 
-  visit('/1');
+  server.create('build', {
+    app_id: 1,
+    branch: 'master',
+    sha: '123'
+  });
+
+  visit('/apps/1');
 
   andThen(function() {
     var summaryPanel = find('.panel:contains("Current live build")');
@@ -63,14 +74,12 @@ test("I can view summary information about the app's current live build", functi
 });
 
 test("In the builds list, I can see all an app's builds", function() {
-  store.loadData([ {id: 1, name: 'blog', build_ids: [1, 2, 3] } ], 'apps');
-  store.loadData([
-    {id: 1, app_id: 1, branch: 'master', sha: '123'},
-    {id: 2, app_id: 1, branch: 'master', sha: '456'},
-    {id: 3, app_id: 1, branch: 'master', sha: '789'}
-  ], 'builds');
+  server.create('app', { name: 'blog', build_ids: [1, 2, 3] });
+  server.create('build', { app_id: 1, branch: 'master', sha: '123' });
+  server.create('build', { app_id: 1, branch: 'master', sha: '789' });
+  server.create('build', { app_id: 1, branch: 'master', sha: '456' });
 
-  visit('/1');
+  visit('/apps/1');
 
   andThen(function() {
     equal(find('.appDetail-buildListItem').length, 3);
@@ -78,35 +87,29 @@ test("In the builds list, I can see all an app's builds", function() {
 });
 
 test("In the builds list, I can view which build is live", function() {
-  store.loadData([ {id: 1, name: 'blog', build_ids: [1, 2, 3], live_build_id: 1 } ], 'apps');
-  store.loadData([
-    {id: 1, app_id: 1, branch: 'master', sha: '123'},
-    {id: 2, app_id: 1, branch: 'master', sha: '456'},
-    {id: 3, app_id: 1, branch: 'master', sha: '789'}
-  ], 'builds');
+  server.create('app', { name: 'blog', build_ids: [1, 2, 3], live_build_id: 1 });
+  server.create('build', { app_id: 1, branch: 'master', sha: '123' });
+  server.create('build', { app_id: 1, branch: 'master', sha: '456' });
+  server.create('build', { app_id: 1, branch: 'master', sha: '789' });
 
-  visit('/1');
+  visit('/apps/1');
 
   andThen(function() {
     ok(find('.appDetail-buildListItem').eq(0).find(':contains("Live")').length > 0);
   });
 });
 
-// Having trouble with this one
-// test("I can delete an app", function() {
-//   store.loadData([ {id: 1, name: 'blog'} ], 'apps');
+test("I can delete an app", function() {
+ server.create('app', { name: 'blog' });
 
-//   visit('/1');
-//   click('a:contains("Delete")');
-//   fillIn('input', 'blog');
-//   Ember.run.next(this, function() {
+ visit('/apps/1');
+ click('a:contains("Delete")');
 
-//     click('button:contains("I understand")');
+ fillIn('input', 'blog');
+ click('button:contains("I understand")');
 
-//   });
-
-//   andThen(function() {
-//     equal(currentRouteName(), 'apps.index');
-//     equal(find('.appCard').length, 0);
-//   });
-// });
+ andThen(function() {
+   equal(currentRouteName(), 'apps');
+   equal(find('.appCard').length, 0);
+ });
+});

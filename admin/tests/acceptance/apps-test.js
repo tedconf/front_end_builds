@@ -1,3 +1,4 @@
+/* global server */
 import Ember from 'ember';
 import startApp from '../helpers/start-app';
 
@@ -6,7 +7,7 @@ var App;
 module('Acceptance: Apps', {
   setup: function() {
     App = startApp();
-    store.loadData({
+    server.loadData({
       hostApps: [{id: 'current', name: 'acme_portal'}],
       apps: [],
       builds: []
@@ -26,11 +27,9 @@ test("I can view the admin overview", function() {
 });
 
 test("The overview summarizes an apps current live build", function() {
-  store.loadData([{id: 1, name: 'first-app', build_ids: [1, 2], live_build_id: 2}], 'apps');
-  store.loadData([
-    {id: 1, app_id: 1, sha: '123', job: 1, branch: 'nonmaster'},
-    {id: 2, app_id: 1, sha: '456', job: 2, branch: 'latest' }
-  ], 'builds');
+  server.create('app', { name: 'first-app', build_ids: [1, 2], live_build_id: 2 });
+  server.create('build', { app_id: 1, sha: '123', job: 1, branch: 'nonmaster' });
+  server.create('build', { app_id: 1, sha: '456', job: 2, branch: 'latest' });
 
   visit('/');
 
@@ -41,7 +40,7 @@ test("The overview summarizes an apps current live build", function() {
 });
 
 test("The overview displays an info message if an app has no live build", function() {
-  store.loadData([{id: 1, name: 'first-app'}], 'apps');
+  server.create('app', { name: 'first-app' });
 
   visit('/');
 
@@ -50,34 +49,37 @@ test("The overview displays an info message if an app has no live build", functi
   });
 });
 
-// test('I can start creating a new app, but then cancel', function() {
-//   visit('/');
-//   click('button:contains("New app")');
-//   click('.appCard:last .fa-remove');
+test('I can start creating a new app, but then cancel', function() {
+  visit('/');
+  click('button:contains("New app")');
 
-//   andThen(function() {
-//     equal(find('.appCard').length, 1);
-//   });
-// });
+  click('.App-card:last .fa-remove');
 
-// test('I can create a new app', function() {
-//   visit('/');
-//   click('button:contains("New app")');
-//   fillIn('.appCard-newInput', 'my-new-app');
-//   click('button:contains("Create")');
+  andThen(function() {
+    equal(find('.App-card').length, 0);
+  });
+});
 
-//   andThen(function() {
-//     equal(find('.appCard').length, 2);
-//     assertText('.appCard:last .panel-title', 'my-new-app');
-//   });
-// });
+test('I can create a new app', function() {
+  visit('/');
+  click('button:contains("New app")');
+  fillIn('.App-card__new-input', 'my-new-app');
+  click('button:contains("Create")');
 
-// test("I can view an app's details", function() {
-//   visit('/');
-//   click('a:contains("first-app")');
+  andThen(function() {
+    equal(find('.App-card').length, 1);
+    assertText('.App-card:last .panel-title', 'my-new-app');
+  });
+});
 
-//   andThen(function() {
-//     equal(currentRouteName(), 'app');
-//     assertText('h1', 'Apps/first-app');
-//   });
-// });
+test("I can view an app's details", function() {
+ server.create('app', { name: 'first-app' });
+
+ visit('/');
+ click('a:contains("first-app")');
+
+ andThen(function() {
+   equal(currentRouteName(), 'app.index');
+   assertText('h1', 'first-app');
+ });
+});

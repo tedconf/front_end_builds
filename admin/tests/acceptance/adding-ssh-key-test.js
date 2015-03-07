@@ -1,3 +1,4 @@
+/* global server */
 import Ember from 'ember';
 import startApp from '../helpers/start-app';
 
@@ -6,7 +7,7 @@ var application;
 module('Acceptance: SSH keys', {
   setup: function() {
     application = startApp();
-    store.loadData({
+    server.loadData({
       hostApps: [{id: 'current', name: 'acme_portal'}],
       apps: [],
       builds: [],
@@ -54,10 +55,7 @@ test("I should end up back on the apps page if I cancel adding my first key", fu
 });
 
 test("I should see a list of all my keys when I have keys to display", function() {
-  store.loadData([
-      { id: 1, name: 'Key 1' },
-      { id: 2, name: 'Key 2' }
-    ], 'pubkeys');
+  server.createList('pubkey', 2);
 
   visit("/ssh-keys");
 
@@ -66,7 +64,7 @@ test("I should see a list of all my keys when I have keys to display", function(
 });
 
 test("I should be able to add a new key", function() {
-  store.loadData([{ id: 1, name: 'Key 1' } ], 'pubkeys');
+  server.create('pubkey');
 
   visit("/ssh-keys");
 
@@ -82,7 +80,7 @@ test("I should be able to add a new key", function() {
 });
 
 test("I should not be able to add a pubkey without the required fields", function() {
-  store.loadData([{ id: 1, name: 'Key 1' } ], 'pubkeys');
+  server.create('pubkey');
 
   visit("/ssh-keys");
 
@@ -94,7 +92,7 @@ test("I should not be able to add a pubkey without the required fields", functio
 });
 
 test("I should be able to cancel adding a new key", function() {
-  store.loadData([{ id: 1, name: 'Key 1' } ], 'pubkeys');
+  server.create('pubkey');
 
   visit("/ssh-keys");
 
@@ -108,10 +106,7 @@ test("I should be able to cancel adding a new key", function() {
 });
 
 test("I should be able to delete a key", function() {
-  store.loadData([
-      { id: 1, name: 'Key 1' },
-      { id: 2, name: 'Key 2' }
-    ], 'pubkeys');
+  server.createList('pubkey', 2);
 
   visit("/ssh-keys");
 
@@ -125,10 +120,7 @@ test("I should be able to delete a key", function() {
 });
 
 test("I should be able to cancel deleting a key", function() {
-  store.loadData([
-      { id: 1, name: 'Key 1' },
-      { id: 2, name: 'Key 2' }
-    ], 'pubkeys');
+  server.createList('pubkey', 2);
 
   visit("/ssh-keys");
 
