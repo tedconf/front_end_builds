@@ -125,6 +125,8 @@ module FrontEndBuilds
         app_id: app_id,
         sha: sha,
         branch: branch,
+        job: job,
+        created_at: created_at
       }
     end
 
