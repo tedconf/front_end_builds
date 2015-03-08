@@ -11,7 +11,11 @@ var app = new EmberApp({
 
 app.import("bower_components/bootstrap/dist/css/bootstrap.css");
 app.import("bower_components/bootstrap/dist/js/bootstrap.js");
+
 app.import("bower_components/bootstrap-material-design/dist/css/material.css");
+app.import("bower_components/bootstrap-material-design/dist/css/ripples.css");
+app.import("bower_components/bootstrap-material-design/dist/js/material.js");
+app.import("bower_components/bootstrap-material-design/dist/js/ripples.js");
 
 // Font Awesome
 var fonts = [

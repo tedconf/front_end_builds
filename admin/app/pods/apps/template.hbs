@@ -1,9 +1,17 @@
 {{#page-title name="Apps"}}
-  <button {{action 'createApp'}} class="btn btn-primary btn-sm">
+  <button {{action 'createApp'}} class="btn btn-primary btn-sm new-app-button">
     {{fa-icon 'plus'}}
     New app
   </button>
 {{/page-title}}
+
+{{#if newApp}}
+  <div class="well">
+    {{new-app-form app=newApp}}
+  </div>
+
+  <hr />
+{{/if}}
 
 <div class="row">
   {{#each app in savedApps}}
@@ -11,12 +19,6 @@
       {{app-card app=app}}
     </div>
   {{/each}}
-
-  {{#if newApp}}
-    <div class="col-sm-4">
-      {{new-app-card app=newApp}}
-    </div>
-  {{/if}}
 </div>
 
 {{liquid-modal}}
