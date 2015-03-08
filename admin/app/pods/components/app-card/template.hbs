@@ -1,7 +1,8 @@
 <div class="App-card panel panel-primary">
   <div class="panel-heading">
     <h3 class="panel-title">
-      {{link-to app.name 'app' app}}
+      {{link-to app.name 'app' app
+        classNames="App-card__heading-link"}}
     </h3>
   </div>
   <div class="panel-body">
@@ -22,13 +23,38 @@
         </div>
       </div>
 
+      <div class="row">
+        <div class="col-xs-12">
+          <p class='App-card__info-label'>Deployed</p>
+          <p>
+            {{ago app.liveBuild.createdAt}}
+            ({{moment app.liveBuild.createdAt "MMM D YYYY"}})
+          </p>
+        </div>
+      </div>
+
+      <hr class='short-divider'>
+
+      {{link-to "See builds" 'app' app
+        classNames="Card-button btn btn-flat btn-xs btn-info"}}
+
+      <a {{bind-attr href=app.location}}
+        class="Card-button pull-right btn-material-grey-600 btn btn-flat btn-xs btn-info">
+          Launch app {{fa-icon "external-link"}}
+      </a>
+
     {{else}}
 
       <div class="text-muted">
         <p class='text-center'>No active build.</p>
+
         <hr class='short-divider'>
+
         <p class='App-card__instructions'>
-          To start pushing builds, install <a href="https://github.com/tedconf/ember-cli-front-end-builds" target="_blank">Ember CLI FrontEndBuilds</a> and deploy with <code>ember deploy</code>.
+          To start pushing builds, install
+          <a href="https://github.com/tedconf/ember-cli-front-end-builds"
+            target="_blank">Ember CLI FrontEndBuilds</a>
+          and deploy with <code>ember deploy</code>.
         </p>
       </div>
 

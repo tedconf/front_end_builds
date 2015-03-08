@@ -1,4 +1,14 @@
 .App-card {
+  &__heading-link {
+    &:hover {
+      color: white;
+    }
+
+    &:hover, &:active, &:focus, &:visited {
+      text-decoration: none;
+    }
+  }
+
   &__new-input {
     border-radius: 3px;
     border: 1px solid;
@@ -8,6 +18,7 @@
     margin-bottom: -5px;
     background-color: transparent;
   }
+
   &__info-label {
     margin-bottom: 0;
     text-transform: uppercase;
@@ -15,30 +26,7 @@
     color: rgb(164, 164, 164);
     font-weight: 200;
   }
-  &__api {
-    border: 1px dotted transparent;
-    padding: 1px 3px;
-    cursor: pointer;
-    @include border-top-radius(3px);
-    @include border-bottom-radius(3px);
-  }
-  &__api:hover {
-    border-color: #ccc;
 
-    .App-card__copy-api-button {
-      opacity: 1;
-    }
-  }
-  &__copy-api-button {
-    opacity: 0;
-    padding-left: 4px;
-    color: #999;
-    vertical-align: top;
-
-    &:hover {
-      color: #333;
-    }
-  }
   &__instructions {
     font-size: 85%;
   }

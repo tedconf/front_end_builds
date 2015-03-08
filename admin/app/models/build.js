@@ -17,7 +17,7 @@ export default DS.Model.extend({
   },
 
   shortSha: function() {
-    return this.get('sha').slice(0, 6);
+    return this.get('sha').slice(0, 7);
   }.property('sha'),
 
   location: function() {
