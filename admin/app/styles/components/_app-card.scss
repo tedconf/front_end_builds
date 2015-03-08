@@ -1,5 +1,4 @@
 .App-card {
-  min-height: 205px;
 
   &__heading-link {
     &:hover {
@@ -9,27 +8,5 @@
     &:hover, &:active, &:focus, &:visited {
       text-decoration: none;
     }
-  }
-
-  &__new-input {
-    border-radius: 3px;
-    border: 1px solid;
-    padding: 3px 7px;
-    font-size: 1em;
-    margin-top: -5px;
-    margin-bottom: -5px;
-    background-color: transparent;
-  }
-
-  &__info-label {
-    margin-bottom: 0;
-    text-transform: uppercase;
-    font-size: 0.8em;
-    color: rgb(164, 164, 164);
-    font-weight: 200;
-  }
-
-  &__instructions {
-    font-size: 85%;
   }
 }

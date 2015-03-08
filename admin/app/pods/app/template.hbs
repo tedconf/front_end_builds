@@ -1,36 +1,26 @@
 {{page-title name=model.name}}
 
 <div class="row">
-  <div class="col-sm-8">
-    {{#if model.liveBuild}}
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class='panel-title'>
-            Current live build
-            <a class='App-detail__link' {{bind-attr href=model.location}}>
+  <div class="col-xs-12 col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class='panel-title'>
+          Active build
+
+          {{#if app.liveBuild}}
+            <a {{bind-attr href=model.location}} class="pull-right">
               {{fa-icon 'external-link'}}
             </a>
-          </h3>
-        </div>
-        <div class="panel-body">
-          <p>Branch: <strong>{{model.liveBuild.branch}}</strong></p>
-          <p>Sha: <strong>{{model.liveBuild.sha}}</strong></p>
-          <p>Job: <strong>{{model.liveBuild.job}}</strong></p>
-        </div>
+          {{/if}}
+        </h3>
       </div>
-    {{else}}
-      <div class="text-muted">
-        <p class='lead'>No active build.</p>
-
-        <p>
-          To start pushing builds, install <a href="https://github.com/tedconf/ember-cli-front-end-builds" target="_blank">Ember CLI FrontEndBuilds</a> and deploy with <code>ember deploy</code>.
-        </p>
+      <div class="panel-body">
+        {{build-info build=model.liveBuild}}
       </div>
-    {{/if}}
-
+    </div>
   </div>
 
-  <div class="col-sm-4">
+  <div class="col-xs-12 col-md-4">
     <div class="panel panel-default">
       <div class="panel-heading">Options</div>
       <div class="list-group">

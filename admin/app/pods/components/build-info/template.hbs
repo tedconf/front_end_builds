@@ -1,0 +1,34 @@
+{{#if build}}
+
+  <div class="row">
+    <div class="col-xs-4">
+      <p class='Build-info__label'>Branch</p>
+      <p>{{build.branch}}</p>
+    </div>
+    <div class="col-xs-4">
+      <p class='Build-info__label'>Sha</p>
+      <p>{{build.shortSha}}</p>
+    </div>
+    <div class="col-xs-4">
+      <p class='Build-info__label'>Job</p>
+      <p>{{build.job}}</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <p class='Build-info__label'>Deployed</p>
+      <p>
+        {{ago build.createdAt}}
+        ({{moment build.createdAt "MMM D YYYY"}})
+      </p>
+    </div>
+  </div>
+
+{{else}}
+
+  <div class="Build-info__no-build text-muted">
+    <p class='text-center'>No active build.</p>
+  </div>
+
+{{/if}}
