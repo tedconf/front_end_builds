@@ -3,9 +3,10 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('new-app-card', 'NewAppCardComponent', {
+moduleForComponent('new-app-form', 'NewAppFormComponent', {
   // specify the other units that are required for this test
-  needs: ['component:async-button', 'helper:fa-icon']
+  // needs: ['component:foo', 'helper:bar']
+  needs: ['component:async-button']
 });
 
 test('it renders', function() {

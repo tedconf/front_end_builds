@@ -49,29 +49,6 @@ test("The overview displays an info message if an app has no live build", functi
   });
 });
 
-test('I can start creating a new app, but then cancel', function() {
-  visit('/');
-  click('button:contains("New app")');
-
-  click('.App-card:last .fa-remove');
-
-  andThen(function() {
-    equal(find('.App-card').length, 0);
-  });
-});
-
-test('I can create a new app', function() {
-  visit('/');
-  click('button:contains("New app")');
-  fillIn('.App-card__new-input', 'my-new-app');
-  click('button:contains("Create")');
-
-  andThen(function() {
-    equal(find('.App-card').length, 1);
-    assertText('.App-card:last .panel-title', 'my-new-app');
-  });
-});
-
 test("I can view an app's details", function() {
  server.create('app', { name: 'first-app' });
 
