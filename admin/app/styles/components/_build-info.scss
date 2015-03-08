@@ -1,5 +1,7 @@
+$build-info-size: 90px;
+
 .Build-info {
-  height: 90px;
+  height: $build-info-size;
 
   &__label {
     margin-bottom: 0;
@@ -10,6 +12,7 @@
   }
 
   &__no-build {
-
+    line-height: $build-info-size;
+    text-align: center;
   }
 }

@@ -1,10 +1,14 @@
 .App-card {
 
-  &__heading-link {
-    &:hover {
-      color: white;
-    }
+  .panel-success &__heading-link {
+    color: white;
+  }
 
+  .panel-default &__heading-link {
+    color: black;
+  }
+
+  &__heading-link {
     &:hover, &:active, &:focus, &:visited {
       text-decoration: none;
     }
