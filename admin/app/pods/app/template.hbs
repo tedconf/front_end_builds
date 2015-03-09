@@ -32,24 +32,27 @@
   </div>
 
   <div class="col-xs-12 col-md-4">
-    <div class="panel panel-default">
-      <div class="panel-heading">Activation options</div>
+    <div {{bind-attr class=":panel model.activateNewDeploys:panel-success:panel-default"}}>
+      <div class="panel-heading">
+        Automatically activate new deploys
+      </div>
       <div class="panel-body">
 
-        <div class="form-group">
-          <div class="togglebutton">
-            <label>
-              <input type="checkbox" checked="">
-              Automaticaly activate new deploys
-            </label>
+        <form>
+          <div class="form-group">
+            {{toggle-switch
+              label="Automatically activate new deploys"
+              value=model.activateNewDeploys
+              action="activateNewDeploys"}}
+
+            <span class="help-block">
+              When this option is on Front End Builds will
+              automatically start serving new master branch
+              deploys. If you want to smoke test your deploys
+              before making them live then turn this option off.
+            </span>
           </div>
-          <span class="help-block">
-            When this option is on Front End Builds will
-            automatically start serving new master branch
-            deploys. If you want to smoke test your deploys
-            before making them live then turn this option off.
-          </span>
-        </div>
+        </form>
 
       </div>
     </div>
@@ -85,16 +88,15 @@
 </div>
 
 {{#if model.orderedBuilds}}
-    <div class="panel panel-primary">
-      <div class="panel-heading">Builds</div>
-      <div class="panel-body">
-        <p>
-          A list of the ten most recent builds for
-          {{model.name}}.
-        </p>
+  <div class="panel panel-primary">
+    <div class="panel-heading">Builds</div>
+    <div class="panel-body">
+      <p>
+        A list of the most recent builds for
+        {{model.name}}.
+      </p>
 
-        {{build-list builds=model.orderedBuilds}}
-      </div>
+      {{build-list builds=model.orderedBuilds}}
     </div>
   </div>
 {{/if}}

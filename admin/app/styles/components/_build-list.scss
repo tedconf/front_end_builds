@@ -18,7 +18,9 @@
   }
 
   &__launch-build {
-    text-decoration: none;
+    &:hover {
+      text-decoration: none;
+    }
   }
 
   &__control-live-button {

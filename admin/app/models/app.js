@@ -9,6 +9,7 @@ export default DS.Model.extend({
   apiKey: DS.attr('string'),
   location: DS.attr('string'),
   requireManualActivation: DS.attr('boolean'),
+  activateNewDeploys: Ember.computed.not('requireManualActivation'),
 
   buildsSorting: ['createdAt:desc'],
   orderedBuilds: Ember.computed.sort('builds', 'buildsSorting'),
