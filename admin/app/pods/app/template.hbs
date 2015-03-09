@@ -85,9 +85,16 @@
 </div>
 
 {{#if model.orderedBuilds}}
-  <h3 class='appDetail-buildListTitle'>All builds</h3>
-  {{#if model.requireManualActivation}}
-    <p class='text-muted'>This app <strong>requires</strong> new builds to be activated manually.</p>
-  {{/if}}
-  {{build-list builds=model.orderedBuilds}}
+    <div class="panel panel-primary">
+      <div class="panel-heading">Builds</div>
+      <div class="panel-body">
+        <p>
+          A list of the ten most recent builds for
+          {{model.name}}.
+        </p>
+
+        {{build-list builds=model.orderedBuilds}}
+      </div>
+    </div>
+  </div>
 {{/if}}

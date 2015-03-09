@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  classNames: ['Build-list'],
 
   actions: {
     activate: function(build) {
