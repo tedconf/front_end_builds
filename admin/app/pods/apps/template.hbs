@@ -5,16 +5,16 @@
   </button>
 {{/page-title}}
 
-{{#if newApp}}
+{{#liquid-if newApp class="animate-sliding-drawer"}}
   <div class="well">
     {{new-app-form app=newApp}}
   </div>
 
   <hr />
-{{/if}}
+{{/liquid-if}}
 
 <div class="row">
-  {{#each app in savedApps}}
+  {{#each app in orderedApps}}
     <div class="col-xs-12 col-sm-6 col-md-4 col-eq-height">
       {{app-card app=app}}
     </div>

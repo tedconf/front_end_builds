@@ -9,8 +9,12 @@ var app = new EmberApp({
   emberCliFontAwesome: { includeFontAwesomeAssets: false }
 });
 
+app.import("bower_components/arrive/src/arrive.js");
+
 app.import("bower_components/bootstrap/dist/css/bootstrap.css");
 app.import("bower_components/bootstrap/dist/js/bootstrap.js");
+
+app.import('bower_components/matchHeight/jquery.matchHeight.js');
 
 app.import("bower_components/bootstrap-material-design/dist/css/material.css");
 app.import("bower_components/bootstrap-material-design/dist/css/ripples.css");

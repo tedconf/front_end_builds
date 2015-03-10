@@ -1,6 +1,19 @@
+.liquid-container {
+  overflow: visible;
+}
+
 .lm-container {
   @include justify-content(flex-start);
 }
+
+.navbar-static-top {
+  z-index: 10;
+}
+
+.lf-overlay {
+  z-index: 999;
+}
+
 .lf-dialog {
   margin-top: 7%;
   width: 480px;
@@ -9,5 +22,5 @@
   border: none;
   border-radius: 4px;
   box-shadow: 0 0 18px rgba(0,0,0,0.4);
-  overflow: scroll;
+  z-index: 9999;
 }

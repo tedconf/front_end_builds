@@ -5,7 +5,7 @@ import {
 
 moduleForComponent('app-card', 'AppCardComponent', {
   // specify the other units that are required for this test
-  needs: []
+  needs: ['component:build-info']
 });
 
 test('it renders', function() {

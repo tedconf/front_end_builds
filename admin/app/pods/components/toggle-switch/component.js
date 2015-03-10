@@ -1,9 +1,6 @@
 import Ember from 'ember';
-import MaterialForm from '../../../mixins/material-form';
 
-export default Ember.Component.extend(
-  MaterialForm, {
-
+export default Ember.Component.extend({
   action: null,
   value: null,
 

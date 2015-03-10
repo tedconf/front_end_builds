@@ -13,7 +13,7 @@
 
 <div class="row">
   <div class="col-xs-12 col-md-4">
-    <div {{bind-attr class=":panel model.liveBuild:panel-success:panel-default"}}>
+    <div {{bind-attr class=":match-height :panel model.liveBuild:panel-success:panel-default"}}>
       <div class="panel-heading">
         <h3 class='panel-title'>
           Active build
@@ -32,16 +32,18 @@
   </div>
 
   <div class="col-xs-12 col-md-4">
-    <div {{bind-attr class=":panel model.activateNewDeploys:panel-success:panel-default"}}>
+    <div {{bind-attr class=":match-height :panel model.activateNewDeploys:panel-success:panel-default"}}>
       <div class="panel-heading">
-        Automatically activate new deploys
+        <h3 class='panel-title'>
+          Automatically activate new deploys
+        </h3>
       </div>
       <div class="panel-body">
 
         <form>
           <div class="form-group">
             {{toggle-switch
-              label="Automatically activate new deploys"
+              label="Automatically activate"
               value=model.activateNewDeploys
               action="activateNewDeploys"}}
 
@@ -59,8 +61,14 @@
   </div>
 
   <div class="col-xs-12 col-md-4">
-    <div class="panel panel-info">
-      <div class="panel-heading">Help &amp; Guides</div>
+    <div class="match-height panel panel-info">
+
+      <div class="panel-heading">
+        <h3 class='panel-title'>
+          Help &amp; Guides
+        </h3>
+      </div>
+
       <div class="panel-body">
 
         <div>
@@ -89,7 +97,12 @@
 
 {{#if model.orderedBuilds}}
   <div class="panel panel-primary">
-    <div class="panel-heading">Builds</div>
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        Builds
+      </h3>
+    </div>
+
     <div class="panel-body">
       <p>
         A list of the most recent builds for

@@ -1,9 +1,7 @@
 import Ember from 'ember';
 import EmberValidations from 'ember-validations';
-import MaterialForm from '../../../mixins/material-form';
 
 export default Ember.Component.extend(
-  MaterialForm,
   EmberValidations.Mixin, {
 
   classNames: ['New-app-form'],

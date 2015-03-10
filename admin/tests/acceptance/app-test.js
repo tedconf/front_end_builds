@@ -47,7 +47,6 @@ test("I see an info message if an app has builds, but none are live", function()
 
   andThen(function() {
     assertPageContainsText('No active build');
-    equal(find('.appDetail-buildListItem').length, 1);
   });
 });
 
@@ -66,7 +65,7 @@ test("I can view summary information about the app's current live build", functi
   visit('/apps/1');
 
   andThen(function() {
-    var summaryPanel = find('.panel:contains("Current live build")');
+    var summaryPanel = find('.panel-success:contains("Active build")');
 
     ok(summaryPanel.text().match('master').length);
     ok(summaryPanel.text().match('123').length);
@@ -82,7 +81,7 @@ test("In the builds list, I can see all an app's builds", function() {
   visit('/apps/1');
 
   andThen(function() {
-    equal(find('.appDetail-buildListItem').length, 3);
+    equal(find('.Build-list__build-row').length, 3);
   });
 });
 
@@ -94,22 +93,21 @@ test("In the builds list, I can view which build is live", function() {
 
   visit('/apps/1');
 
-  andThen(function() {
-    ok(find('.appDetail-buildListItem').eq(0).find(':contains("Live")').length > 0);
-  });
+  assertExists('.Build-list__control-live-button--live');
 });
 
 test("I can delete an app", function() {
  server.create('app', { name: 'blog' });
 
  visit('/apps/1');
- click('a:contains("Delete")');
+
+ click('button:contains("Delete")');
 
  fillIn('input', 'blog');
  click('button:contains("I understand")');
 
  andThen(function() {
    equal(currentRouteName(), 'apps');
-   equal(find('.appCard').length, 0);
+   equal(find('.App-card').length, 0);
  });
 });
