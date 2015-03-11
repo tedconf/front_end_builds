@@ -1,36 +1,33 @@
 /* global server */
 import Ember from 'ember';
+import {module, test} from 'qunit';
 import startApp from '../helpers/start-app';
 
 var application;
 
 module('Acceptance: Create new app', {
-  setup: function() {
+  beforeEach: function() {
     application = startApp();
-
-    server.loadData({
-      hostApps: [{ id: 'current', name: 'Test' }],
-      apps: []
-    });
+    server.create('host_app', { id: 'current' });
   },
-  teardown: function() {
+  afterEach: function() {
     Ember.run(application, 'destroy');
   }
 });
 
-test('I should not see the new app form when I visit the page', function() {
+test('I should not see the new app form when I visit the page', function(assert) {
   visit("/");
   assertExists(".New-app-form", 0);
 });
 
-test('I should see the new app form when I click the new app button', function() {
+test('I should see the new app form when I click the new app button', function(assert) {
   visit("/");
   click(".new-app-button");
 
   assertExists(".New-app-form");
 });
 
-test('I should not be able to create a new app without entering a name', function() {
+test('I should not be able to create a new app without entering a name', function(assert) {
   visit("/");
   click(".new-app-button");
 
@@ -39,7 +36,7 @@ test('I should not be able to create a new app without entering a name', functio
   assertExists(".form-group.has-error .New-app-form__name");
 });
 
-test("I should be able to cancel adding a new app", function() {
+test("I should be able to cancel adding a new app", function(assert) {
   visit("/");
   click(".new-app-button");
 
@@ -48,7 +45,7 @@ test("I should be able to cancel adding a new app", function() {
   assertExists(".New-app-form", 0);
 });
 
-test('I should be able to create a new app', function() {
+test('I should be able to create a new app', function(assert) {
   visit("/");
   click(".new-app-button");
 

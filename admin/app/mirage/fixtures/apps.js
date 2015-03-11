@@ -1,7 +1,7 @@
 export default [
   {
     id: 1,
-    name: 'Blog',
+    name: 'blog',
     location: '/engineering/blog',
     require_manual_activation: true,
     build_ids: [1, 2, 3, 4],
@@ -9,14 +9,14 @@ export default [
   },
   {
     id: 2,
-    name: 'Finance app',
+    name: 'finance app',
     location: '/finance/reports',
     require_manual_activation: false,
     build_ids: []
   },
   {
     id: 3,
-    name: 'CRM',
+    name: 'crm',
     location: '/people',
     require_manual_activation: false,
     build_ids: []

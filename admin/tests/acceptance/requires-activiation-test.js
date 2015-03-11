@@ -1,22 +1,21 @@
 /* global server */
 import Ember from 'ember';
+import {module, test} from 'qunit';
 import startApp from '../helpers/start-app';
 
 var application;
 
 module('Acceptance: Require Activiation', {
-  setup: function() {
+  beforeEach: function() {
     application = startApp();
-    server.loadData({
-      hostApps: [{id: 'current', name: 'acme_portal'}],
-    });
+    server.create('host_app', { id: 'current' });
   },
-  teardown: function() {
+  afterEach: function() {
     Ember.run(application, 'destroy');
   }
 });
 
-test('I should be able to toggle a build to require activation', function() {
+test('I should be able to toggle a build to require activation', function(assert) {
   server.create('app', { name: 'x', require_manual_activation: 'true' });
 
   visit("/apps/1");
