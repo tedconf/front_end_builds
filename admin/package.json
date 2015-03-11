@@ -41,6 +41,6 @@
     "ember-moment": "1.0.0",
     "ember-validations": "dockyard/ember-validations",
     "ember-watson": "^0.1.1",
-    "liquid-fire": "0.16.1"
+    "liquid-fire": "0.17.1"
   }
 }
