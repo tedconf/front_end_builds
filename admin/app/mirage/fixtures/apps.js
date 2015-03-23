@@ -9,7 +9,7 @@ export default [
   },
   {
     id: 2,
-    name: 'accounting-reports',
+    name: 'finance app',
     location: '/finance/reports',
     require_manual_activation: false,
     build_ids: []

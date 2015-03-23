@@ -26,17 +26,6 @@ Router.map(function() {
   });
 
   this.resource("pubkeys", { path: '/ssh-keys' }, function() {
-    this.modal('pubkey-form', {
-      withParams: ['isAdding'],
-      otherParams: {
-        newPubkey: "pubkey"
-      },
-      actions: {
-        saveAction: 'save',
-        cancelAction: 'hideAddModal'
-      }
-    });
-
     this.modal('delete-pubkey-modal', {
       withParams: ['willDelete'],
       otherParams: {

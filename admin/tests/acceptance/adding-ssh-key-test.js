@@ -1,35 +1,31 @@
 /* global server */
 import Ember from 'ember';
+import {module, test} from 'qunit';
 import startApp from '../helpers/start-app';
 
 var application;
 
 module('Acceptance: SSH keys', {
-  setup: function() {
+  beforeEach: function() {
     application = startApp();
-    server.loadData({
-      hostApps: [{id: 'current', name: 'acme_portal'}],
-      apps: [],
-      builds: [],
-      pubkeys: []
-    });
+    server.create('host_app', { id: 'current' });
   },
-  teardown: function() {
+  afterEach: function() {
     Ember.run(application, 'destroy');
   }
 });
 
-test("I should be able to get to the ssk key section from the navigation", function() {
+test("I should be able to get to the ssk key section from the navigation", function(assert) {
   visit("/");
 
   click(".Navigation-links__pubkeys");
 
   andThen(function() {
-    equal(currentRouteName(), "pubkeys.index");
+    assert.equal(currentRouteName(), "pubkeys.index");
   });
 });
 
-test("I should get a new SSH key form if I have never added a key", function() {
+test("I should get a new SSH key form if I have never added a key", function(assert) {
   visit("/ssh-keys");
   assertExists(".Pubkey-form");
 
@@ -39,22 +35,23 @@ test("I should get a new SSH key form if I have never added a key", function() {
 
   fillIn(".Pubkey-form__name", "My first key");
   fillIn(".Pubkey-form__pubkey", "key");
+
   click(".Pubkey-form__save");
 
   assertExists(".Pubkey-table");
-  assertExists(".Pubkey-table__pubkey", 1);
+  assertExists(".Pubkey-table__pubkey");
 });
 
-test("I should end up back on the apps page if I cancel adding my first key", function() {
+test("I should end up back on the apps page if I cancel adding my first key", function(assert) {
   visit("/ssh-keys");
   click(".Pubkey-form__cancel");
 
   andThen(function() {
-    equal(currentRouteName(), "apps");
+    assert.equal(currentRouteName(), "apps");
   });
 });
 
-test("I should see a list of all my keys when I have keys to display", function() {
+test("I should see a list of all my keys when I have keys to display", function(assert) {
   server.createList('pubkey', 2);
 
   visit("/ssh-keys");
@@ -63,7 +60,7 @@ test("I should see a list of all my keys when I have keys to display", function(
   assertExists(".Pubkey-table__pubkey", 2);
 });
 
-test("I should be able to add a new key", function() {
+test("I should be able to add a new key", function(assert) {
   server.create('pubkey');
 
   visit("/ssh-keys");
@@ -79,7 +76,7 @@ test("I should be able to add a new key", function() {
   assertExists(".Pubkey-table__pubkey", 2);
 });
 
-test("I should not be able to add a pubkey without the required fields", function() {
+test("I should not be able to add a pubkey without the required fields", function(assert) {
   server.create('pubkey');
 
   visit("/ssh-keys");
@@ -91,7 +88,7 @@ test("I should not be able to add a pubkey without the required fields", functio
   assertExists(".Pubkey-form .form-group.has-error", 2);
 });
 
-test("I should be able to cancel adding a new key", function() {
+test("I should be able to cancel adding a new key", function(assert) {
   server.create('pubkey');
 
   visit("/ssh-keys");
@@ -105,7 +102,7 @@ test("I should be able to cancel adding a new key", function() {
   assertExists(".Pubkey-table__pubkey", 1);
 });
 
-test("I should be able to delete a key", function() {
+test("I should be able to delete a key", function(assert) {
   server.createList('pubkey', 2);
 
   visit("/ssh-keys");
@@ -119,7 +116,7 @@ test("I should be able to delete a key", function() {
   assertExists(".Pubkey-table__pubkey", 1);
 });
 
-test("I should be able to cancel deleting a key", function() {
+test("I should be able to cancel deleting a key", function(assert) {
   server.createList('pubkey', 2);
 
   visit("/ssh-keys");

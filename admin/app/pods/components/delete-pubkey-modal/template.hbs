@@ -12,11 +12,15 @@
     <strong>{{pubkey.name}}</strong> SSH key?
   </p>
 
-  <div>
-    <a class="Delete-pubkey-modal__cancel btn btn-default"
-      href="#" {{action "dismiss"}}>Cancel</a>
+  <hr class="short-divider" />
 
-    <a class="Delete-pubkey-modal__confirm-delete pull-right btn btn-danger"
-      href="#" {{action "remove"}}>Yes, delete SSH key</a>
+  <div class="clearfix">
+    <div class="pull-right">
+      <a class="Delete-pubkey-modal__cancel btn btn-default btn-xs"
+        href="#" {{action "dismiss"}}>Cancel</a>
+
+      <a class="Delete-pubkey-modal__confirm-delete btn btn-danger btn-xs"
+        href="#" {{action "remove"}}>Yes, delete SSH key</a>
+    </div>
   </div>
 </div>

@@ -7,7 +7,9 @@
   <p>Please type in the name of this app to confirm.</p>
 
   <div class="form-group">
-    {{input class='form-control' value=confirmedName}}
+    {{input value=confirmedName
+      placeholder='Type in the name of this app to confirm'
+      class='form-control'}}
   </div>
 
   <button {{action 'deleteApp'}} {{bind-attr class='canDelete::disabled :btn :btn-block :btn-danger'}}>I understand, delete the app</button>

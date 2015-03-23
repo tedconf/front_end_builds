@@ -1,36 +1,30 @@
-<div class="App-card panel panel-primary">
+<div {{bind-attr class=":App-card :panel app.liveBuild:panel-success:panel-default"}}>
   <div class="panel-heading">
     <h3 class="panel-title">
-      {{link-to app.name 'app' app}}
+      {{link-to app.name 'app' app
+        classNames="App-card__heading-link"}}
     </h3>
   </div>
-  <div class="panel-body">
+  <div class="App-card__body panel-body">
+
+    {{build-info build=app.liveBuild}}
+
+    <hr class='short-divider'>
 
     {{#if app.liveBuild}}
-      <div class="row">
-        <div class="col-xs-4">
-          <p class='App-card__info-label'>Branch</p>
-          <p>{{app.liveBuild.branch}}</p>
-        </div>
-        <div class="col-xs-4">
-          <p class='App-card__info-label'>Sha</p>
-          <p>{{app.liveBuild.shortSha}}</p>
-        </div>
-        <div class="col-xs-4">
-          <p class='App-card__info-label'>Job</p>
-          <p>{{app.liveBuild.job}}</p>
-        </div>
-      </div>
+
+      {{link-to "See builds" 'app' app
+        classNames="Card-button btn btn-flat btn-xs btn-info"}}
+
+      <a {{bind-attr href=app.location}}
+        class="Card-button pull-right btn-material-grey-600 btn btn-flat btn-xs btn-info">
+          Launch app {{fa-icon "external-link"}}
+      </a>
 
     {{else}}
 
-      <div class="text-muted">
-        <p class='text-center'>No active build.</p>
-        <hr class='short-divider'>
-        <p class='App-card__instructions'>
-          To start pushing builds, install <a href="https://github.com/tedconf/ember-cli-front-end-builds" target="_blank">Ember CLI FrontEndBuilds</a> and deploy with <code>ember deploy</code>.
-        </p>
-      </div>
+      {{link-to "Install instructions" 'app' app
+        classNames="Card-button btn btn-flat btn-xs btn-info"}}
 
     {{/if}}
 

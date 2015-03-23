@@ -1,50 +1,115 @@
-{{page-title name=model.name}}
+{{#page-title name=model.name}}
+  <button {{action 'willRenameApp'}}
+    class="btn btn-raised btn-default btn-sm rename-app-button">
+      Rename
+  </button>
+
+  <button {{action 'willDeleteApp'}}
+    class="btn btn-raised btn-default btn-sm rename-app-button">
+      Delete
+  </button>
+
+{{/page-title}}
 
 <div class="row">
-  <div class="col-sm-8">
-    {{#if model.liveBuild}}
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class='panel-title'>
-            Current live build
-            <a class='App-detail__link' {{bind-attr href=model.location}}>
+  <div class="col-xs-12 col-md-4">
+    <div {{bind-attr class=":match-height :panel model.liveBuild:panel-success:panel-default"}}>
+      <div class="panel-heading">
+        <h3 class='panel-title'>
+          Active build
+
+          {{#if app.liveBuild}}
+            <a {{bind-attr href=model.location}} class="pull-right">
               {{fa-icon 'external-link'}}
             </a>
-          </h3>
-        </div>
-        <div class="panel-body">
-          <p>Branch: <strong>{{model.liveBuild.branch}}</strong></p>
-          <p>Sha: <strong>{{model.liveBuild.sha}}</strong></p>
-          <p>Job: <strong>{{model.liveBuild.job}}</strong></p>
-        </div>
+          {{/if}}
+        </h3>
       </div>
-    {{else}}
-      <div class="text-muted">
-        <p class='lead'>No active build.</p>
-
-        <p>
-          To start pushing builds, install <a href="https://github.com/tedconf/ember-cli-front-end-builds" target="_blank">Ember CLI FrontEndBuilds</a> and deploy with <code>ember deploy</code>.
-        </p>
+      <div class="panel-body">
+        {{build-info build=model.liveBuild}}
       </div>
-    {{/if}}
-
+    </div>
   </div>
 
-  <div class="col-sm-4">
-    <div class="panel panel-default">
-      <div class="panel-heading">Options</div>
-      <div class="list-group">
-        <a {{action 'willRenameApp'}} href='#' class="list-group-item">Rename<a>
-        <a {{action 'willDeleteApp'}} href='#' class="list-group-item">Delete</a>
+  <div class="col-xs-12 col-md-4">
+    <div {{bind-attr class=":match-height :panel model.activateNewDeploys:panel-success:panel-default"}}>
+      <div class="panel-heading">
+        <h3 class='panel-title'>
+          Automatically activate new deploys
+        </h3>
+      </div>
+      <div class="panel-body">
+
+        <form>
+          <div class="form-group">
+            {{toggle-switch
+              label="Automatically activate"
+              value=model.activateNewDeploys
+              action="activateNewDeploys"}}
+
+            <span class="help-block">
+              When this option is on Front End Builds will
+              automatically start serving new master branch
+              deploys. If you want to smoke test your deploys
+              before making them live then turn this option off.
+            </span>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-4">
+    <div class="match-height panel panel-info">
+
+      <div class="panel-heading">
+        <h3 class='panel-title'>
+          Help &amp; Guides
+        </h3>
+      </div>
+
+      <div class="panel-body">
+
+        <div>
+          Rails router setup
+          <span class="pull-right text-muted">coming soon</span>
+        </div>
+
+        <hr class='short-divider'>
+
+        <div>
+          Amazon S3 setup
+          <span class="pull-right text-muted">coming soon</span>
+        </div>
+
+        <hr class='short-divider'>
+
+        <div>
+          Ember-cli setup
+          <span class="pull-right text-muted">coming soon</span>
+        </div>
+
       </div>
     </div>
   </div>
 </div>
 
 {{#if model.orderedBuilds}}
-  <h3 class='appDetail-buildListTitle'>All builds</h3>
-  {{#if model.requireManualActivation}}
-    <p class='text-muted'>This app <strong>requires</strong> new builds to be activated manually.</p>
-  {{/if}}
-  {{build-list builds=model.orderedBuilds}}
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        Builds
+      </h3>
+    </div>
+
+    <div class="panel-body">
+      <p>
+        A list of the most recent builds for
+        {{model.name}}.
+      </p>
+
+      {{build-list builds=model.orderedBuilds}}
+    </div>
+  </div>
 {{/if}}

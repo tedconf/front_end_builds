@@ -2,8 +2,8 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   actions: {
-    openPubkeyModal: function() {
-      this.controllerFor('pubkeys').setProperties({
+    openPubkeyForm: function() {
+      this.controller.setProperties({
         isAdding: true,
         newPubkey: this.store.createRecord('pubkey')
       });
@@ -15,13 +15,12 @@ export default Ember.Route.extend({
       pubkey.save()
         .then(function() {
           router.refresh();
-          router.send('hideAddModal');
+          router.send('hideAddForm');
         });
     },
 
-    hideAddModal: function() {
-      this.controllerFor('pubkeys')
-        .set('isAdding', undefined);
+    hideAddForm: function() {
+      this.controller.set('isAdding', undefined);
     },
 
     openRemoveModal: function(pubkey) {

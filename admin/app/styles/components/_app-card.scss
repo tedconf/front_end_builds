@@ -1,45 +1,16 @@
 .App-card {
-  &__new-input {
-    border-radius: 3px;
-    border: 1px solid;
-    padding: 3px 7px;
-    font-size: 1em;
-    margin-top: -5px;
-    margin-bottom: -5px;
-    background-color: transparent;
-  }
-  &__info-label {
-    margin-bottom: 0;
-    text-transform: uppercase;
-    font-size: 0.8em;
-    color: rgb(164, 164, 164);
-    font-weight: 200;
-  }
-  &__api {
-    border: 1px dotted transparent;
-    padding: 1px 3px;
-    cursor: pointer;
-    @include border-top-radius(3px);
-    @include border-bottom-radius(3px);
-  }
-  &__api:hover {
-    border-color: #ccc;
 
-    .App-card__copy-api-button {
-      opacity: 1;
-    }
+  .panel-success &__heading-link {
+    color: white;
   }
-  &__copy-api-button {
-    opacity: 0;
-    padding-left: 4px;
-    color: #999;
-    vertical-align: top;
 
-    &:hover {
-      color: #333;
-    }
+  .panel-default &__heading-link {
+    color: black;
   }
-  &__instructions {
-    font-size: 85%;
+
+  &__heading-link {
+    &:hover, &:active, &:focus, &:visited {
+      text-decoration: none;
+    }
   }
 }

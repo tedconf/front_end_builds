@@ -3,36 +3,56 @@
       have keys because we are going to inline the
       form in that scenario. }}
   {{#if hasKeys}}
-    <button {{action 'openPubkeyModal'}}
-      class='btn btn-default btn-sm new-pubkey'>
+    <button {{action 'openPubkeyForm'}}
+      class='btn btn-default btn-sm btn-raised new-pubkey'>
         {{fa-icon 'plus'}} Add SSH key
     </button>
   {{/if}}
 {{/page-title}}
 
-
 {{#if hasKeys}}
-  <p>
-    SSH keys are used to grant deployment access. Simply add your SSH
-    public key here to start deploying.
-  <p>
+  {{#liquid-if isAdding class="animate-sliding-drawer"}}
+    <div class="well">
+      {{pubkey-form
+        pubkey=newPubkey
+        saveAction="save"
+        cancelAction="hideAddForm"}}
+    </div>
+  {{/liquid-if}}
 
-  {{pubkey-table
-    pubkeys=displayableKeys
-    removeAction="openRemoveModal"}}
+  <div class="panel panel-primary">
+
+    <div class="panel-heading">
+      <h3 class='panel-title'>
+        Active public keys
+      </h3>
+    </div>
+
+    <div class="panel-body">
+      <p>
+        SSH keys are used to grant deployment access. Simply add your SSH
+        public key here to start deploying.
+      </p>
+
+      {{pubkey-table
+        pubkeys=displayableKeys
+        removeAction="openRemoveModal"}}
+    </div>
+  </div>
+
 {{else}}
 
-  <h4>Add an SSH public key</h4>
-  <p>
-    Front end builds uses SSH keys to control which machines can
-    deploy new builds. To get started we'll need to first add
-    an SSH key.
-  </p>
+  <div class="well">
+    <p>
+      Front end builds uses SSH keys to control which machines can
+      deploy new builds. To get started we'll need to first add
+      an SSH key.
+    </p>
 
-  {{pubkey-form
-    pubkey=newPubkey
-    saveAction="save"
-    cancelRoute="apps"}}
+    {{pubkey-form
+      pubkey=newPubkey
+      saveAction="save"
+      cancelRoute="apps"}}
+  </div>
+
 {{/if}}
-
-<table>

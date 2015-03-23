@@ -34,7 +34,8 @@ export default Ember.Component.extend(EmberValidations.Mixin, {
         .then(function() {
           component.set('isValidating', false);
           component.sendAction('saveAction', pubkey);
-        });
+        })
+        .catch(Ember.K);
     },
 
     cancel: function() {
