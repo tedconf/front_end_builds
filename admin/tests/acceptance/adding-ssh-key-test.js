@@ -35,10 +35,11 @@ test("I should get a new SSH key form if I have never added a key", function(ass
 
   fillIn(".Pubkey-form__name", "My first key");
   fillIn(".Pubkey-form__pubkey", "key");
+
   click(".Pubkey-form__save");
 
   assertExists(".Pubkey-table");
-  assertExists(".Pubkey-table__pubkey", 1);
+  assertExists(".Pubkey-table__pubkey");
 });
 
 test("I should end up back on the apps page if I cancel adding my first key", function(assert) {

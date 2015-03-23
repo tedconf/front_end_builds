@@ -17,7 +17,7 @@ export default function() {
     var data = JSON.parse(request.requestBody).pubkey;
     data.fingerprint = 'A1:B2:C3';
     var model = db.pubkeys.insert(data);
-    return model;
+    return { pubkey: model };
   });
 
   this.del('/pubkeys/:id');
