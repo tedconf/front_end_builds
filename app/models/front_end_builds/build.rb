@@ -38,7 +38,9 @@ module FrontEndBuilds
           .where(
             front_end_builds_apps: { name: params[:app_name] }
           )
-        app = App.where( name: params[:app_name] ).first
+        condition = {name: params[:name]}
+        condition.merge!({client: 'mobile'}) if params[:mobile]
+        app = App.where(condition).first
       end
 
       if params[:id]
@@ -140,5 +142,6 @@ module FrontEndBuilds
         0
       end
     end
+
   end
 end
