@@ -41,6 +41,7 @@ module FrontEndBuilds
       {
         id: id,
         name: name,
+        client: client,
         build_ids: recent_builds.map(&:id),
         live_build_id: (live_build ? live_build.id : nil),
         location: get_url,

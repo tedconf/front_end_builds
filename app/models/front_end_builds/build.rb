@@ -38,9 +38,11 @@ module FrontEndBuilds
           .where(
             front_end_builds_apps: { name: params[:app_name] }
           )
-        condition = {name: params[:name]}
-        condition.merge!({client: 'mobile'}) if params[:mobile]
-        app = App.where(condition).first
+        if params[:mobile]
+          app = App.where({name: params[:app_name], client: 'mobile'}).first
+        else
+          app = App.where({name: params[:app_name]}).where.not({client: 'mobile'}).first
+        end
       end
 
       if params[:id]
