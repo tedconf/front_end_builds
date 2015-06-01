@@ -72,6 +72,13 @@ Visit the admin (at whatever URL you mounted the engine above), create a
 new app named `app-name`, and you'll receive  instructions on how to
 start pushing builds.
 
+#### Option to host two client(web/mobile) on same path:
+
+ Default client is 'web',
+ 
+ To serve mobile client app on same domain name, create app with same name as web client and choose client as mobile. 
+ 
+ 
 Note:
 If you're using this engine to serve an ember app at the Root, be sure
 to put all other Rails routes above the `front_end` route - as this take priority
