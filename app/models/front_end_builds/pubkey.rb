@@ -53,7 +53,20 @@ module FrontEndBuilds
       digest = OpenSSL::Digest::SHA256.new
       expected = "#{build.app.name}-#{build.endpoint}"
 
-      pkey.verify(digest, signature, expected)
+      match = pkey.verify(digest, signature, expected)
+      # Bug in ruby's OpenSSL implementation.
+      # SSL connection with PostgreSQL can fail, after a call to
+      # OpenSSL::X509::Certificate#verify with result 'false'. Root cause is
+      # the thread local error queue of OpenSSL, that is used to transmit
+      # textual error messages to the application after a failed crypto
+      # operation. A failure in Certificate#verify leaves some messages on the
+      # error queue, which can lead to errors in a SSL communication of other
+      # parts of the application. The only solution at the moment is running:
+      # OpenSSL.errors.clear after certificate verifying. This clears OpenSSL
+      # errors array and keeps database connection alive.
+      # From https://bugs.ruby-lang.org/issues/7215
+      OpenSSL.errors.clear
+      match # return true/false
     end
 
     def last_build
