@@ -49,14 +49,26 @@ First, mount the admin interface in `routes.rb`:
 ```rb
 Rails.application.routes.draw do
 
-  mount FrontEndBuilds::Engine, at: '/frontend-admin'
+  mount FrontEndBuilds::Engine, at: '/frontends'
 
 end
 ```
 
 You should mount this under an authenticated route using your application's
 auth strategy, as anyone with access to the admin will be able to affect the
-production builds of your front end apps.
+production builds of your front end apps.a
+
+If you don't want to set up an HTML auth strategy, you can do something like this:
+
+```rb
+# routes.rb
+protected_app = Rack::Auth::Basic.new(FrontEndBuilds::Engine) do |username, password|
+  username == 'admin' && password == (Rails.env.production? ? ENV['FEB_ADMIN_PASSWORD'] : '')
+end
+mount protected_app, at: '/frontends'
+```
+
+This will use basic HTTP auth to secure access to your admin ui. Just set the ENV variable, and use it to gain access.
 
 Now, to create a new app, first add a `front_end` route pointing to your app in `routes.rb`:
 
