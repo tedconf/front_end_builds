@@ -164,3 +164,6 @@ DEPENDENCIES
   shoulda-matchers
   sqlite3
   webmock
+
+BUNDLED WITH
+   1.10.3

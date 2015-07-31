@@ -2,7 +2,7 @@ import Ember from 'ember';
 import EmberValidations from 'ember-validations';
 
 export default Ember.Component.extend(
-  EmberValidations, {
+  EmberValidations.Mixin, {
 
   classNames: ['New-app-form'],
 
