@@ -87,7 +87,7 @@ module FrontEndBuilds
     def setup!
       fetch!
 
-      if automatic_activation? && master?
+      if automatic_activation?
         activate!
       end
     end
