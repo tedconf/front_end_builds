@@ -58,10 +58,10 @@ module FrontEndBuilds
     def build_search_params_rails_4
       params.permit(:app_name, :id, :branch, :sha, :job)
     end
-   
-    # Taken from http://stackoverflow.com/a/13590374/1970061
+  
+    # Use https://github.com/jistr/mobvious
     def is_mobile_client?
-      request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"][/(iPhone|iPad|iPod|BlackBerry|Android)/]
+      request.env['mobvious.device_type']  == :mobile
     end
   end
 end
