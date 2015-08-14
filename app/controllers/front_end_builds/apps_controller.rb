@@ -74,12 +74,12 @@ module FrontEndBuilds
     end
 
     def app_create_params_rails_3
-      params[:app].slice(:name)
+      params[:app].slice(:name, :client)
     end
 
     def app_create_params_rails_4
       params.require(:app).permit(
-        :name
+        :name, :client
       )
     end
 

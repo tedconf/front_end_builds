@@ -1,3 +1,4 @@
+require 'front_end_builds'
 require 'front_end_builds/utils/ssh_pubkey_convert'
 require 'base64'
 require 'openssl'

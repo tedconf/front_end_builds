@@ -48,7 +48,7 @@ module FrontEndBuilds
     end
 
     def find_front_end
-      @front_end = FrontEndBuilds::Build.find_best(use_params(:build_search_params))
+      @front_end = FrontEndBuilds::Build.find_best(use_params(:build_search_params).merge({mobile: is_mobile_client?}))
     end
 
     def build_search_params_rails_3
@@ -57,6 +57,11 @@ module FrontEndBuilds
 
     def build_search_params_rails_4
       params.permit(:app_name, :id, :branch, :sha, :job)
+    end
+  
+    # Use https://github.com/jistr/mobvious
+    def is_mobile_client?
+      request.env['mobvious.device_type']  == :mobile
     end
   end
 end

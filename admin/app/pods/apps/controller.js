@@ -8,7 +8,7 @@ export default Ember.Controller.extend({
   orderedApps: Ember.computed.sort('savedApps', 'sortBy'),
 
   newApp: function() {
-    return this.get('model').filterBy('isNew', true).get('firstObject');
+    return  this.get('model').filterBy('isNew', true).get('firstObject');
   }.property('model.@each.isNew'),
 
   actions: {

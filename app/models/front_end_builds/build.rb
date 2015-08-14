@@ -38,7 +38,11 @@ module FrontEndBuilds
           .where(
             front_end_builds_apps: { name: params[:app_name] }
           )
-        app = App.where( name: params[:app_name] ).first
+        if params[:mobile]
+          app = App.where({name: params[:app_name], client: 'mobile'}).first
+        else
+          app = App.where({name: params[:app_name]}).where.not({client: 'mobile'}).first
+        end
       end
 
       if params[:id]
@@ -83,7 +87,7 @@ module FrontEndBuilds
     def setup!
       fetch!
 
-      if automatic_activation? && master?
+      if automatic_activation?
         activate!
       end
     end
@@ -140,5 +144,6 @@ module FrontEndBuilds
         0
       end
     end
+
   end
 end

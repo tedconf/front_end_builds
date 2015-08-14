@@ -6,6 +6,7 @@ export default Ember.Component.extend(
 
   classNames: ['New-app-form'],
 
+  clients: ['web','mobile'],
   hasNoNameError: Ember.computed.empty('errors.app.name'),
   hasNameError: Ember.computed.not('hasNoNameError'),
   showNameError: Ember.computed.and('hasNameError', 'isValidating'),

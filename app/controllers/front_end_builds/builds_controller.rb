@@ -38,8 +38,10 @@ module FrontEndBuilds
     private
 
     def set_app!
+      condition = {name: params[:app_name]}
+      condition.merge!({client: params[:client]}) if params[:client]
       @app = FrontEndBuilds::App
-        .where(name: params[:app_name])
+        .where(condition)
         .limit(1)
         .first
 
