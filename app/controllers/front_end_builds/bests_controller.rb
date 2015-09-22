@@ -29,15 +29,7 @@ module FrontEndBuilds
     private
 
     def meta_tags
-      tags = {
-        csrf_param: request_forgery_protection_token,
-        csrf_token: form_authenticity_token,
-        front_end_build_version: @front_end.id,
-        front_end_build_params: use_params(:build_search_params).to_query,
-        front_end_build_url: front_end_builds_best_path(
-            use_params(:build_search_params).merge(format: :json)
-          )
-      }
+      tags = feb_meta(@front_end)
 
       tags
         .map { |name, content|
