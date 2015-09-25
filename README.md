@@ -97,6 +97,71 @@ Rails.application.routes.draw do
 end
 ```
 
+## Customization
+
+**Meta Tags**
+
+It's possible to inject custom meta tags into your build as it's being rendered. The 
+`BestsController` exposes a method called `feb_meta` that accepts the application being
+rendered and returns a hash whose key/value pairs are injected into `index.html` 
+as meta tags. Out of the box, these meta tags are incorporated:
+
+```rb
+def feb_meta(app)
+  {
+    csrf_param: request_forgery_protection_token,
+    csrf_token: form_authenticity_token,
+    front_end_build_version: app.id,
+    front_end_build_params: use_params(:build_search_params).to_query,
+    front_end_build_url: front_end_builds_best_path(
+        use_params(:build_search_params).merge(format: :json)
+      )
+  }
+end
+```
+
+That method results in meta tags like this being rendered in the head tag:
+
+```html
+<meta name="front-end-build-version" content="95">
+```
+
+To override this method and provide your own custom meta tags, you can use the decorators
+mechanism described by Rails' documentation: 
+http://edgeguides.rubyonrails.org/engines.html#overriding-models-and-controllers.
+
+The short and sweet of it is:
+
+```rb
+# MyApp/app/decorators/controllers/front_end_builds/bests_controller_decorator.rb
+
+FrontEndBuilds::BestsController.class_eval do
+  def feb_meta(app)
+    {
+      my_key: 'hello',
+      other_tag: 'bleurgh',
+      tag_depending_on_app: app.id
+    }
+  end
+end
+```
+
+You also need to ensure that the file is loaded by the engine:
+
+```rb
+# MyApp/lib/front_end_builds/engine.rb
+module FrontEndBuilds
+  class Engine < ::Rails::Engine
+    isolate_namespace FrontEndBuilds
+
+    config.to_prepare do
+      Dir.glob(Rails.root + 'app/decorators/**/*_decorator*.rb').each do |c|
+        require_dependency c
+      end
+    end
+  end
+end
+```
 
 ## Development
 
