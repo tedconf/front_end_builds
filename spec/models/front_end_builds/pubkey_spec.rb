@@ -98,6 +98,17 @@ module FrontEndBuilds
         expect(pubkey.verify(build)).to be_truthy
       end
 
+      it 'should verify the signature + html for a build without an endpoint' do
+        build = FactoryGirl.create(:front_end_builds_build, {
+          app: app,
+          html: 'some html',
+          endpoint: nil,
+          signature: create_signature('some html')
+        })
+
+        expect(pubkey.verify(build)).to be_truthy
+      end
+
       it 'should not verify a bad signature for a build' do
         build.signature = create_signature('bad-verybad')
         expect(pubkey.verify(build)).to be_falsey
