@@ -113,6 +113,17 @@ module FrontEndBuilds
         build.signature = create_signature('bad-verybad')
         expect(pubkey.verify(build)).to be_falsey
       end
+
+      it 'should not verify a bad html signature for a build' do
+        build = FactoryGirl.create(:front_end_builds_build, {
+          app: app,
+          html: 'some html',
+          endpoint: nil,
+          signature: create_signature('verybad')
+        })
+
+        expect(pubkey.verify(build)).to be_falsey
+      end
     end
 
     describe '#last_build' do
