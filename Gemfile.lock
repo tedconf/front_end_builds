@@ -161,6 +161,9 @@ DEPENDENCIES
   rails (~> 4.2.0)
   rspec-its
   rspec-rails
-  shoulda-matchers
+  shoulda-matchers (= 2.7.0)
   sqlite3
   webmock
+
+BUNDLED WITH
+   1.10.6

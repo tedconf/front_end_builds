@@ -23,6 +23,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'factory_girl_rails'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'pry-stack_explorer'
-  s.add_development_dependency 'shoulda-matchers'
+  s.add_development_dependency 'shoulda-matchers', '2.7.0'
   s.add_development_dependency 'webmock'
 end
