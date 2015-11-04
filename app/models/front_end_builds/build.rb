@@ -15,7 +15,6 @@ module FrontEndBuilds
     validates :app, presence: true
     validates :sha, presence: true
     validates :branch, presence: true
-    validates :endpoint, presence: true
     validates :signature, presence: true
 
     scope :recent, -> { limit(10).order('created_at desc') }
@@ -97,7 +96,7 @@ module FrontEndBuilds
     end
 
     def fetch!
-      return if fetched?
+      return if fetched? || endpoint.blank?
 
       html = URI.parse(endpoint).read
 

@@ -50,7 +50,17 @@ module FrontEndBuilds
       pkey = to_rsa_pkey
       signature = Base64.decode64(build.signature)
       digest = OpenSSL::Digest::SHA256.new
-      expected = "#{build.app.name}-#{build.endpoint}"
+
+      # If the user submits html were going to expect the
+      # signature to match the html they are submitting.
+      # However, if the user gives a url where we can download
+      # the html, we're going to expect the signature to match
+      # the app name and the url.
+      if build.endpoint.present?
+        expected = "#{build.app.name}-#{build.endpoint}"
+      else
+        expected = build.html
+      end
 
       match = pkey.verify(digest, signature, expected)
       # Bug in ruby's OpenSSL implementation.

@@ -156,8 +156,6 @@ module FrontEndBuilds
       end
 
       it 'should let the html be submitted' do
-        pending("need html signatures")
-
         post :create, {
           app_name: app.name,
           branch: 'master',

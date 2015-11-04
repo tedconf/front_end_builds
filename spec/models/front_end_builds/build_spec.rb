@@ -9,7 +9,6 @@ module FrontEndBuilds
     it { should validate_presence_of(:app) }
     it { should validate_presence_of(:sha) }
     it { should validate_presence_of(:branch) }
-    it { should validate_presence_of(:endpoint) }
 
     describe :find_best do
       let(:app) { FactoryGirl.create :front_end_builds_app }
