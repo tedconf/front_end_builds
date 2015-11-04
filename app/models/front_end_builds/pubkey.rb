@@ -62,7 +62,9 @@ module FrontEndBuilds
         expected = build.html
       end
 
-      match = pkey.verify(digest, signature, expected)
+      match = expected &&
+        signature &&
+        pkey.verify(digest, signature, expected)
       # Bug in ruby's OpenSSL implementation.
       # SSL connection with PostgreSQL can fail, after a call to
       # OpenSSL::X509::Certificate#verify with result 'false'. Root cause is

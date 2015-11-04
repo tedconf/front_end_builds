@@ -242,7 +242,10 @@ module FrontEndBuilds
       end
 
       it 'should fetch the new build' do
-        build.update_attributes(fetched: false, html: '')
+        build.html = ''
+        build.fetched = false
+        build.save
+
         expect(build).to receive(:fetch!)
         build.setup!
       end

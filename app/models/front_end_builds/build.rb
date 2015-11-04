@@ -6,6 +6,7 @@ module FrontEndBuilds
       attr_accessible :branch,
                       :sha,
                       :endpoint,
+                      :html,
                       :signature
     end
 
