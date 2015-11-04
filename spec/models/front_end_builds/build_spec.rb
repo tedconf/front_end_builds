@@ -128,7 +128,7 @@ module FrontEndBuilds
         FactoryGirl.build(:front_end_builds_build, {
           app: app,
           endpoint: endpoint,
-          signature: create_signature(app.name, endpoint)
+          signature: create_signature("#{app.name}-#{endpoint}")
         })
       end
 
@@ -157,7 +157,7 @@ module FrontEndBuilds
         FactoryGirl.build(:front_end_builds_build, {
           app: app,
           endpoint: endpoint,
-          signature: create_signature(app.name, endpoint)
+          signature: create_signature("#{app.name}-#{endpoint}")
         })
       end
 
@@ -243,7 +243,14 @@ module FrontEndBuilds
       end
 
       it 'should fetch the new build' do
+        build.update_attributes(fetched: false, html: '')
         expect(build).to receive(:fetch!)
+        build.setup!
+      end
+
+      it 'should not fetch if the build already has html' do
+        expect(build).to_not receive(:fetch!)
+        build.update_attributes(html: 'got it')
         build.setup!
       end
 

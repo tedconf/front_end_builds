@@ -94,12 +94,12 @@ module FrontEndBuilds
       end
 
       it 'should verify the signature is valid for a build' do
-        build.signature = create_signature(app.name, endpoint)
+        build.signature = create_signature("#{app.name}-#{endpoint}")
         expect(pubkey.verify(build)).to be_truthy
       end
 
       it 'should not verify a bad signature for a build' do
-        build.signature = create_signature('bad', 'verybad')
+        build.signature = create_signature('bad-verybad')
         expect(pubkey.verify(build)).to be_falsey
       end
     end

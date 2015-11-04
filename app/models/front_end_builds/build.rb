@@ -81,7 +81,7 @@ module FrontEndBuilds
     end
 
     def setup!
-      fetch!
+      fetch! if html.blank?
 
       if automatic_activation? && master?
         activate!

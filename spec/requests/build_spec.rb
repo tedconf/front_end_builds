@@ -17,7 +17,7 @@ describe "Front end builds API", type: :request do
       sha: "a1b2c3",
       job: "jenkins-build-1",
       endpoint: endpoint,
-      signature: create_signature('dummy', endpoint)
+      signature: create_signature("dummy-#{endpoint}")
 
     expect(response).to be_success
 
@@ -39,7 +39,7 @@ describe "Front end builds API", type: :request do
       sha: "a1b2c3",
       job: "jenkins-build-1",
       endpoint: endpoint,
-      signature: create_signature('dummy', endpoint)
+      signature: create_signature("dummy-#{endpoint}")
 
     expect(response).to be_success
     expect(front_end_app.builds.length).to eq(1)

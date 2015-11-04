@@ -59,6 +59,7 @@ module FrontEndBuilds
         :sha,
         :job,
         :endpoint,
+        :html,
         :signature
       ]
     end

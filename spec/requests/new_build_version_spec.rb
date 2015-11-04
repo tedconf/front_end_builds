@@ -31,7 +31,7 @@ describe "Front end builds new version", type: :request do
       sha: "a1b2c3",
       job: "jenkins-build-1",
       endpoint: endpoint,
-      signature: create_signature('dummy', endpoint)
+      signature: create_signature("dummy-#{endpoint}")
 
     expect(response).to be_success
 
