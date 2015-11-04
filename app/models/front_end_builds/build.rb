@@ -23,9 +23,7 @@ module FrontEndBuilds
     def self.find_best(params = {})
       scope = self
 
-      query = {
-        fetched: true
-      }
+      query = { fetched: true }
 
       if params[:app]
         query[:app_id] = params[:app].id
@@ -81,7 +79,14 @@ module FrontEndBuilds
     end
 
     def setup!
+      # Fetching no longer makes senses since ember-cli-deploy will
+      # directly give the HTML to front end builds. However, in order
+      # to support old versions we're going to keep this around for
+      # a while.
       fetch! if html.blank?
+
+      self.fetched = true
+      save
 
       if automatic_activation? && master?
         activate!
@@ -102,7 +107,6 @@ module FrontEndBuilds
       html = URI.parse(endpoint).read
 
       self.html = html
-      self.fetched = true
       save
     end
 
