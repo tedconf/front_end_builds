@@ -6,6 +6,7 @@ module FrontEndBuilds
       attr_accessible :branch,
                       :sha,
                       :endpoint,
+                      :html,
                       :signature
     end
 
@@ -15,7 +16,6 @@ module FrontEndBuilds
     validates :app, presence: true
     validates :sha, presence: true
     validates :branch, presence: true
-    validates :endpoint, presence: true
     validates :signature, presence: true
 
     scope :recent, -> { limit(10).order('created_at desc') }
@@ -23,9 +23,7 @@ module FrontEndBuilds
     def self.find_best(params = {})
       scope = self
 
-      query = {
-        fetched: true
-      }
+      query = { fetched: true }
 
       if params[:app]
         query[:app_id] = params[:app].id
@@ -81,7 +79,14 @@ module FrontEndBuilds
     end
 
     def setup!
-      fetch!
+      # Fetching no longer makes senses since ember-cli-deploy will
+      # directly give the HTML to front end builds. However, in order
+      # to support old versions we're going to keep this around for
+      # a while.
+      fetch! if html.blank?
+
+      self.fetched = true
+      save
 
       if automatic_activation? && master?
         activate!
@@ -97,12 +102,11 @@ module FrontEndBuilds
     end
 
     def fetch!
-      return if fetched?
+      return if fetched? || endpoint.blank?
 
       html = URI.parse(endpoint).read
 
       self.html = html
-      self.fetched = true
       save
     end
 

@@ -72,7 +72,7 @@ module FrontEndBuilds
           sha: 'some-sha',
           job: '1',
           endpoint: endpoint,
-          signature: create_signature(app.name, endpoint)
+          signature: create_signature("#{app.name}-#{endpoint}")
         }
 
         expect(response).to be_success
@@ -88,7 +88,7 @@ module FrontEndBuilds
           sha: 'some-sha',
           job: '1',
           endpoint: endpoint,
-          signature: create_signature(app.name, endpoint)
+          signature: create_signature("#{app.name}-#{endpoint}")
         }
 
         expect(response).to be_success
@@ -104,7 +104,7 @@ module FrontEndBuilds
           sha: 'some-sha',
           job: '1',
           endpoint: endpoint,
-          signature: create_signature(app.name, endpoint)
+          signature: create_signature("#{app.name}-#{endpoint}")
         }
 
         expect(response).to be_success
@@ -120,7 +120,7 @@ module FrontEndBuilds
           sha: 'some-sha',
           job: '1',
           endpoint: endpoint,
-          signature: create_signature('this-does-not-exist', endpoint)
+          signature: create_signature("unknown-#{endpoint}")
         }
 
         expect(response).to_not be_success
@@ -149,10 +149,24 @@ module FrontEndBuilds
         post :create, {
           app_name: app.name,
           endpoint: endpoint,
-          signature: create_signature(app.name, endpoint)
+          signature: create_signature("#{app.name}-#{endpoint}")
         }
         expect(response).to_not be_success
         expect(response.body).to match("Sha can't be blank")
+      end
+
+      it 'should let the html be submitted' do
+        post :create, {
+          app_name: app.name,
+          branch: 'master',
+          sha: 'some-sha',
+          job: '1',
+          html: 'hello world',
+          signature: create_signature('hello world')
+        }
+
+        expect(response).to be_success
+        expect(app.live_build.html).to eq('the old build')
       end
     end
 

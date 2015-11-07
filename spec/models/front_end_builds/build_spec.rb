@@ -9,7 +9,6 @@ module FrontEndBuilds
     it { should validate_presence_of(:app) }
     it { should validate_presence_of(:sha) }
     it { should validate_presence_of(:branch) }
-    it { should validate_presence_of(:endpoint) }
 
     describe :find_best do
       let(:app) { FactoryGirl.create :front_end_builds_app }
@@ -128,7 +127,7 @@ module FrontEndBuilds
         FactoryGirl.build(:front_end_builds_build, {
           app: app,
           endpoint: endpoint,
-          signature: create_signature(app.name, endpoint)
+          signature: create_signature("#{app.name}-#{endpoint}")
         })
       end
 
@@ -157,7 +156,7 @@ module FrontEndBuilds
         FactoryGirl.build(:front_end_builds_build, {
           app: app,
           endpoint: endpoint,
-          signature: create_signature(app.name, endpoint)
+          signature: create_signature("#{app.name}-#{endpoint}")
         })
       end
 
@@ -243,7 +242,17 @@ module FrontEndBuilds
       end
 
       it 'should fetch the new build' do
+        build.html = ''
+        build.fetched = false
+        build.save
+
         expect(build).to receive(:fetch!)
+        build.setup!
+      end
+
+      it 'should not fetch if the build already has html' do
+        expect(build).to_not receive(:fetch!)
+        build.update_attributes(html: 'got it')
         build.setup!
       end
 
