@@ -3,8 +3,6 @@ Climate](https://codeclimate.com/github/tedconf/front_end_builds/badges/gpa.svg)
 
 # FrontEndBuilds
 
-**Warning: Beta software!**
-
 Front-End Builds lets you easily serve remotely-hosted static (JS) applications from your Rails apps.
 
 ![](https://camo.githubusercontent.com/175c23176da269c03c5d3f51a8feef3bdb50fc8a/687474703a2f2f63762d73637265656e73686f74732e73332e616d617a6f6e6177732e636f6d2f41646d696e5f323031352d30332d31305f30302d35312d32352e706e67)
