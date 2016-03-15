@@ -46,10 +46,10 @@ ActiveRecord::Schema.define(version: 20150224040537) do
   add_index "front_end_builds_builds", ["fetched"], name: "index_front_end_builds_builds_on_fetched"
 
   create_table "front_end_builds_pubkeys", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.text     "pubkey",     null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name",       limit: 191, null: false
+    t.text     "pubkey",                 null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
 end

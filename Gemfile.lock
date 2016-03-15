@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    front_end_builds (0.2.0)
+    front_end_builds (0.2.1)
 
 GEM
   remote: https://rubygems.org/
@@ -158,6 +158,3 @@ DEPENDENCIES
   shoulda-matchers (= 2.7.0)
   sqlite3
   webmock
-
-BUNDLED WITH
-   1.10.6
