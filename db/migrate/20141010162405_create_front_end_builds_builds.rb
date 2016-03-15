@@ -2,9 +2,9 @@ class CreateFrontEndBuildsBuilds < ActiveRecord::Migration
   def change
     create_table :front_end_builds_builds do |t|
       t.references :app
-      t.string :sha
-      t.string :job
-      t.string :branch
+      t.string :sha, limit: 191
+      t.string :job, limit: 191
+      t.string :branch, limit: 191
       t.text :html
       t.boolean :fetched, default: false
       t.boolean :active, default: false
