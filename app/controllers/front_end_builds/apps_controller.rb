@@ -23,7 +23,7 @@ module FrontEndBuilds
     end
 
     def create
-      @app = FrontEndBuilds::App.new( use_params(:app_create_params) )
+      @app = FrontEndBuilds::App.new( app_create_params )
 
       if @app.save
         respond_with_json(
@@ -39,7 +39,7 @@ module FrontEndBuilds
     end
 
     def update
-      if @app.update_attributes( use_params(:app_update_params) )
+      if @app.update_attributes( app_update_params )
 
         respond_with_json(
           { app: @app.serialize },
@@ -73,33 +73,30 @@ module FrontEndBuilds
       @app = FrontEndBuilds::App.find(params[:id])
     end
 
-    def app_create_params_rails_3
-      params[:app].slice(:name)
+    def app_create_params
+      if supports_strong_params?
+        params.require(:app).permit(
+          :name
+        )
+      else
+        params[:app].slice(:name)
+      end
     end
 
-    def app_create_params_rails_4
-      params.require(:app).permit(
-        :name
-      )
+    def app_update_params
+      if supports_strong_params?
+        params.require(:app).permit(
+          :name,
+          :require_manual_activation,
+          :live_build_id
+        )
+      else
+        params[:app].slice(
+          :name,
+          :require_manual_activation,
+          :live_build_id
+        )
+      end
     end
-    alias_method :app_create_params_rails_5, :app_create_params_rails_4
-
-    def app_update_params_rails_3
-      params[:app].slice(
-        :name,
-        :require_manual_activation,
-        :live_build_id
-      )
-    end
-
-    def app_update_params_rails_4
-      params.require(:app).permit(
-        :name,
-        :require_manual_activation,
-        :live_build_id
-      )
-    end
-    alias_method :app_update_params_rails_5, :app_update_params_rails_4
-
   end
 end

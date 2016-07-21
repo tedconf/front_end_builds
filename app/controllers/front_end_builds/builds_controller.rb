@@ -12,7 +12,7 @@ module FrontEndBuilds
     end
 
     def create
-      build = @app.builds.new(use_params(:build_create_params))
+      build = @app.builds.new(build_create_params)
 
       if build.verify && build.save
         build.setup!
@@ -64,14 +64,12 @@ module FrontEndBuilds
       ]
     end
 
-    def build_create_params_rails_3
-      params.slice(*_create_params)
+    def build_create_params
+      if supports_strong_params?
+        params.permit(*_create_params)
+      else
+        params.slice(*_create_params)
+      end
     end
-
-    def build_create_params_rails_4
-      params.permit(*_create_params)
-    end
-    alias_method :build_create_params_rails_5, :build_create_params_rails_4
-
   end
 end
