@@ -23,6 +23,28 @@ module FrontEndBuilds
 
     validates :name, presence: true
 
+    validate do |app|
+      live_build_validator(app)
+    end
+
+    def live_build_validator(app)
+      return unless deploy_restrictions?
+      return if app.new_record?
+      ensure_acceptable_branch(app)
+    end
+
+    def ensure_acceptable_branch(app)
+      build = FrontEndBuilds::Build.find(app.live_build_id)
+      production_branch = ENV["FRONT_END_BUILDS_PRODUCTION_BRANCH"]
+      if production_branch != build.branch
+        app.errors[:validations] << "Cannot activate build - build is from branch: #{build.branch}, but deploys are restricted to branch: #{production_branch}"
+      end
+    end
+
+    def deploy_restrictions?
+      ENV["FRONT_END_BUILDS_RESTRICT_DEPLOYS"] == "TRUE"
+    end
+
     def self.register_url(name, url)
       @_url ||= {}
       @_url[name.to_sym] = url

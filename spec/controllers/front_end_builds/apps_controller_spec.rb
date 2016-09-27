@@ -79,6 +79,7 @@ module FrontEndBuilds
       let(:app) { create :front_end_builds_app, name: 'forsaken' }
       let!(:live_build) { create :front_end_builds_build, :live, :fetched, app: app }
       let!(:new_build) { create :front_end_builds_build, :fetched, app: app }
+      let(:prohibited_build) { create(:front_end_builds_build, :fetched, app: app, branch: 'experimental')}
 
       it "should edit an existing app" do
         post :update,
@@ -96,6 +97,22 @@ module FrontEndBuilds
 
         expect(app.live_build).to eq(new_build)
         expect(json['app']['id']).to eq(app.id)
+      end
+
+      it 'should fail when branch restrictions are triggered' do
+        allow(ENV).to receive(:[]).with("FRONT_END_BUILDS_RESTRICT_DEPLOYS").and_return("TRUE")
+        allow(ENV).to receive(:[]).with("FRONT_END_BUILDS_PRODUCTION_BRANCH").and_return("production")
+
+        post :update,
+             id: app.id,
+             app: {
+               live_build_id: prohibited_build.id
+             },
+             format: :json
+
+        body = JSON.parse(response.body)
+        expect(response.status).to be(422)
+        expect(body["errors"]["validations"].first).to eq("Cannot activate build - build is from branch: experimental, but deploys are restricted to branch: production")
       end
     end
 

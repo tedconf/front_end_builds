@@ -98,7 +98,7 @@ module FrontEndBuilds
     end
 
     def master?
-      branch == 'master'
+      branch == (ENV["FRONT_END_BUILDS_PRODUCTION_BRANCH"] || 'master')
     end
 
     def fetch!
@@ -111,8 +111,13 @@ module FrontEndBuilds
     end
 
     def activate!
+      return if deploy_restrictions? && !master?
       app.live_build = self
       app.save
+    end
+
+    def deploy_restrictions?
+      ENV["FRONT_END_BUILDS_RESTRICT_DEPLOYS"] == "TRUE"
     end
 
     def automatic_activation?
