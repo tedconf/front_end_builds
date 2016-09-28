@@ -118,6 +118,21 @@ A common configuration is to deploy your FEB-enabled Rails app to Heroku, and de
 3. Access your Rails app's FEB Admin interface, add an app, and configure a public SSH key that corresponds to the private key you plan on using to sign your Ember.js builds
 4. Deploy your frontend app. If all goes well, it should build the Ember app, push the static assets to S3, then POST to your Rails app. You'll see the build in the Admin interface, and should be able to access your frontend at the `front_end` route you specified.
 
+## Configurations Options
+
+Should you wish to allow deploys from an approved branch only, you may set the following environment variables
+
+`FRONT_END_BUILDS_RESTRICT_DEPLOYS=TRUE` and set the approved branch `FRONT_END_BUILDS_PRODUCTION_BRANCH=the_name_of_your_approved_branch`
+
+This can be troublesome if you're deploying from TravisCI as builds are always tagged `HEAD`, you can resolve this by adjusting your `.travis.yml`.
+
+```yml
+install:
+- git checkout ${TRAVIS_BRANCH}
+```
+
+This basically just ensures that the branch name is available to `ember-cli-front-end-builds` to tag the deploy.
+
 
 ## Development
 
