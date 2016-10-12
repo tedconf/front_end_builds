@@ -11,7 +11,7 @@ module FrontEndBuilds
   class BestsController < ApplicationController
     include Rails.application.routes.url_helpers
 
-    before_filter :find_front_end, only: [:show]
+    before_action :find_front_end, only: [:show]
 
     def show
       if @front_end

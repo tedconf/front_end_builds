@@ -2,7 +2,7 @@ require_dependency "front_end_builds/application_controller"
 
 module FrontEndBuilds
   class BuildsController < ApplicationController
-    before_filter :set_app!, only: [:create]
+    before_action :set_app!, only: [:create]
 
     def index
       builds = FrontEndBuilds::Build.where(app_id: params[:app_id])

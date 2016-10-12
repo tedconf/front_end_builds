@@ -2,7 +2,7 @@ require_dependency "front_end_builds/application_controller"
 
 module FrontEndBuilds
   class AppsController < ApplicationController
-    before_filter :set_app , :only => [:show, :destroy, :update]
+    before_action :set_app , :only => [:show, :destroy, :update]
 
     def index
       apps = App.includes(:recent_builds)
