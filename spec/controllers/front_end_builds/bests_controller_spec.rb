@@ -62,7 +62,7 @@ module FrontEndBuilds
         expect(response.body).to match(latest.html)
       end
 
-      context "meta tags" do
+      context "default meta tags" do
         before(:each) do
           get :show, app_name: app.name, branch: 'master'
           expect(response).to be_success
@@ -74,6 +74,19 @@ module FrontEndBuilds
         it { should match(/front-end-build-version/) }
         it { should match(/front-end-build-params/) }
         it { should match(/front-end-build-url/) }
+      end
+
+      context "custom meta tags" do
+        before(:each) do
+          allow(controller).to receive(:feb_meta)
+            .and_return({ fake_meta_tag: 'custom' })
+          get :show, app_name: app.name, branch: 'master'
+          expect(response).to be_success
+        end
+
+        subject { response.body }
+
+        it { should match(/fake-meta-tag/) }
       end
 
       it "should be 404 when nothing is found" do
