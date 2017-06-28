@@ -15,7 +15,7 @@ module FrontEndBuilds
       html = html.sub('BASEURL/', baseURL)
       html = html.sub("baseURL: ''", "baseURL: '#{baseURL}'")
 
-      render text: html
+      render plain: html
     end
 
   end
