@@ -22,7 +22,7 @@ module FrontEndBuilds
         build.errors[:base] << 'No access - invalid SSH key' if !build.verify
 
         render(
-          text: 'Could not create the build: ' + build.errors.full_messages.to_s,
+          plain: 'Could not create the build: ' + build.errors.full_messages.to_s,
           status: :unprocessable_entity
         )
       end
@@ -45,7 +45,7 @@ module FrontEndBuilds
 
       if @app.nil?
         render(
-          text: "No app named #{params[:app_name]}.",
+          plain: "No app named #{params[:app_name]}.",
           status: :unprocessable_entity
         )
 
@@ -65,11 +65,7 @@ module FrontEndBuilds
     end
 
     def build_create_params
-      if supports_strong_params?
-        params.permit(*_create_params)
-      else
-        params.slice(*_create_params)
-      end
+      params.permit(*_create_params)
     end
   end
 end

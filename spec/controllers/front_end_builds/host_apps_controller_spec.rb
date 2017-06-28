@@ -6,7 +6,7 @@ module FrontEndBuilds
 
     describe 'show' do
       it 'should fetch info about the host application (rails)' do
-        get :show, id: 'current', format: :json
+        get :show, params: { id: 'current' }, format: :json
 
         expect(response).to be_success
         expect(json['host_app']['id']).to eq('current')

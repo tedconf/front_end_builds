@@ -18,9 +18,11 @@ module FrontEndBuilds
     describe 'create' do
       it 'should create a new pubkey' do
         post :create,
-          pubkey: {
-            name: 'my-new-key',
-            pubkey: 'asdfasdf'
+          params: {
+            pubkey: {
+              name: 'my-new-key',
+              pubkey: 'asdfasdf'
+            }
           },
           format: :json
 
@@ -36,8 +38,10 @@ module FrontEndBuilds
 
       it 'should not create a new pubkey without a pubkey' do
         post :create,
-          pubkey: {
-            name: 'my-new-key'
+          params: {
+            pubkey: {
+              name: 'my-new-key'
+            }
           },
           format: :json
 
@@ -50,7 +54,7 @@ module FrontEndBuilds
       let(:pubkey) { FactoryGirl.create(:front_end_builds_pubkey) }
 
       it 'should remove a pubkey' do
-        delete :destroy, id: pubkey.id, format: :json
+        delete :destroy, params: { id: pubkey.id }, format: :json
 
         expect(response).to be_success
 

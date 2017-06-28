@@ -39,32 +39,32 @@ module FrontEndBuilds
       end
 
       it "should find the live build" do
-        get :show, app_name: app.name
+        get :show, params: { app_name: app.name }
         expect(response).to be_success
         expect(response.body).to match(live.html)
       end
 
       it "should find the build by job" do
-        get :show, app_name: app.name, job: 'number3'
+        get :show, params: { app_name: app.name, job: 'number3' }
         expect(response).to be_success
         expect(response.body).to match(older.html)
       end
 
       it "should find the build by build_id" do
-        get :show, id: older.id
+        get :show, params: { id: older.id }
         expect(response).to be_success
         expect(response.body).to match(older.html)
       end
 
       it "should find the build by branch" do
-        get :show, app_name: app.name, branch: 'master'
+        get :show, params: { app_name: app.name, branch: 'master' }
         expect(response).to be_success
         expect(response.body).to match(latest.html)
       end
 
       context "meta tags" do
         before(:each) do
-          get :show, app_name: app.name, branch: 'master'
+          get :show, params: { app_name: app.name, branch: 'master' }
           expect(response).to be_success
         end
 
@@ -77,13 +77,13 @@ module FrontEndBuilds
       end
 
       it "should be 404 when nothing is found" do
-        get :show, app_name: 'does-not-exist', branch: 'master'
+        get :show, params: { app_name: 'does-not-exist', branch: 'master' }
         expect(response).to_not be_success
         expect(response.status).to eq(404)
       end
 
       it "should be able to get the version of the best build" do
-        get :show, app_name: app.name, branch: 'master', format: :json
+        get :show, params: { app_name: app.name, branch: 'master', format: :json }
         expect(json['version']).to eq(latest.id)
       end
 

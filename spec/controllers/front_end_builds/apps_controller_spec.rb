@@ -4,9 +4,9 @@ module FrontEndBuilds
   RSpec.describe AppsController, :type => :controller do
     routes { FrontEndBuilds::Engine.routes }
 
-    let(:app) { FactoryGirl.create :front_end_builds_app, name: 'dummy' }
-    let!(:builds) { FactoryGirl.create_list :front_end_builds_build, 2, app: app }
-    let!(:live_build) { FactoryGirl.create :front_end_builds_build, :live, :fetched, app: app }
+    let(:app) { FactoryGirl.create(:front_end_builds_app, name: 'dummy') }
+    let!(:builds) { FactoryGirl.create_list(:front_end_builds_build, 2, app: app) }
+    let!(:live_build) { FactoryGirl.create(:front_end_builds_build, :live, :fetched, app: app) }
 
     describe 'index' do
       it "should find all apps" do
@@ -20,7 +20,7 @@ module FrontEndBuilds
 
     describe 'show' do
       it "should find the requested app" do
-        get :show, id: app.id, format: :json
+        get :show, params: { id: app.id }, format: :json
 
         expect(response).to be_success
         expect(json['app']['id']).to eq(app.id)
@@ -31,8 +31,10 @@ module FrontEndBuilds
 
     describe 'create' do
       it "should create a new app" do
-        post :create, app: {
-            name: 'my-new-app'
+        post :create, params: {
+            app: {
+              name: 'my-new-app'
+            }
           },
           format: :json
 
@@ -50,9 +52,11 @@ module FrontEndBuilds
 
       it "should edit an existing app" do
         post :update,
-          id: app.id,
-          app: {
-            live_build_id: new_build.id
+          params: {
+            id: app.id,
+            app: {
+              live_build_id: new_build.id
+            }
           },
           format: :json
 
@@ -71,7 +75,9 @@ module FrontEndBuilds
       context 'a valid app' do
         before(:each) do
           post :destroy,
-            id: deletable_app.id,
+            params: {
+              id: deletable_app.id
+            },
             format: :json
         end
 

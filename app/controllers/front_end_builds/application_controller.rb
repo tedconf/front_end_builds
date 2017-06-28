@@ -15,11 +15,5 @@ module FrontEndBuilds
     def error!(errors, status = :unprocessable_entity)
       respond_with_json({ errors: errors }, status: status)
     end
-
-    private
-
-    def supports_strong_params?
-      Rails::VERSION::MAJOR >= 4
-    end
   end
 end

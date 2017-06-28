@@ -52,11 +52,7 @@ module FrontEndBuilds
     end
 
     def build_search_params
-      if supports_strong_params?
-        params.permit(:app_name, :id, :branch, :sha, :job)
-      else
-        params.slice(:app_name, :id, :branch, :sha, :job)
-      end
+      params.permit(:app_name, :id, :branch, :sha, :job)
     end
   end
 end

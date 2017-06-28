@@ -6,7 +6,6 @@ module FrontEndBuilds
 
     def index
       apps = App.includes(:recent_builds)
-
       respond_with_json({
         apps: apps.map(&:serialize),
         builds: apps.map(&:recent_builds)
@@ -61,7 +60,7 @@ module FrontEndBuilds
         )
       else
         respond_with_json(
-          {errors: @app.errors},
+          { errors: @app.errors },
           status: :unprocessable_entity
         )
       end
@@ -74,29 +73,17 @@ module FrontEndBuilds
     end
 
     def app_create_params
-      if supports_strong_params?
-        params.require(:app).permit(
-          :name
-        )
-      else
-        params[:app].slice(:name)
-      end
+      params.require(:app).permit(
+        :name
+      )
     end
 
     def app_update_params
-      if supports_strong_params?
-        params.require(:app).permit(
-          :name,
-          :require_manual_activation,
-          :live_build_id
-        )
-      else
-        params[:app].slice(
-          :name,
-          :require_manual_activation,
-          :live_build_id
-        )
-      end
+      params.require(:app).permit(
+        :name,
+        :require_manual_activation,
+        :live_build_id
+      )
     end
   end
 end

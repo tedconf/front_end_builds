@@ -7,6 +7,7 @@ require 'rspec/its'
 require 'factory_girl_rails'
 require 'shoulda/matchers'
 require 'webmock/rspec'
+require 'database_cleaner'
 
 Rails.backtrace_cleaner.remove_silencers!
 
