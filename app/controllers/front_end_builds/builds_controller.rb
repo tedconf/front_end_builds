@@ -71,5 +71,7 @@ module FrontEndBuilds
     def build_create_params_rails_4
       params.permit(*_create_params)
     end
+    alias_method :build_create_params_rails_5, :build_create_params_rails_4
+
   end
 end

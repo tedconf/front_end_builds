@@ -58,5 +58,7 @@ module FrontEndBuilds
     def build_search_params_rails_4
       params.permit(:app_name, :id, :branch, :sha, :job)
     end
+    alias_method :build_search_params_rails_5, :build_search_params_rails_4
+
   end
 end

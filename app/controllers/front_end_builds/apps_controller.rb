@@ -82,6 +82,7 @@ module FrontEndBuilds
         :name
       )
     end
+    alias_method :app_create_params_rails_5, :app_create_params_rails_4
 
     def app_update_params_rails_3
       params[:app].slice(
@@ -98,6 +99,7 @@ module FrontEndBuilds
         :live_build_id
       )
     end
+    alias_method :app_update_params_rails_5, :app_update_params_rails_4
 
   end
 end
