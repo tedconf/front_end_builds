@@ -46,5 +46,7 @@ module FrontEndBuilds
         :pubkey
       )
     end
+    alias_method :pubkey_create_params_rails_5, :pubkey_create_params_rails_4
+
   end
 end
