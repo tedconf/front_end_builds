@@ -1,6 +1,4 @@
 language: ruby
-# Reset lockfile for different rails versions
-before_install: "rm Gemfile.lock"
 install: bundle install
 script:
   - bundle exec rake db:create
