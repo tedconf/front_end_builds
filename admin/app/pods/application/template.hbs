@@ -1,32 +1,22 @@
-<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      {{#link-to 'apps' class='navbar-brand'}}
-        <strong>{{model.friendlyName}}'s</strong> frontend apps
-      {{/link-to}}
+<nav class="navbar">
+  <div class="flex flex-no-shrink items-stretch h-16">
+    <div class="navbar-link">
+      <strong>{{model.friendlyName}}'s</strong>&nbsp;frontend apps
     </div>
+  </div>
+  <div class="lg:flex lg:items-stretch lg:flex-no-shrink lg:flex-grow">
+    <div class="lg:flex lg:items-stretch lg:justify-end ml-auto">
+      {{link-to "Apps" "apps"
+        classNames="navbar-link navbar-link__apps"}}
 
-    <ul class="Navigation-links nav navbar-nav navbar-right">
-      <li>
-        {{link-to "Apps" "apps"
-          classNames="Navigation-links__apps"}}
-      </li>
-      <li>
-        {{link-to "SSH keys" "pubkeys"
-          classNames="Navigation-links__pubkeys"}}
-      </li>
-      <li>
-        <a href="https://github.com/tedconf/front_end_builds/issues" target="_blank">
-          Support
-        </a>
-      </li>
-    </ul>
+      {{link-to "SSH keys" "pubkeys"
+        classNames="navbar-link navbar-link__pubkeys"}}
+      <a href="https://github.com/tedconf/front_end_builds" target="_blank" class="navbar-link">Help</a>
 
+    </div>
   </div>
 </nav>
 
-<div class="container">
+<div class="container mx-auto font-light">
   {{outlet}}
 </div>
-
-{{liquid-modal}}

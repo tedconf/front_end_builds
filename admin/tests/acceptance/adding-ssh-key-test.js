@@ -1,131 +1,140 @@
-/* global server */
-import Ember from 'ember';
-import {module, test} from 'qunit';
-import startApp from '../helpers/start-app';
+import { module, test } from 'qunit';
+import { visit, currentRouteName, click, fillIn } from '@ember/test-helpers';
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { assertionInjector } from '../assertions';
 
-var application;
+module('Acceptance | adding ssh key', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(function() {
+    assertionInjector(this);
+  });
 
-module('Acceptance: SSH keys', {
-  beforeEach: function() {
-    application = startApp();
-    server.create('host_app', { id: 'current' });
-  },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
-  }
-});
+  test("I should be able to get to the ssk key section from the navigation", async function(assert) {
+    this.server.create('host_app', { id: 'current' });
 
-test("I should be able to get to the ssk key section from the navigation", function(assert) {
-  visit("/");
+    await visit("/");
 
-  click(".Navigation-links__pubkeys");
+    await click(".navbar-link__pubkeys");
 
-  andThen(function() {
     assert.equal(currentRouteName(), "pubkeys.index");
   });
-});
 
-test("I should get a new SSH key form if I have never added a key", function(assert) {
-  visit("/ssh-keys");
-  assertExists(".Pubkey-form");
+  test("I should get a new SSH key form if I have never added a key", async function(assert) {
+    this.server.create('host_app', { id: 'current' });
 
-  // should not see the new ssh key button since we are inlining
-  // the form
-  assertExists(".new-pubkey", 0);
+    await visit("/ssh-keys");
 
-  fillIn(".Pubkey-form__name", "My first key");
-  fillIn(".Pubkey-form__pubkey", "key");
+    assert.count(".Pubkey-form", 1);
 
-  click(".Pubkey-form__save");
+    // should not see the new ssh key button since we are inlining
+    // the form
+    assert.count(".new-pubkey.btn-primary", 1);
+    assert.count(".new-pubkey.btn-default", 0);
 
-  assertExists(".Pubkey-table");
-  assertExists(".Pubkey-table__pubkey");
-});
+    await fillIn(".Form__name", "My first key");
+    await fillIn(".Form__pubkey", "key");
+    await click(".Form__buttons button.btn-success");
 
-test("I should end up back on the apps page if I cancel adding my first key", function(assert) {
-  visit("/ssh-keys");
-  click(".Pubkey-form__cancel");
-
-  andThen(function() {
-    assert.equal(currentRouteName(), "apps");
+    assert.count(".Pubkey-table", 1);
+    assert.count(".Table__row", 1);
   });
-});
 
-test("I should see a list of all my keys when I have keys to display", function(assert) {
-  server.createList('pubkey', 2);
+  test("I should not be able to cancel my first key form", async function(assert) {
+    this.server.create('host_app', { id: 'current' });
 
-  visit("/ssh-keys");
+    await visit("/ssh-keys");
 
-  assertExists(".Pubkey-table");
-  assertExists(".Pubkey-table__pubkey", 2);
-});
+    assert.count(".Form__cancel", 0);
+  });
 
-test("I should be able to add a new key", function(assert) {
-  server.create('pubkey');
+  test("I should see a list of all my keys when I have keys to display", async function(assert) {
+    this.server.create('host_app', { id: 'current' });
+    this.server.createList('pubkey', 2);
 
-  visit("/ssh-keys");
+    await visit("/ssh-keys");
 
-  click(".new-pubkey");
+    assert.count(".Pubkey-table", 1);
+    assert.count(".Table__row", 2);
+  });
 
-  assertExists(".Pubkey-form");
-  fillIn(".Pubkey-form__name", "Test key");
-  fillIn(".Pubkey-form__pubkey", "The key");
-  click(".Pubkey-form__save");
+  test("I should be able to add a new key", async function(assert) {
+    this.server.create('host_app', { id: 'current' });
+    this.server.create('pubkey');
 
-  assertExists(".Pubkey-table");
-  assertExists(".Pubkey-table__pubkey", 2);
-});
+    await visit("/ssh-keys");
 
-test("I should not be able to add a pubkey without the required fields", function(assert) {
-  server.create('pubkey');
+    await click(".new-pubkey");
 
-  visit("/ssh-keys");
+    assert.count(".Pubkey-form", 1);
 
-  click(".new-pubkey");
+    await fillIn(".Form__name", "Test key");
+    await fillIn(".Form__pubkey", "The key");
+    await click(".Form__buttons button.btn-success");
 
-  click(".Pubkey-form__save");
+    assert.count(".Pubkey-table", 1);
+    assert.count(".Table__row", 2);
+  });
 
-  assertExists(".Pubkey-form .form-group.has-error", 2);
-});
+  test("I should not be able to add a pubkey without the required fields", async function(assert) {
+    this.server.create('host_app', { id: 'current' });
+    this.server.create('pubkey');
 
-test("I should be able to cancel adding a new key", function(assert) {
-  server.create('pubkey');
+    await visit("/ssh-keys");
 
-  visit("/ssh-keys");
+    await click(".new-pubkey");
 
-  click(".new-pubkey");
+    await click(".Form__buttons button.btn-success");
 
-  assertExists(".Pubkey-form");
-  click(".Pubkey-form__cancel");
+    assert.count(".Form__row-error", 2);
+  });
 
-  assertExists(".Pubkey-table");
-  assertExists(".Pubkey-table__pubkey", 1);
-});
+  test("I should be able to cancel adding a new key", async function(assert) {
+    this.server.create('host_app', { id: 'current' });
+    this.server.create('pubkey');
 
-test("I should be able to delete a key", function(assert) {
-  server.createList('pubkey', 2);
+    await visit("/ssh-keys");
 
-  visit("/ssh-keys");
+    await click(".new-pubkey");
 
-  click(".Pubkey-table__delete:first");
+    assert.count(".Pubkey-form", 1);
 
-  assertExists(".Delete-pubkey-modal");
+    await click(".Form__cancel");
 
-  click(".Delete-pubkey-modal__confirm-delete");
+    assert.count(".Pubkey-table", 1);
+    assert.count(".Table__row", 1);
+  });
 
-  assertExists(".Pubkey-table__pubkey", 1);
-});
+  test("I should be able to delete a key", async function(assert) {
+    this.server.create('host_app', { id: 'current' });
+    this.server.createList('pubkey', 2);
 
-test("I should be able to cancel deleting a key", function(assert) {
-  server.createList('pubkey', 2);
+    await visit("/ssh-keys");
 
-  visit("/ssh-keys");
+    await click(".Pubkey-table__delete");
 
-  click(".Pubkey-table__delete:first");
+    assert.count(".Delete-pubkey-modal", 1);
 
-  assertExists(".Delete-pubkey-modal");
+    await click(".Panel-footer button.btn-danger");
 
-  click(".Delete-pubkey-modal__cancel");
+    assert.count(".Pubkey-table", 1);
+    assert.count(".Table__row", 1);
+  });
 
-  assertExists(".Pubkey-table__pubkey", 2);
+  test("I should be able to cancel deleting a key", async function(assert) {
+    this.server.create('host_app', { id: 'current' });
+    this.server.createList('pubkey', 2);
+
+    await visit("/ssh-keys");
+
+    await click(".Pubkey-table__delete");
+
+    assert.count(".Delete-pubkey-modal", 1);
+
+    await click(".Panel-footer button.btn-primary");
+
+    assert.count(".Pubkey-table", 1);
+    assert.count(".Table__row", 2);
+  });
 });

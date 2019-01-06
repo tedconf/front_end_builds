@@ -1,0 +1,41 @@
+{{#modal-panel title="Rename this app?"
+  showCancel=true
+  dismiss=(action 'dismiss')
+  submitLabel="Rename"
+  submittingLabel="Renaming..."
+  submitDisabled=showNameError
+  submit=(action 'submit')
+  isSubmitting=isSubmitting
+  }}
+  <p>
+    If you rename your <strong>{{app.name}}</strong> app, you'll
+    need to update the <code>routes.rb</code> file in your Rails
+    app. Currently it probably looks something like this:
+  </p>
+
+  <pre>
+Rails.application.routes.draw do
+front_end '{{app.name}}'
+end</pre>
+
+  <p>
+    You'll need to change the <code>'{{app.name}}'</code>
+    portion to match the updated app name.
+  </p>
+
+
+  <form {{action "submit" on="submit"}}>
+    <div class="Form__row {{if showNameError "Form__row-error"}}">
+      <label class="Form__label {{if showNameError "Form__label-error"}}" for="app-name">
+        App name
+      </label>
+      {{input
+        value=app.name
+        classNames="Form__name"
+        id="app-name"
+        placeholder="Enter an app name"
+      }}
+    </div>
+  </form>
+
+{{/modal-panel}}

@@ -1,14 +1,13 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
+export default Component.extend({
+  classNames: Object.freeze(['Toggle-switch']),
   action: null,
   value: null,
 
   actions: {
     toggle: function() {
-      this.sendAction('action', !this.get('value'));
+      this.action(!this.get('value'));
     }
-  },
-
-  classNames: ['Toggle-switch']
+  }
 });

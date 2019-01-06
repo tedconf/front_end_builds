@@ -1,0 +1,56 @@
+<table class="Table">
+  <thead>
+    <tr class="Table__head">
+      <th>SHA</th>
+      <th>Branch</th>
+      <th>Built</th>
+      <th>Launch</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each app.builds as |build|}}
+      <tr class="Table__row {{if build.isLive 'bg-green-lightest'}}">
+        <td>
+          <div class="Table__build">
+            {{build.shortSha}}
+          </div>
+        </td>
+        <td>
+          <div class="Table__build">
+            {{build.branch}}
+          </div>
+        </td>
+        <td>
+          <div class="Table__build">
+            {{build.createdAtFormatted}}
+          </div>
+        </td>
+        <td>
+          <a href="{{build.location}}"
+            class="Build-list__launch-build">
+            Build {{fa-icon 'external-link-alt'}}
+          </a>
+          <br/>
+          <a href="{{build.locationBranch}}"
+            class="Build-list__launch-build">
+            Branch {{fa-icon 'external-link-alt'}}
+          </a>
+        </td>
+        <td>
+          <div class="float-right">
+            {{#if build.isLive}}
+              <a class="btn btn-default">
+                Live
+              </a>
+
+            {{else}}
+              <a {{action "activate" build}}
+              class="btn btn-primary">Make live</a>
+            {{/if}}
+          </div>
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

@@ -1,16 +1,24 @@
 import DS from 'ember-data';
-import Ember from 'ember';
+const { attr, belongsTo, hasMany } = DS;
+import { computed } from '@ember/object';
 
-export default DS.Model.extend({
-  builds: DS.hasMany('build'),
-  liveBuild: DS.belongsTo('build'),
+import { validator, buildValidations } from 'ember-cp-validations';
 
-  name: DS.attr('string', {defaultValue: ''}),
-  apiKey: DS.attr('string'),
-  location: DS.attr('string'),
-  requireManualActivation: DS.attr('boolean'),
-  activateNewDeploys: Ember.computed.not('requireManualActivation'),
+const Validations = buildValidations({
+  name: validator('presence', true),
+});
 
-  buildsSorting: ['createdAt:desc'],
-  orderedBuilds: Ember.computed.sort('builds', 'buildsSorting'),
+export default DS.Model.extend(Validations, {
+  builds: hasMany('build'),
+  liveBuild: belongsTo('build'),
+
+  name: attr('string', {defaultValue: ''}),
+  apiKey: attr('string'),
+  location: attr('string'),
+
+  requireManualActivation: attr('boolean'),
+  activateNewDeploys: computed.not('requireManualActivation'),
+
+  buildsSorting: Object.freeze(['createdAt:desc']),
+  orderedBuilds: computed.sort('builds', 'buildsSorting'),
 });

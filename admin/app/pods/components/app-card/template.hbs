@@ -1,32 +1,19 @@
-<div {{bind-attr class=":App-card :panel app.liveBuild:panel-success:panel-default"}}>
-  <div class="panel-heading">
-    <h3 class="panel-title">
-      {{link-to app.name 'app' app
-        classNames="App-card__heading-link"}}
-    </h3>
+<div class="Panel h-full">
+  <div class="Panel-head {{if app.liveBuild "Panel-head__active" "Panel-head__inactive"}}">
+    {{link-to app.name "app" app
+      classNames=""}}
   </div>
-  <div class="App-card__body panel-body">
-
+  <div class="Panel-content">
     {{build-info build=app.liveBuild}}
-
-    <hr class='short-divider'>
-
+  </div>
+  <div class="Panel-footer">
     {{#if app.liveBuild}}
-
-      {{link-to "See builds" 'app' app
-        classNames="Card-button btn btn-flat btn-xs btn-info"}}
-
-      <a {{bind-attr href=app.location}}
-        class="Card-button pull-right btn-material-grey-600 btn btn-flat btn-xs btn-info">
-          Launch app {{fa-icon "external-link"}}
+      {{link-to "See builds" "app" app classNames=""}}
+      <a href="{{app.location}}" class="float-right" target="_blank">Launch app {{fa-icon "external-link-alt"}}
       </a>
-
     {{else}}
-
-      {{link-to "Install instructions" 'app' app
-        classNames="Card-button btn btn-flat btn-xs btn-info"}}
-
+      {{link-to "Install instructions" "app" app
+        classNames=""}}
     {{/if}}
-
   </div>
 </div>

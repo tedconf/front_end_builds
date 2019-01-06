@@ -1,59 +1,54 @@
-/* global server */
-import Ember from 'ember';
-import {module, test} from 'qunit';
-import startApp from '../helpers/start-app';
+import { module, test } from 'qunit';
+import { visit, currentRouteName, click } from '@ember/test-helpers';
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { assertionInjector } from '../assertions';
 
-var App;
+module('Acceptance | apps', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(function() {
+    assertionInjector(this);
+  });
 
-module('Acceptance: Apps', {
-  beforeEach: function() {
-    App = startApp();
-    server.create('host_app', { id: 'current' });
-  },
-  afterEach: function() {
-    Ember.run(App, 'destroy');
-  }
-});
+  test("I can view the admin overview", async function(assert) {
+    this.server.create('host_app', { id: 'current' });
 
-test("I can view the admin overview", function(assert) {
-  visit('/');
+    await visit('/');
 
-  andThen(function() {
     assert.equal(currentRouteName(), 'apps');
   });
-});
 
-test("The overview summarizes an apps current live build", function(assert) {
-  server.create('app', { name: 'first-app', build_ids: [1, 2], live_build_id: 2 });
-  server.create('build', { app_id: 1, sha: '123', job: 1, branch: 'nonmaster' });
-  server.create('build', { app_id: 1, sha: '456', job: 2, branch: 'latest' });
+  test("The overview summarizes an apps current live build", async function(assert) {
+    this.server.create('host_app', { id: 'current' });
+    this.server.create('app', { name: 'first-app', build_ids: [1, 2], live_build_id: 2 });
+    this.server.create('build', { app_id: 1, sha: '123', job: 1, branch: 'nonmaster' });
+    this.server.create('build', { app_id: 1, sha: '456', job: 2, branch: 'latest' });
 
-  visit('/');
+    await visit('/');
 
-  andThen(function() {
-    assertPageContainsText('latest');
-    assertPageContainsText('456');
+    assert.contains('.Build-info', 'latest');
+    assert.contains('.Build-info', '456');
+
   });
-});
 
-test("The overview displays an info message if an app has no live build", function(assert) {
-  server.create('app', { name: 'first-app' });
+  test("The overview displays an info message if an app has no live build", async function(assert) {
+    this.server.create('host_app', { id: 'current' });
+    this.server.create('app', { name: 'first-app' });
 
-  visit('/');
+    await visit('/');
 
-  andThen(function() {
-    assertPageContainsText('No active build');
+    assert.contains('body', 'No active build');
   });
-});
 
-test("I can view an app's details", function(assert) {
- server.create('app', { name: 'first-app' });
+  test("I can view an app's details", async function(assert) {
+    this.server.create('host_app', { id: 'current' });
+    this.server.create('app', { name: 'first-app' });
 
- visit('/');
- click('a:contains("first-app")');
+    await visit('/');
+    await click('.Panel-head__inactive a');
 
- andThen(function() {
-   assert.equal(currentRouteName(), 'app.index');
-   assertText('h1', 'first-app');
- });
+    assert.equal(currentRouteName(), 'app.index');
+    assert.contains('h1', 'first-app');
+  });
 });

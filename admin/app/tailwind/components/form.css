@@ -1,0 +1,39 @@
+.Form {
+  @apply .font-hairline .bg-white .shadow-md .px-8 .pt-6 .pb-8 .mb-4 .mx-2;
+}
+
+.Form legend {
+  @apply .font-normal .text-xl .pb-5;
+}
+
+.Form__row {
+  @apply .flex .flex-col .border-b .border-b-2 .border-teal .py-2;
+}
+
+.Form__row-error {
+  @apply .border-red;
+}
+
+.Form__label {
+  @apply .block .text-grey-darker .text-sm .font-bold .mb-2;
+}
+
+.Form__label-error {
+  @apply .text-red;
+}
+
+.Form__name {
+  @apply .appearance-none .bg-transparent .border-none .w-full .text-grey-darker .mr-3 .py-1 .px-2 .leading-tight;
+}
+
+.Form__name:focus {
+  @apply .outline-none;
+}
+
+.Form__buttons {
+  @apply .flex .flex-row .px-5 .py-5;
+}
+
+.Form__buttons button {
+  @apply .mx-2;
+}

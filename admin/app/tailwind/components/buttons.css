@@ -1,0 +1,76 @@
+/* Navbar */
+
+.navbar {
+  @apply .relative .select-none .bg-indigo .w-full;
+}
+
+@screen lg {
+  .navbar {
+    @apply .flex .items-stretch;
+  }
+}
+
+.navbar-link {
+  @apply .flex-no-grow .flex-no-shrink .relative .py-2 .px-4 .leading-normal .text-white .no-underline .flex .items-center;
+}
+
+.navbar-link:hover {
+  @apply .bg-indigo-light;
+}
+
+/* Buttons */
+
+.btn {
+  @apply .bg-transparent .border .py-2 .px-4;
+}
+.btn:hover {
+  @apply .text-white .border-transparent shadow-lg;
+}
+
+.btn-round {
+  @apply rounded-full mr-2;
+}
+
+/* Variations */
+
+.btn-default {
+  @apply .border-grey .text-grey-dark;
+}
+.btn-default:hover {
+  @apply .bg-grey;
+}
+
+.btn-primary {
+  @apply .border-blue .text-blue-dark;
+}
+.btn-primary:hover {
+  @apply .bg-blue;
+}
+
+.btn-success {
+  @apply .border-green .text-green-dark;
+}
+.btn-success:hover {
+  @apply .bg-green;
+}
+
+.btn-info {
+  @apply .border-teal .text-teal-dark;
+}
+.btn-info:hover {
+  @apply .bg-teal;
+}
+
+.btn-warning {
+  @apply .border-orange .text-orange-dark;
+}
+.btn-warning:hover {
+  @apply .bg-orange;
+}
+
+.btn-danger {
+  @apply .border-red .text-red-dark;
+}
+.btn-danger:hover {
+  @apply .bg-red;
+}
