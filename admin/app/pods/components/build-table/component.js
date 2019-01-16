@@ -8,9 +8,16 @@ export default Component.extend({
   page: 1,
 
   didInsertElement() {
-    let page = this.get('page');
+    this.loadPage(this.get('page'));
+  },
+
+  loadPage(page) {
+    this.set('isLoading', true);
     this.get('store').query('build', { app_id: this.get('app').id, page: page }).then(() => {
-      this.set('page', page+1);
+      this.setProperties({
+        isLoading: false,
+        page: page+1
+      });
     });
   },
 
@@ -19,6 +26,10 @@ export default Component.extend({
       let app = this.get('app');
       app.set('liveBuild', build);
       app.save();
+    },
+
+    loadMore() {
+      this.loadPage(this.get('page'));
     }
   }
 });

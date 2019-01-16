@@ -54,3 +54,11 @@
     {{/each}}
   </tbody>
 </table>
+
+<p class="pt-5 text-center">
+{{#if isLoading}}
+  <a class="btn btn-default">Loading...</a>
+{{else}}
+  <a {{action "loadMore"}} class="btn btn-primary">Load more</a>
+{{/if}}
+</p>
