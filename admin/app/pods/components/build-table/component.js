@@ -22,12 +22,6 @@ export default Component.extend({
   },
 
   actions: {
-    activate(build) {
-      let app = this.get('app');
-      app.set('liveBuild', build);
-      app.save();
-    },
-
     loadMore() {
       this.loadPage(this.get('page'));
     }
