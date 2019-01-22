@@ -2461,6 +2461,52 @@
 
   _exports.default = _default;
 });
+;define("admin/pods/components/build-table-row/component", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _default = Ember.Component.extend({
+    classNames: Object.freeze(['Table__row']),
+    classNameBindings: Object.freeze(['isLive:bg-green-lightest']),
+    tagName: 'tr',
+    store: Ember.inject.service(),
+    actions: {
+      activate(build) {
+        this.set('isLoading', true);
+        let app = this.get('app');
+        app.set('liveBuild', build);
+        app.save().then(() => {
+          this.set('isLoading', false);
+        });
+      }
+
+    }
+  });
+
+  _exports.default = _default;
+});
+;define("admin/pods/components/build-table-row/template", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _default = Ember.HTMLBars.template({
+    "id": "Vt8wFkD6",
+    "block": "{\"symbols\":[],\"statements\":[[7,\"td\"],[9],[0,\"\\n  \"],[7,\"div\"],[11,\"class\",\"Table__build\"],[9],[0,\"\\n    \"],[1,[23,[\"build\",\"shortSha\"]],false],[0,\"\\n  \"],[10],[0,\"\\n\"],[10],[0,\"\\n\"],[7,\"td\"],[9],[0,\"\\n  \"],[7,\"div\"],[11,\"class\",\"Table__build\"],[9],[0,\"\\n    \"],[1,[23,[\"build\",\"branch\"]],false],[0,\"\\n  \"],[10],[0,\"\\n\"],[10],[0,\"\\n\"],[7,\"td\"],[9],[0,\"\\n  \"],[7,\"div\"],[11,\"class\",\"Table__build\"],[9],[0,\"\\n    \"],[1,[23,[\"build\",\"createdAtFormatted\"]],false],[0,\"\\n  \"],[10],[0,\"\\n\"],[10],[0,\"\\n\"],[7,\"td\"],[9],[0,\"\\n  \"],[7,\"a\"],[12,\"href\",[28,[[23,[\"build\",\"location\"]]]]],[11,\"class\",\"Build-list__launch-build\"],[9],[0,\"\\n    Build \"],[1,[27,\"fa-icon\",[\"external-link-alt\"],null],false],[0,\"\\n  \"],[10],[0,\"\\n  \"],[7,\"br\"],[9],[10],[0,\"\\n  \"],[7,\"a\"],[12,\"href\",[28,[[23,[\"build\",\"locationBranch\"]]]]],[11,\"class\",\"Build-list__launch-build\"],[9],[0,\"\\n    Branch \"],[1,[27,\"fa-icon\",[\"external-link-alt\"],null],false],[0,\"\\n  \"],[10],[0,\"\\n\"],[10],[0,\"\\n\"],[7,\"td\"],[9],[0,\"\\n  \"],[7,\"div\"],[11,\"class\",\"float-right\"],[9],[0,\"\\n\"],[4,\"if\",[[23,[\"isLoading\"]]],null,{\"statements\":[[0,\"      \"],[7,\"a\"],[11,\"class\",\"btn btn-default\"],[9],[0,\"Selecting...\"],[10],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[4,\"if\",[[23,[\"build\",\"isLive\"]]],null,{\"statements\":[[0,\"        \"],[7,\"a\"],[11,\"class\",\"btn btn-default\"],[9],[0,\"\\n          Live\\n        \"],[10],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"        \"],[7,\"a\"],[11,\"class\",\"btn btn-primary\"],[9],[0,\"Make live\"],[3,\"action\",[[22,0,[]],\"activate\",[23,[\"build\"]]]],[10],[0,\"\\n\"]],\"parameters\":[]}]],\"parameters\":[]}],[0,\"  \"],[10],[0,\"\\n\"],[10],[0,\"\\n\"]],\"hasEval\":false}",
+    "meta": {
+      "moduleName": "admin/pods/components/build-table-row/template.hbs"
+    }
+  });
+
+  _exports.default = _default;
+});
 ;define("admin/pods/components/build-table/component", ["exports"], function (_exports) {
   "use strict";
 
@@ -2492,12 +2538,6 @@
     },
 
     actions: {
-      activate(build) {
-        let app = this.get('app');
-        app.set('liveBuild', build);
-        app.save();
-      },
-
       loadMore() {
         this.loadPage(this.get('page'));
       }
@@ -2516,8 +2556,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "U2Dcgzm9",
-    "block": "{\"symbols\":[\"build\"],\"statements\":[[7,\"table\"],[11,\"class\",\"Table\"],[9],[0,\"\\n  \"],[7,\"thead\"],[9],[0,\"\\n    \"],[7,\"tr\"],[11,\"class\",\"Table__head\"],[9],[0,\"\\n      \"],[7,\"th\"],[9],[0,\"SHA\"],[10],[0,\"\\n      \"],[7,\"th\"],[9],[0,\"Branch\"],[10],[0,\"\\n      \"],[7,\"th\"],[9],[0,\"Built\"],[10],[0,\"\\n      \"],[7,\"th\"],[9],[0,\"Launch\"],[10],[0,\"\\n      \"],[7,\"th\"],[9],[0,\" \"],[10],[0,\"\\n    \"],[10],[0,\"\\n  \"],[10],[0,\"\\n  \"],[7,\"tbody\"],[9],[0,\"\\n\"],[4,\"each\",[[23,[\"app\",\"builds\"]]],null,{\"statements\":[[0,\"      \"],[7,\"tr\"],[12,\"class\",[28,[\"Table__row \",[27,\"if\",[[22,1,[\"isLive\"]],\"bg-green-lightest\"],null]]]],[9],[0,\"\\n        \"],[7,\"td\"],[9],[0,\"\\n          \"],[7,\"div\"],[11,\"class\",\"Table__build\"],[9],[0,\"\\n            \"],[1,[22,1,[\"shortSha\"]],false],[0,\"\\n          \"],[10],[0,\"\\n        \"],[10],[0,\"\\n        \"],[7,\"td\"],[9],[0,\"\\n          \"],[7,\"div\"],[11,\"class\",\"Table__build\"],[9],[0,\"\\n            \"],[1,[22,1,[\"branch\"]],false],[0,\"\\n          \"],[10],[0,\"\\n        \"],[10],[0,\"\\n        \"],[7,\"td\"],[9],[0,\"\\n          \"],[7,\"div\"],[11,\"class\",\"Table__build\"],[9],[0,\"\\n            \"],[1,[22,1,[\"createdAtFormatted\"]],false],[0,\"\\n          \"],[10],[0,\"\\n        \"],[10],[0,\"\\n        \"],[7,\"td\"],[9],[0,\"\\n          \"],[7,\"a\"],[12,\"href\",[28,[[22,1,[\"location\"]]]]],[11,\"class\",\"Build-list__launch-build\"],[9],[0,\"\\n            Build \"],[1,[27,\"fa-icon\",[\"external-link-alt\"],null],false],[0,\"\\n          \"],[10],[0,\"\\n          \"],[7,\"br\"],[9],[10],[0,\"\\n          \"],[7,\"a\"],[12,\"href\",[28,[[22,1,[\"locationBranch\"]]]]],[11,\"class\",\"Build-list__launch-build\"],[9],[0,\"\\n            Branch \"],[1,[27,\"fa-icon\",[\"external-link-alt\"],null],false],[0,\"\\n          \"],[10],[0,\"\\n        \"],[10],[0,\"\\n        \"],[7,\"td\"],[9],[0,\"\\n          \"],[7,\"div\"],[11,\"class\",\"float-right\"],[9],[0,\"\\n\"],[4,\"if\",[[22,1,[\"isLive\"]]],null,{\"statements\":[[0,\"              \"],[7,\"a\"],[11,\"class\",\"btn btn-default\"],[9],[0,\"\\n                Live\\n              \"],[10],[0,\"\\n\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"              \"],[7,\"a\"],[11,\"class\",\"btn btn-primary\"],[9],[0,\"Make live\"],[3,\"action\",[[22,0,[]],\"activate\",[22,1,[]]]],[10],[0,\"\\n\"]],\"parameters\":[]}],[0,\"          \"],[10],[0,\"\\n        \"],[10],[0,\"\\n      \"],[10],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"  \"],[10],[0,\"\\n\"],[10],[0,\"\\n\\n\"],[7,\"p\"],[11,\"class\",\"pt-5 text-center\"],[9],[0,\"\\n\"],[4,\"if\",[[23,[\"isLoading\"]]],null,{\"statements\":[[0,\"  \"],[7,\"a\"],[11,\"class\",\"btn btn-default\"],[9],[0,\"Loading...\"],[10],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"  \"],[7,\"a\"],[11,\"class\",\"btn btn-primary\"],[9],[0,\"Load more\"],[3,\"action\",[[22,0,[]],\"loadMore\"]],[10],[0,\"\\n\"]],\"parameters\":[]}],[10],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "b8WfVgkV",
+    "block": "{\"symbols\":[\"build\"],\"statements\":[[7,\"table\"],[11,\"class\",\"Table\"],[9],[0,\"\\n  \"],[7,\"thead\"],[9],[0,\"\\n    \"],[7,\"tr\"],[11,\"class\",\"Table__head\"],[9],[0,\"\\n      \"],[7,\"th\"],[9],[0,\"SHA\"],[10],[0,\"\\n      \"],[7,\"th\"],[9],[0,\"Branch\"],[10],[0,\"\\n      \"],[7,\"th\"],[9],[0,\"Built\"],[10],[0,\"\\n      \"],[7,\"th\"],[9],[0,\"Launch\"],[10],[0,\"\\n      \"],[7,\"th\"],[9],[0,\" \"],[10],[0,\"\\n    \"],[10],[0,\"\\n  \"],[10],[0,\"\\n  \"],[7,\"tbody\"],[9],[0,\"\\n\"],[4,\"each\",[[23,[\"app\",\"builds\"]]],null,{\"statements\":[[0,\"      \"],[1,[27,\"build-table-row\",null,[[\"app\",\"build\",\"isLive\"],[[23,[\"app\"]],[22,1,[]],[22,1,[\"isLive\"]]]]],false],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"  \"],[10],[0,\"\\n\"],[10],[0,\"\\n\\n\"],[7,\"p\"],[11,\"class\",\"pt-5 text-center\"],[9],[0,\"\\n\"],[4,\"if\",[[23,[\"isLoading\"]]],null,{\"statements\":[[0,\"  \"],[7,\"a\"],[11,\"class\",\"btn btn-default\"],[9],[0,\"Loading...\"],[10],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"  \"],[7,\"a\"],[11,\"class\",\"btn btn-primary\"],[9],[0,\"Load more\"],[3,\"action\",[[22,0,[]],\"loadMore\"]],[10],[0,\"\\n\"]],\"parameters\":[]}],[10],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "admin/pods/components/build-table/template.hbs"
     }
@@ -4810,7 +4850,7 @@ catch(err) {
 
 ;
           if (!runningTests) {
-            require("admin/app")["default"].create({"name":"admin","version":"0.0.0+0f58b99b"});
+            require("admin/app")["default"].create({"name":"admin","version":"0.0.0+a5cfabe2"});
           }
         
 //# sourceMappingURL=admin.map
