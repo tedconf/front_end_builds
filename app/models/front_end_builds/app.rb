@@ -9,18 +9,6 @@ module FrontEndBuilds
     belongs_to :live_build, class_name: 'FrontEndBuilds::Build'
     has_many :builds, class_name: 'FrontEndBuilds::Build'
 
-    if ActiveRecord::VERSION::MAJOR < 4
-      # Rails 3
-      has_many :recent_builds,
-        class_name: "FrontEndBuilds::Build",
-        limit: 10,
-        order: 'created_at desc'
-    else
-      # Rails 4
-      has_many :recent_builds, -> { recent },
-        class_name: "FrontEndBuilds::Build"
-    end
-
     validates :name, presence: true
 
     def self.register_url(name, url)
@@ -41,7 +29,6 @@ module FrontEndBuilds
       {
         id: id,
         name: name,
-        build_ids: recent_builds.map(&:id),
         live_build_id: (live_build ? live_build.id : nil),
         location: get_url,
         require_manual_activation: require_manual_activation
