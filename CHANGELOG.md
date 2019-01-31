@@ -1,5 +1,9 @@
 # What's new
 
+### 1.0.0 (January 31, 2019)
+* Support for Rails 5
+* Dropping support for < Rails 5
+
 ## Upgrading
 
 To upgrade ``front_end_builds`` just set the appropriate version in your
