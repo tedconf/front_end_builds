@@ -5,13 +5,13 @@ FactoryBot.define do
     sequence(:sha) { |n| "sha#{n}" }
     sequence(:job) { |n| n }
     sequence(:endpoint) { |n| "http://ted.bucket.ted.com/#{n}/index.html" }
-    branch "master"
-    signature "some signature"
-    html "hello world"
+    branch { "master" }
+    signature { "some signature" }
+    html { "hello world" }
     association :app, factory: :front_end_builds_app
 
     trait :fetched do
-      fetched true
+      fetched { true }
     end
 
     trait :live do
