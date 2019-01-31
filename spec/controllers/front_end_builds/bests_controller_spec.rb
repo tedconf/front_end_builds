@@ -2,11 +2,11 @@ require 'rails_helper'
 
 module FrontEndBuilds
   RSpec.describe BestsController, :type => :controller do
-    let(:app) { FactoryGirl.create :front_end_builds_app, name: 'dummy' }
+    let(:app) { FactoryBot.create :front_end_builds_app, name: 'dummy' }
 
     describe "show" do
       let!(:latest) do
-        FactoryGirl.create :front_end_builds_build,
+        FactoryBot.create :front_end_builds_build,
           app: app,
           sha: 'sha1',
           job: 'number1',
@@ -17,7 +17,7 @@ module FrontEndBuilds
       end
 
       let!(:live) do
-        FactoryGirl.create :front_end_builds_build, :live,
+        FactoryBot.create :front_end_builds_build, :live,
           app: app,
           sha: 'sha2',
           job: 'number2',
@@ -28,7 +28,7 @@ module FrontEndBuilds
       end
 
       let!(:older) do
-        FactoryGirl.create :front_end_builds_build,
+        FactoryBot.create :front_end_builds_build,
           app: app,
           sha: 'sha3',
           job: 'number3',

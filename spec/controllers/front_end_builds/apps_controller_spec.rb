@@ -4,9 +4,9 @@ module FrontEndBuilds
   RSpec.describe AppsController, :type => :controller do
     routes { FrontEndBuilds::Engine.routes }
 
-    let(:app) { FactoryGirl.create(:front_end_builds_app, name: 'dummy') }
-    let!(:builds) { FactoryGirl.create_list(:front_end_builds_build, 2, app: app) }
-    let!(:live_build) { FactoryGirl.create(:front_end_builds_build, :live, :fetched, app: app) }
+    let(:app) { FactoryBot.create(:front_end_builds_app, name: 'dummy') }
+    let!(:builds) { FactoryBot.create_list(:front_end_builds_build, 2, app: app) }
+    let!(:live_build) { FactoryBot.create(:front_end_builds_build, :live, :fetched, app: app) }
 
     describe 'index' do
       it "should find all apps" do
@@ -46,9 +46,9 @@ module FrontEndBuilds
     end
 
     describe 'update' do
-      let(:app) { FactoryGirl.create :front_end_builds_app, name: 'forsaken' }
-      let!(:live_build) { FactoryGirl.create :front_end_builds_build, :live, :fetched, app: app }
-      let!(:new_build) { FactoryGirl.create :front_end_builds_build, :fetched, app: app }
+      let(:app) { FactoryBot.create :front_end_builds_app, name: 'forsaken' }
+      let!(:live_build) { FactoryBot.create :front_end_builds_build, :live, :fetched, app: app }
+      let!(:new_build) { FactoryBot.create :front_end_builds_build, :fetched, app: app }
 
       it "should edit an existing app" do
         post :update,
@@ -70,7 +70,7 @@ module FrontEndBuilds
     end
 
     describe 'destroy' do
-      let(:deletable_app) { FactoryGirl.create :front_end_builds_app, name: 'forsaken' }
+      let(:deletable_app) { FactoryBot.create :front_end_builds_app, name: 'forsaken' }
 
       context 'a valid app' do
         before(:each) do

@@ -5,7 +5,7 @@ module FrontEndBuilds
     routes { FrontEndBuilds::Engine.routes }
 
     describe 'index' do
-      let!(:keys) { FactoryGirl.create_list(:front_end_builds_pubkey, 3) }
+      let!(:keys) { FactoryBot.create_list(:front_end_builds_pubkey, 3) }
 
       it 'should list all pubkeys' do
         get :index, format: :json
@@ -51,7 +51,7 @@ module FrontEndBuilds
     end
 
     describe 'destroy' do
-      let(:pubkey) { FactoryGirl.create(:front_end_builds_pubkey) }
+      let(:pubkey) { FactoryBot.create(:front_end_builds_pubkey) }
 
       it 'should remove a pubkey' do
         delete :destroy, params: { id: pubkey.id }, format: :json
