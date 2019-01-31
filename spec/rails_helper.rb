@@ -25,4 +25,8 @@ RSpec.configure do |config|
   config.include JsonParser, type: :controller
   config.include JsonParser, type: :request
   config.include CreateSignature
+
+  # make create & build available directly.
+  # FactoryBot.create(:foo) -> create(:foo)
+  config.include FactoryBot::Syntax::Methods
 end

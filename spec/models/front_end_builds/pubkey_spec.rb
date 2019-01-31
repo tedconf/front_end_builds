@@ -9,7 +9,7 @@ module FrontEndBuilds
     end
 
     let(:pubkey) do
-      FactoryBot.create(:front_end_builds_pubkey, {
+      create(:front_end_builds_pubkey, {
         pubkey: ssh_public_key
       })
     end
@@ -24,7 +24,7 @@ module FrontEndBuilds
       end
 
       it 'should be unknown if it cannot figure out the pubkey' do
-        pubkey = FactoryBot.create(:front_end_builds_pubkey, {
+        pubkey = create(:front_end_builds_pubkey, {
           pubkey: 'badinfo'
         })
 
@@ -45,7 +45,7 @@ module FrontEndBuilds
       end
 
       it 'should be false if the type of unknown' do
-        pubkey = FactoryBot.create(:front_end_builds_pubkey, {
+        pubkey = create(:front_end_builds_pubkey, {
           pubkey: 'ssh-UNKNOWN badkeybutwhocares'
         })
 
@@ -53,7 +53,7 @@ module FrontEndBuilds
       end
 
       it 'should be false if the key has no base64 encoded part' do
-        pubkey = FactoryBot.create(:front_end_builds_pubkey, {
+        pubkey = create(:front_end_builds_pubkey, {
           pubkey: 'someotherkeyformat'
         })
 
@@ -71,7 +71,7 @@ module FrontEndBuilds
       end
 
       it 'should raise an error if it cannot convert' do
-        pubkey = FactoryBot.create(:front_end_builds_pubkey, {
+        pubkey = create(:front_end_builds_pubkey, {
           pubkey: 'badkey'
         })
 
@@ -81,7 +81,7 @@ module FrontEndBuilds
 
     describe '#verify' do
       let(:app) do
-        FactoryBot.create(:front_end_builds_app, name: 'app')
+        create(:front_end_builds_app, name: 'app')
       end
 
       let(:endpoint) { 'http://some.external.url.ted.com/index.html' }
@@ -99,7 +99,7 @@ module FrontEndBuilds
       end
 
       it 'should verify the signature + html for a build without an endpoint' do
-        build = FactoryBot.create(:front_end_builds_build, {
+        build = create(:front_end_builds_build, {
           app: app,
           html: 'some html',
           endpoint: nil,
@@ -115,7 +115,7 @@ module FrontEndBuilds
       end
 
       it 'should not verify a bad html signature for a build' do
-        build = FactoryBot.create(:front_end_builds_build, {
+        build = create(:front_end_builds_build, {
           app: app,
           html: 'some html',
           endpoint: nil,
@@ -127,19 +127,19 @@ module FrontEndBuilds
     end
 
     describe '#last_build' do
-      let(:pubkey) { FactoryBot.create(:front_end_builds_pubkey) }
+      let(:pubkey) { create(:front_end_builds_pubkey) }
 
       it 'should be nil if this pubkey was never used in a build' do
         expect(pubkey.last_build).to be_nil
       end
 
       it 'should be the most recently created build' do
-        build = FactoryBot.create(:front_end_builds_build, {
+        build = create(:front_end_builds_build, {
           pubkey: pubkey,
           created_at: 2.hours.ago
         })
 
-        FactoryBot.create(:front_end_builds_build, {
+        create(:front_end_builds_build, {
           pubkey: pubkey,
           created_at: 3.hours.ago
         })

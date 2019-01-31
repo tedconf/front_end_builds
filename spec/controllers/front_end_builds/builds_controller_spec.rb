@@ -2,13 +2,13 @@ require 'rails_helper'
 
 module FrontEndBuilds
   RSpec.describe BuildsController, :type => :controller do
-    let(:app) { FactoryBot.create :front_end_builds_app, name: 'dummy' }
+    let(:app) { create :front_end_builds_app, name: 'dummy' }
 
     describe "index" do
       routes { FrontEndBuilds::Engine.routes }
 
       it "should list all the builds for an app" do
-        FactoryBot.create_list(:front_end_builds_build, 3, app: app)
+        create_list(:front_end_builds_build, 3, app: app)
 
         get :index, params: { app_id: app.id }, format: :json
         expect(response).to be_success
@@ -16,8 +16,8 @@ module FrontEndBuilds
       end
 
       it 'should be scoped to the requested app' do
-        build1 = FactoryBot.create(:front_end_builds_build, app: app)
-        FactoryBot.create(:front_end_builds_build)
+        build1 = create(:front_end_builds_build, app: app)
+        create(:front_end_builds_build)
 
         get :index, params: { app_id: app.id }, format: :json
         expect(response).to be_success
@@ -26,7 +26,7 @@ module FrontEndBuilds
       end
 
       it "should not list any builds if the app is not present" do
-        FactoryBot.create_list(:front_end_builds_build, 3)
+        create_list(:front_end_builds_build, 3)
 
         get :index, format: :json
         expect(response).to be_success
@@ -37,7 +37,7 @@ module FrontEndBuilds
     describe "show" do
       routes { FrontEndBuilds::Engine.routes }
 
-      let(:build) { FactoryBot.create :front_end_builds_build }
+      let(:build) { create :front_end_builds_build }
 
       it "should load the app" do
         get :show, params: { id: build.id }, format: :json
@@ -50,14 +50,14 @@ module FrontEndBuilds
       let(:endpoint) { 'http://www.ted.com/testing/build' }
 
       before(:each) do
-        FactoryBot.create :front_end_builds_build, :live,
+        create :front_end_builds_build, :live,
           app: app,
           endpoint: 'http://www.ted.com/testing/build',
           created_at: 1.day.ago,
           fetched: true,
           html: 'the old build'
 
-        FactoryBot.create(:front_end_builds_pubkey, :fixture_pubkey)
+        create(:front_end_builds_pubkey, :fixture_pubkey)
 
         stub_request(:get, endpoint)
           .to_return(body: 'fetched html')

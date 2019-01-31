@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 describe "Front end builds API", type: :request do
-  let!(:front_end_app) { FactoryBot.create :front_end_builds_app, name: "dummy" }
+  let!(:front_end_app) { create :front_end_builds_app, name: "dummy" }
   let(:endpoint) { "http://www.ted.com/builds/1" }
 
   before(:each) do
     stub_request(:get, endpoint)
       .to_return(body: 'your app!')
 
-    FactoryBot.create(:front_end_builds_pubkey, :fixture_pubkey)
+    create(:front_end_builds_pubkey, :fixture_pubkey)
   end
 
   it "creates a new build and then uses it" do
