@@ -15,7 +15,9 @@ FactoryBot.define do
     end
 
     trait :live do
-      after :create, &:activate!
+      after(:create) do |p|
+        p.activate!
+      end
     end
 
     trait :signed do
