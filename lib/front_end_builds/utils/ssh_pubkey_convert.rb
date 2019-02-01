@@ -66,8 +66,16 @@ module FrontEndBuilds
           (nstr, bytes) = unpack_string(bytes, n)
 
           key = OpenSSL::PKey::RSA.new
-          key.n = OpenSSL::BN.new(nstr, 2)
-          key.e = OpenSSL::BN.new(estr, 2)
+
+          # support SSL 2
+          if Gem::Version.new(OpenSSL::VERSION) < Gem::Version.new('2.0.0')
+            key.n = OpenSSL::BN.new(nstr, 2)
+            key.e = OpenSSL::BN.new(estr, 2)
+          else
+            # params are n, e, d
+            key.set_key(OpenSSL::BN.new(nstr, 2), OpenSSL::BN.new(estr, 2), nil)
+          end
+
           key
         elsif keytype == 'ssh-dss'
           (n, bytes) = unpack_u32(bytes)
@@ -80,13 +88,28 @@ module FrontEndBuilds
           (pkstr, bytes) = unpack_string(bytes, n)
 
           key = OpenSSL::PKey::DSA.new
-          key.p = OpenSSL::BN.new(pstr, 2)
-          key.q = OpenSSL::BN.new(qstr, 2)
-          key.g = OpenSSL::BN.new(gstr, 2)
-          key.pub_key = OpenSSL::BN.new(pkstr, 2)
+
+          # support SSL 2
+          if Gem::Version.new(OpenSSL::VERSION) < Gem::Version.new('2.0.0')
+            # TODO make this work for DSA w/ open SSL 2
+            key.p = OpenSSL::BN.new(pstr, 2)
+            key.q = OpenSSL::BN.new(qstr, 2)
+            key.g = OpenSSL::BN.new(gstr, 2)
+            key.pub_key = OpenSSL::BN.new(pkstr, 2)
+          else
+            # TODO make this work for DSA w/ open SSL 2
+            key.p = OpenSSL::BN.new(pstr, 2)
+            key.q = OpenSSL::BN.new(qstr, 2)
+            key.g = OpenSSL::BN.new(gstr, 2)
+            key.pub_key = OpenSSL::BN.new(pkstr, 2)
+            # params are n, e, d
+            #key.set_key(OpenSSL::BN.new(nstr, 2), OpenSSL::BN.new(estr, 2), nil)
+          end
+
           key
         else
-          nil
+          # waiting for the sshkey gem to support other key types
+          raise "Unsupported key type: #{keytype}"
         end
       end
     end
