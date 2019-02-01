@@ -97,13 +97,13 @@ module FrontEndBuilds
             key.g = OpenSSL::BN.new(gstr, 2)
             key.pub_key = OpenSSL::BN.new(pkstr, 2)
           else
-            # TODO make this work for DSA w/ open SSL 2
-            key.p = OpenSSL::BN.new(pstr, 2)
-            key.q = OpenSSL::BN.new(qstr, 2)
-            key.g = OpenSSL::BN.new(gstr, 2)
-            key.pub_key = OpenSSL::BN.new(pkstr, 2)
-            # params are n, e, d
-            #key.set_key(OpenSSL::BN.new(nstr, 2), OpenSSL::BN.new(estr, 2), nil)
+            # params are set_pqg(p, q, g) → self
+            key.set_pqg(
+              OpenSSL::BN.new(pstr, 2),
+              OpenSSL::BN.new(qstr, 2),
+              OpenSSL::BN.new(gstr, 2)
+            )
+            key.set_key(OpenSSL::BN.new(pkstr, 2), nil)
           end
 
           key
