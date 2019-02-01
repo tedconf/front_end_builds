@@ -3,6 +3,8 @@
 ### 1.0.0 (January 31, 2019)
 * Support for Rails 5
 * Dropping support for < Rails 5
+* Support for OpenSSL Ver 2
+* If a user uses a key that is not RSA/DSA an exception will now be raised
 
 ## Upgrading
 
