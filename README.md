@@ -102,6 +102,9 @@ bin/rails server
 
 Visit `/frontends` to access the Admin interface, and visit the `front_end` route, which will initially return 404 Not found since you haven't configured and deployed any front-end builds yet.
 
+## A note on SSH Keys
+At this time only RSA and DSA keys are supported for authentication.
+
 ### Example Next Steps with Heroku and Ember.js
 
 A common configuration is to deploy your FEB-enabled Rails app to Heroku, and deploy your Ember.js frontend to S3:
