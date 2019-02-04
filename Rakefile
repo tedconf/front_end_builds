@@ -25,7 +25,7 @@ end
 namespace :admin do
   task :build do
     Dir.chdir('admin') do
-      sh 'ember build  --environment=production'
+      sh 'ember build production'
     end
 
     # Copy the dist to public
