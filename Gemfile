@@ -16,7 +16,7 @@ end
 gem 'rails', rails
 
 
- # there are here for travis
+ # these are here so travis will work
 group :test, :development do
   gem 'sqlite3', '< 1.4'
 end
