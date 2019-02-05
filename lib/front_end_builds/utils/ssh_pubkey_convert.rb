@@ -3,6 +3,9 @@
 #
 # https://github.com/mytestbed/omf/blob/master/omf_common/lib/omf_common/auth/ssh_pub_key_convert.rb
 #
+# Support for DSA keys was removed from this code as the FEB app doesn't support DSA keys
+# See PubKey#verify
+#
 
 module FrontEndBuilds
   module Utils
@@ -77,38 +80,9 @@ module FrontEndBuilds
           end
 
           key
-        elsif keytype == 'ssh-dss'
-          (n, bytes) = unpack_u32(bytes)
-          (pstr, bytes) = unpack_string(bytes, n)
-          (n, bytes) = unpack_u32(bytes)
-          (qstr, bytes) = unpack_string(bytes, n)
-          (n, bytes) = unpack_u32(bytes)
-          (gstr, bytes) = unpack_string(bytes, n)
-          (n, bytes) = unpack_u32(bytes)
-          (pkstr, bytes) = unpack_string(bytes, n)
-
-          key = OpenSSL::PKey::DSA.new
-
-          # support SSL 2
-          if Gem::Version.new(OpenSSL::VERSION) < Gem::Version.new('2.0.0')
-            # TODO make this work for DSA w/ open SSL 2
-            key.p = OpenSSL::BN.new(pstr, 2)
-            key.q = OpenSSL::BN.new(qstr, 2)
-            key.g = OpenSSL::BN.new(gstr, 2)
-            key.pub_key = OpenSSL::BN.new(pkstr, 2)
-          else
-            # params are set_pqg(p, q, g) → self
-            key.set_pqg(
-              OpenSSL::BN.new(pstr, 2),
-              OpenSSL::BN.new(qstr, 2),
-              OpenSSL::BN.new(gstr, 2)
-            )
-            key.set_key(OpenSSL::BN.new(pkstr, 2), nil)
-          end
-
-          key
         else
-          # waiting for the sshkey gem to support other key types
+          # anything non-RSA is not supported
+          # this part edited by TED
           raise "Unsupported key type: #{keytype}"
         end
       end
