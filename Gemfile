@@ -14,3 +14,9 @@ else
 end
 
 gem 'rails', rails
+
+
+ # there are here for travis
+group :test, :development do
+  gem 'sqlite3', '< 1.4'
+end
