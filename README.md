@@ -140,6 +140,11 @@ rspec
 ember test
 ```
 
+## Build status
+This gem is built on Travis-CI.
+
+![](https://travis-ci.org/tedconf/front_end_builds.svg?branch=master)
+
 ## TODO
 
 * Create docs site
