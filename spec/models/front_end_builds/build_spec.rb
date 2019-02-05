@@ -11,10 +11,10 @@ module FrontEndBuilds
     it { should validate_presence_of(:branch) }
 
     describe :find_best do
-      let(:app) { FactoryGirl.create :front_end_builds_app }
+      let(:app) { create :front_end_builds_app }
 
       let!(:latest) do
-        FactoryGirl.create :front_end_builds_build,
+        create :front_end_builds_build,
           app: app,
           sha: 'sha1',
           job: 'number1',
@@ -24,7 +24,7 @@ module FrontEndBuilds
       end
 
       let!(:live_build) do
-        FactoryGirl.create :front_end_builds_build, :live,
+        create :front_end_builds_build, :live,
           app: app,
           sha: 'sha2',
           job: 'number2',
@@ -34,7 +34,7 @@ module FrontEndBuilds
       end
 
       let!(:older) do
-        FactoryGirl.create :front_end_builds_build,
+        create :front_end_builds_build,
           app: app,
           sha: 'sha3',
           job: 'number3',
@@ -45,7 +45,7 @@ module FrontEndBuilds
 
       context "with no query" do
         before(:each) do
-          FactoryGirl.create :front_end_builds_build,
+          create :front_end_builds_build,
             app: app,
             sha: 'sha4',
             branch: 'nonmaster',
@@ -64,7 +64,7 @@ module FrontEndBuilds
 
       context "when finding the branch" do
         before(:each) do
-          FactoryGirl.create :front_end_builds_build,
+          create :front_end_builds_build,
             app: app,
             sha: 'sha3',
             branch: 'master',
@@ -88,7 +88,7 @@ module FrontEndBuilds
 
       context "when finding unfetched build" do
         before(:each) do
-          FactoryGirl.create :front_end_builds_build,
+          create :front_end_builds_build,
             app: app,
             sha: 'sha3',
             branch: 'master',
@@ -102,7 +102,7 @@ module FrontEndBuilds
 
       context "when finding another app" do
         before(:each) do
-          FactoryGirl.create :front_end_builds_build,
+          create :front_end_builds_build,
             sha: 'sha4',
             branch: 'master',
             fetched: true,
@@ -120,11 +120,11 @@ module FrontEndBuilds
     end
 
     describe '#verify' do
-      let(:app) { FactoryGirl.create(:front_end_builds_app, name: 'app') }
+      let(:app) { create(:front_end_builds_app, name: 'app') }
       let(:endpoint) { 'http://some.external.url.ted.com/index.html' }
 
       let(:build) do
-        FactoryGirl.build(:front_end_builds_build, {
+        FactoryBot.build(:front_end_builds_build, {
           app: app,
           endpoint: endpoint,
           signature: create_signature("#{app.name}-#{endpoint}")
@@ -136,7 +136,7 @@ module FrontEndBuilds
       end
 
       it 'should be true if the signature can be verifed by a pubkey' do
-        FactoryGirl.create(:front_end_builds_pubkey, {
+        create(:front_end_builds_pubkey, {
           pubkey: ssh_pubkey
         })
 
@@ -149,11 +149,11 @@ module FrontEndBuilds
     end
 
     describe '#matching_pubkey' do
-      let(:app) { FactoryGirl.create(:front_end_builds_app, name: 'app') }
+      let(:app) { create(:front_end_builds_app, name: 'app') }
       let(:endpoint) { 'http://some.external.url.ted.com/index.html' }
 
       let(:build) do
-        FactoryGirl.build(:front_end_builds_build, {
+        FactoryBot.build(:front_end_builds_build, {
           app: app,
           endpoint: endpoint,
           signature: create_signature("#{app.name}-#{endpoint}")
@@ -165,7 +165,7 @@ module FrontEndBuilds
       end
 
       it 'should have a pubkey if the signature can be verifed by a pubkey' do
-        pubkey = FactoryGirl.create(:front_end_builds_pubkey, {
+        pubkey = create(:front_end_builds_pubkey, {
           pubkey: ssh_pubkey
         })
 
@@ -178,9 +178,9 @@ module FrontEndBuilds
     end
 
     describe :live? do
-      let(:app) { FactoryGirl.create(:front_end_builds_app) }
+      let(:app) { create(:front_end_builds_app) }
       let!(:latest) do
-        FactoryGirl.create :front_end_builds_build, :live,
+        create :front_end_builds_build, :live,
           app: app,
           sha: 'sha1',
           job: 'number1',
@@ -190,7 +190,7 @@ module FrontEndBuilds
       end
 
       let!(:older) do
-        FactoryGirl.create :front_end_builds_build,
+        create :front_end_builds_build,
           app: app,
           sha: 'sha2',
           job: 'number2',
@@ -209,14 +209,14 @@ module FrontEndBuilds
     end
 
     describe :master? do
-      let(:app) { FactoryGirl.create(:front_end_builds_app) }
+      let(:app) { create(:front_end_builds_app) }
       let(:build1) do
-        FactoryGirl.create :front_end_builds_build,
+        create :front_end_builds_build,
           app: app,
           branch: 'master'
       end
       let(:build2) do
-        FactoryGirl.create :front_end_builds_build,
+        create :front_end_builds_build,
           app: app,
           branch: 'feature'
       end
@@ -232,7 +232,7 @@ module FrontEndBuilds
 
     describe '#setup!' do
       let(:build) do
-        FactoryGirl.create(:front_end_builds_build)
+        create(:front_end_builds_build)
       end
 
       before(:each) do
@@ -282,7 +282,7 @@ module FrontEndBuilds
 
     describe :fetch! do
       let(:app) do
-        FactoryGirl.create(:front_end_builds_app)
+        create(:front_end_builds_app)
       end
 
       before(:each) do
@@ -295,7 +295,7 @@ module FrontEndBuilds
       end
 
       it "should fetch and load the html" do
-        build = FactoryGirl.create(:front_end_builds_build,
+        build = create(:front_end_builds_build,
           app: app,
           job: 'job1',
           sha: 'sha1',
@@ -310,7 +310,7 @@ module FrontEndBuilds
       end
 
       it "should not fetch if it has already been fetched" do
-        build = FactoryGirl.create :front_end_builds_build,
+        build = create :front_end_builds_build,
           html: 'unchanged',
           fetched: true
 
@@ -323,7 +323,7 @@ module FrontEndBuilds
 
     describe :with_head_tag do
       let(:build) do
-        FactoryGirl.create :front_end_builds_build,
+        create :front_end_builds_build,
           html: '<html><head></head></html>'
       end
 

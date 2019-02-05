@@ -2,7 +2,7 @@ require_dependency "front_end_builds/application_controller"
 
 module FrontEndBuilds
   class BuildsController < ApplicationController
-    before_filter :set_app!, only: [:create]
+    before_action :set_app!, only: [:create]
 
     def index
       builds = FrontEndBuilds::Build.where(app_id: params[:app_id])
@@ -12,7 +12,7 @@ module FrontEndBuilds
     end
 
     def create
-      build = @app.builds.new(use_params(:build_create_params))
+      build = @app.builds.new(build_create_params)
 
       if build.verify && build.save
         build.setup!
@@ -22,7 +22,7 @@ module FrontEndBuilds
         build.errors[:base] << 'No access - invalid SSH key' if !build.verify
 
         render(
-          text: 'Could not create the build: ' + build.errors.full_messages.to_s,
+          plain: 'Could not create the build: ' + build.errors.full_messages.to_s,
           status: :unprocessable_entity
         )
       end
@@ -45,7 +45,7 @@ module FrontEndBuilds
 
       if @app.nil?
         render(
-          text: "No app named #{params[:app_name]}.",
+          plain: "No app named #{params[:app_name]}.",
           status: :unprocessable_entity
         )
 
@@ -64,14 +64,8 @@ module FrontEndBuilds
       ]
     end
 
-    def build_create_params_rails_3
-      params.slice(*_create_params)
-    end
-
-    def build_create_params_rails_4
+    def build_create_params
       params.permit(*_create_params)
     end
-    alias_method :build_create_params_rails_5, :build_create_params_rails_4
-
   end
 end

@@ -11,17 +11,17 @@ module FrontEndBuilds
   class BestsController < ApplicationController
     include Rails.application.routes.url_helpers
 
-    before_filter :find_front_end, only: [:show]
+    before_action :find_front_end, only: [:show]
 
     def show
       if @front_end
         respond_to do |format|
-          format.html { render text: @front_end.with_head_tag(meta_tags) }
+          format.html { render plain: @front_end.with_head_tag(meta_tags) }
           format.json { render json: { version: @front_end.id } }
         end
       else
         # TODO install instructions, user needs to push build
-        render text: "not found", status: 404
+        render plain: "not found", status: 404
       end
     end
 
@@ -33,10 +33,10 @@ module FrontEndBuilds
         csrf_param: request_forgery_protection_token,
         csrf_token: form_authenticity_token,
         front_end_build_version: @front_end.id,
-        front_end_build_params: use_params(:build_search_params).to_query,
+        front_end_build_params: build_search_params.to_h.to_query,
         front_end_build_url: front_end_builds_best_path(
-            use_params(:build_search_params).merge(format: :json)
-          )
+          build_search_params.merge(format: :json)
+        )
       }
 
       tags
@@ -48,17 +48,11 @@ module FrontEndBuilds
     end
 
     def find_front_end
-      @front_end = FrontEndBuilds::Build.find_best(use_params(:build_search_params))
+      @front_end = FrontEndBuilds::Build.find_best(build_search_params)
     end
 
-    def build_search_params_rails_3
-      params.slice(:app_name, :id, :branch, :sha, :job)
-    end
-
-    def build_search_params_rails_4
+    def build_search_params
       params.permit(:app_name, :id, :branch, :sha, :job)
     end
-    alias_method :build_search_params_rails_5, :build_search_params_rails_4
-
   end
 end

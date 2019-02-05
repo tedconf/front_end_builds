@@ -4,9 +4,10 @@ require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 
 require 'rspec/rails'
 require 'rspec/its'
-require 'factory_girl_rails'
+require 'factory_bot_rails'
 require 'shoulda/matchers'
 require 'webmock/rspec'
+require 'database_cleaner'
 
 Rails.backtrace_cleaner.remove_silencers!
 
@@ -24,4 +25,8 @@ RSpec.configure do |config|
   config.include JsonParser, type: :controller
   config.include JsonParser, type: :request
   config.include CreateSignature
+
+  # make create & build available directly.
+  # FactoryBot.create(:foo) -> create(:foo)
+  config.include FactoryBot::Syntax::Methods
 end

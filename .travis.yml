@@ -5,15 +5,14 @@ script:
   - bundle exec rake db:schema:load
   - bundle exec rake spec
 rvm:
-  - 1.9.3
-  - 2.0.0
-  - 2.1.0
-  - 2.2.0
+  - 2.2.2
+  - 2.3.0
+  - 2.4.0
+  - 2.5.0
 env:
-  - "RAILS_VERSION=3.2.0"
-  - "RAILS_VERSION=4.0.0"
-  - "RAILS_VERSION=4.1.0"
-  - "RAILS_VERSION=4.2.0"
+  - "RAILS_VERSION=5.0.0"
+  - "RAILS_VERSION=5.1.0"
+  - "RAILS_VERSION=5.2.0"
 matrix:
   exclude:
     - rvm: 1.9.3
@@ -22,3 +21,28 @@ matrix:
       env: "RAILS_VERSION=4.2.0"
     - rvm: 2.2.0
       env: "RAILS_VERSION=3.2.0"
+    - rvm: 2.2.2
+      env: "RAILS_VERSION=5.0.0"
+    - rvm: 2.2.2
+      env: "RAILS_VERSION=5.1.0"
+    - rvm: 2.2.2
+      env: "RAILS_VERSION=5.2.0"
+  include:
+    - rvm: 2.3.0
+      env: "RAILS_VERSION=5.0.0"
+    - rvm: 2.3.0
+      env: "RAILS_VERSION=5.1.0"
+    - rvm: 2.3.0
+      env: "RAILS_VERSION=5.2.0"
+    - rvm: 2.4.0
+      env: "RAILS_VERSION=5.0.0"
+    - rvm: 2.4.0
+      env: "RAILS_VERSION=5.1.0"
+    - rvm: 2.4.0
+      env: "RAILS_VERSION=5.2.0"
+    - rvm: 2.5.0
+      env: "RAILS_VERSION=5.0.0"
+    - rvm: 2.5.0
+      env: "RAILS_VERSION=5.1.0"
+    - rvm: 2.5.0
+      env: "RAILS_VERSION=5.2.0"
