@@ -2556,8 +2556,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "b8WfVgkV",
-    "block": "{\"symbols\":[\"build\"],\"statements\":[[7,\"table\"],[11,\"class\",\"Table\"],[9],[0,\"\\n  \"],[7,\"thead\"],[9],[0,\"\\n    \"],[7,\"tr\"],[11,\"class\",\"Table__head\"],[9],[0,\"\\n      \"],[7,\"th\"],[9],[0,\"SHA\"],[10],[0,\"\\n      \"],[7,\"th\"],[9],[0,\"Branch\"],[10],[0,\"\\n      \"],[7,\"th\"],[9],[0,\"Built\"],[10],[0,\"\\n      \"],[7,\"th\"],[9],[0,\"Launch\"],[10],[0,\"\\n      \"],[7,\"th\"],[9],[0,\" \"],[10],[0,\"\\n    \"],[10],[0,\"\\n  \"],[10],[0,\"\\n  \"],[7,\"tbody\"],[9],[0,\"\\n\"],[4,\"each\",[[23,[\"app\",\"builds\"]]],null,{\"statements\":[[0,\"      \"],[1,[27,\"build-table-row\",null,[[\"app\",\"build\",\"isLive\"],[[23,[\"app\"]],[22,1,[]],[22,1,[\"isLive\"]]]]],false],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"  \"],[10],[0,\"\\n\"],[10],[0,\"\\n\\n\"],[7,\"p\"],[11,\"class\",\"pt-5 text-center\"],[9],[0,\"\\n\"],[4,\"if\",[[23,[\"isLoading\"]]],null,{\"statements\":[[0,\"  \"],[7,\"a\"],[11,\"class\",\"btn btn-default\"],[9],[0,\"Loading...\"],[10],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"  \"],[7,\"a\"],[11,\"class\",\"btn btn-primary\"],[9],[0,\"Load more\"],[3,\"action\",[[22,0,[]],\"loadMore\"]],[10],[0,\"\\n\"]],\"parameters\":[]}],[10],[0,\"\\n\"]],\"hasEval\":false}",
+    "id": "ZiwSlvp5",
+    "block": "{\"symbols\":[\"build\"],\"statements\":[[7,\"table\"],[11,\"class\",\"Table\"],[9],[0,\"\\n  \"],[7,\"thead\"],[9],[0,\"\\n    \"],[7,\"tr\"],[11,\"class\",\"Table__head\"],[9],[0,\"\\n      \"],[7,\"th\"],[9],[0,\"SHA\"],[10],[0,\"\\n      \"],[7,\"th\"],[9],[0,\"Branch\"],[10],[0,\"\\n      \"],[7,\"th\"],[9],[0,\"Built\"],[10],[0,\"\\n      \"],[7,\"th\"],[9],[0,\"Launch\"],[10],[0,\"\\n      \"],[7,\"th\"],[11,\"class\",\"Table__actions\"],[9],[0,\" \"],[10],[0,\"\\n    \"],[10],[0,\"\\n  \"],[10],[0,\"\\n  \"],[7,\"tbody\"],[9],[0,\"\\n\"],[4,\"each\",[[23,[\"app\",\"orderedBuilds\"]]],null,{\"statements\":[[0,\"      \"],[1,[27,\"build-table-row\",null,[[\"app\",\"build\",\"isLive\"],[[23,[\"app\"]],[22,1,[]],[22,1,[\"isLive\"]]]]],false],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"  \"],[10],[0,\"\\n\"],[10],[0,\"\\n\\n\"],[7,\"p\"],[11,\"class\",\"pt-5 text-center\"],[9],[0,\"\\n\"],[4,\"if\",[[23,[\"isLoading\"]]],null,{\"statements\":[[0,\"  \"],[7,\"a\"],[11,\"class\",\"btn btn-default\"],[9],[0,\"Loading...\"],[10],[0,\"\\n\"]],\"parameters\":[]},{\"statements\":[[0,\"  \"],[7,\"a\"],[11,\"class\",\"btn btn-primary\"],[9],[0,\"Load more\"],[3,\"action\",[[22,0,[]],\"loadMore\"]],[10],[0,\"\\n\"]],\"parameters\":[]}],[10],[0,\"\\n\"]],\"hasEval\":false}",
     "meta": {
       "moduleName": "admin/pods/components/build-table/template.hbs"
     }
@@ -4850,7 +4850,7 @@ catch(err) {
 
 ;
           if (!runningTests) {
-            require("admin/app")["default"].create({"name":"admin","version":"0.0.0+a5cfabe2"});
+            require("admin/app")["default"].create({"name":"admin","version":"0.0.0+66205710"});
           }
         
 //# sourceMappingURL=admin.map

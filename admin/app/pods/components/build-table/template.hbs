@@ -5,11 +5,11 @@
       <th>Branch</th>
       <th>Built</th>
       <th>Launch</th>
-      <th>&nbsp;</th>
+      <th class="Table__actions">&nbsp;</th>
     </tr>
   </thead>
   <tbody>
-    {{#each app.builds as |build|}}
+    {{#each app.orderedBuilds as |build|}}
       {{build-table-row app=app build=build isLive=build.isLive}}
     {{/each}}
   </tbody>
