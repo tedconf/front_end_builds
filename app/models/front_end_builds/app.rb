@@ -6,7 +6,7 @@ module FrontEndBuilds
                       :live_build_id
     end
 
-    belongs_to :live_build, class_name: 'FrontEndBuilds::Build'
+    belongs_to :live_build, class_name: 'FrontEndBuilds::Build', optional: true
     has_many :builds, class_name: 'FrontEndBuilds::Build'
 
     if ActiveRecord::VERSION::MAJOR < 4
