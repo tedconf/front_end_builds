@@ -1,5 +1,8 @@
 # What's new
 
+### Unreleased
+* `FrontEndBuilds::App.live_build` is now optional. This resolves issues with  Rails 5 clients that have `Rails.application.config.active_record.belongs_to_required_by_default` enabled.
+
 ### 1.0.0 (January 31, 2019)
 * Support for Rails 5
 * Dropping support for < Rails 5
@@ -29,6 +32,3 @@ Check the log below to see all the new features.
   to verify the build. To set this up login to your admin area and add a
   public key, for example your SSH pubkey. Make sure you update your
   ``ember-cli-front-end-builds`` to use version `0.1.0` as well.
-
-
-
