@@ -1,6 +1,6 @@
 # What's new
 
-### Unreleased
+### 1.0.1 (May 6th, 2019)
 * `FrontEndBuilds::App.live_build` is now optional. This resolves issues with  Rails 5 clients that have `Rails.application.config.active_record.belongs_to_required_by_default` enabled.
 
 ### 1.0.0 (January 31, 2019)
