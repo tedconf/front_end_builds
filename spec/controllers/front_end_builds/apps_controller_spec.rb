@@ -17,7 +17,7 @@ module FrontEndBuilds
         expect(json['builds'].length).to eq(3)
       end
 
-      # This specs query composition b/c it changed slightled between rails 4 and rails 5
+      # This specs query composition b/c it changed slightly between rails 4 and rails 5
       # in regards to includes
       describe "testing query composition", focus: true do
         # getting rid of the ones from the outer describe
