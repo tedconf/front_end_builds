@@ -141,7 +141,7 @@ ember test
 ```
 
 ## Build status
-This gem is built on Travis-CI.
+[This gem is built on Travis-CI.](https://travis-ci.org/tedconf/front_end_builds)
 
 ![](https://travis-ci.org/tedconf/front_end_builds.svg?branch=master)
 

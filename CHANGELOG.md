@@ -1,5 +1,15 @@
 # What's new
 
+### 1.0.2 (January 9th, 2020)
+* This version fixes a bug with FrontEndBuilds::AppsController#index where it would not show the `/frontends`.
+ - This bug was introduced in 1.0.0 (rails 5 updates).
+ - The controller should return "10 builds for each app", instead it was
+   returning "10 builds for all apps". This and issue when one of your apps has
+   a really old "live build" that is older than your 10 most recent (for any app)
+
+### 1.0.1 (May 6th, 2019)
+* `FrontEndBuilds::App.live_build` is now optional. This resolves issues with  Rails 5 clients that have `Rails.application.config.active_record.belongs_to_required_by_default` enabled.
+
 ### 1.0.0 (January 31, 2019)
 * Support for Rails 5
 * Dropping support for < Rails 5
@@ -29,6 +39,3 @@ Check the log below to see all the new features.
   to verify the build. To set this up login to your admin area and add a
   public key, for example your SSH pubkey. Make sure you update your
   ``ember-cli-front-end-builds`` to use version `0.1.0` as well.
-
-
-
