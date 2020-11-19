@@ -1,5 +1,8 @@
 # What's new
 
+### 1.0.3 (November 19th, 2020)
+* remove crossdomain.xml see https://www.openbugbounty.org/reports/1519953/
+
 ### 1.0.2 (January 9th, 2020)
 * This version fixes a bug with FrontEndBuilds::AppsController#index where it would not show the `/frontends`.
  - This bug was introduced in 1.0.0 (rails 5 updates).
