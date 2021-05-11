@@ -1,5 +1,8 @@
 # What's new
 
+### 1.0.4 (May 11, 2021)
+* changed rails dependency to '>= 5.0'
+
 ### 1.0.3 (November 19th, 2020)
 * remove crossdomain.xml see https://www.openbugbounty.org/reports/1519953/
 
