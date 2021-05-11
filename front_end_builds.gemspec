@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   # min supported version
-  s.add_dependency 'rails', '~> 5.0'
+  s.add_dependency 'rails', '>= 5.0'
 
   # Ideally we'd use this https://github.com/bensie/sshkey
   # for ssh key bits, but it doesn't support OpenSSL v2.x
