@@ -92,7 +92,7 @@ module FrontEndBuilds
         id: id,
         name: name,
         fingerprint: fingerprint,
-        lastUsedAt: last_build.try(:created_at)
+        last_used_at: last_build.try(:created_at)
       }
     end
   end

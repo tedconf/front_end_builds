@@ -1,0 +1,24 @@
+<table class="Table">
+  <thead>
+    <tr class="Table__head">
+      <th>SHA</th>
+      <th>Branch</th>
+      <th>Built</th>
+      <th>Launch</th>
+      <th class="Table__actions">&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each app.orderedBuilds as |build|}}
+      {{build-table-row app=app build=build isLive=build.isLive}}
+    {{/each}}
+  </tbody>
+</table>
+
+<p class="pt-5 text-center">
+{{#if isLoading}}
+  <a class="btn btn-default">Loading...</a>
+{{else}}
+  <a {{action "loadMore"}} class="btn btn-primary">Load more</a>
+{{/if}}
+</p>

@@ -1,5 +1,5 @@
-import DS from 'ember-data';
+import ActiveModelAdapter from 'active-model-adapter';
 
-export default DS.ActiveModelAdapter.extend({
-  namespace: window.RAILS_ENV.baseURL + (window.RAILS_ENV.baseURL ? '/' : '' ) + 'api'
+export default ActiveModelAdapter.extend({
+  namespace: (window.RAILS_ENV ? window.RAILS_ENV.baseURL + (window.RAILS_ENV.baseURL ? '/' : '' ) : '') + 'api'
 });

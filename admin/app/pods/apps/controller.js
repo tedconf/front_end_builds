@@ -1,21 +1,18 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
+  savedApps: computed.filterBy('model', 'isNew', false),
 
-  savedApps: Ember.computed.filterBy('model', 'isNew', false),
-
-  sortBy: ['name'],
-  orderedApps: Ember.computed.sort('savedApps', 'sortBy'),
-
-  newApp: function() {
-    return this.get('model').filterBy('isNew', true).get('firstObject');
-  }.property('model.@each.isNew'),
+  sortBy: Object.freeze(['name']),
+  orderedApps: computed.sort('savedApps', 'sortBy'),
 
   actions: {
-    createApp: function() {
-      if (!this.get('newApp')) {
-        this.store.createRecord('app');
-      }
+    showForm() {
+      this.set('isAdding', true);
+    },
+    hideForm() {
+      this.set('isAdding', false);
     }
   }
 });

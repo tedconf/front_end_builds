@@ -1,57 +1,71 @@
-/* global server */
-import Ember from 'ember';
-import {module, test} from 'qunit';
-import startApp from '../helpers/start-app';
+import { module, test } from 'qunit';
+import { visit, click, fillIn } from '@ember/test-helpers';
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { assertionInjector } from '../assertions';
 
-var application;
+module('Acceptance | create new app', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(function() {
+    assertionInjector(this);
+  });
 
-module('Acceptance: Create new app', {
-  beforeEach: function() {
-    application = startApp();
-    server.create('host_app', { id: 'current' });
-  },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
-  }
-});
+  test('I should not see the new app form when I visit the page', async function(assert) {
+    this.server.create('host_app', { id: 'current' });
 
-test('I should not see the new app form when I visit the page', function(assert) {
-  visit("/");
-  assertExists(".New-app-form", 0);
-});
+    await visit("/");
 
-test('I should see the new app form when I click the new app button', function(assert) {
-  visit("/");
-  click(".new-app-button");
+    assert.count(".App-form", 0);
+  });
 
-  assertExists(".New-app-form");
-});
+  test('I should see the new app form when I click the new app button', async function(assert) {
+    this.server.create('host_app', { id: 'current' });
 
-test('I should not be able to create a new app without entering a name', function(assert) {
-  visit("/");
-  click(".new-app-button");
+    await visit("/");
+    await click(".new-app");
 
-  click(".New-app-form__create");
+    assert.count(".App-form", 1);
+  });
 
-  assertExists(".form-group.has-error .New-app-form__name");
-});
+  test('I should not be able to create a new app without entering a name', async function(assert) {
+    this.server.create('host_app', { id: 'current' });
 
-test("I should be able to cancel adding a new app", function(assert) {
-  visit("/");
-  click(".new-app-button");
+    await visit("/");
+    await click(".new-app");
 
-  click(".New-app-form__cancel");
+    assert.count(".App-form", 1);
 
-  assertExists(".New-app-form", 0);
-});
+    await click(".Form__buttons button.btn-success");
 
-test('I should be able to create a new app', function(assert) {
-  visit("/");
-  click(".new-app-button");
+    assert.count(".Form__row-error", 1);
+  });
 
-  fillIn(".New-app-form__name", "Test app");
-  click(".New-app-form__create");
+  test("I should be able to cancel adding a new app", async function(assert) {
+    this.server.create('host_app', { id: 'current' });
 
-  assertExists(".New-app-form", 0);
-  assertExists(".App-card");
+    await visit("/");
+    await click(".new-app");
+
+    assert.count(".App-form", 1);
+
+    await click(".Form__cancel");
+
+    assert.count(".App-form", 0);
+  });
+
+  test('I should be able to create a new app', async function(assert) {
+    this.server.create('host_app', { id: 'current' });
+
+    await visit("/");
+    await click(".new-app");
+
+    assert.count(".App-form", 1);
+
+    await fillIn(".Form__name", "Test app");
+    await click(".Form__buttons button.btn-success");
+
+    assert.count(".App-form", 0);
+    assert.count(".App-card", 1);
+  });
 });

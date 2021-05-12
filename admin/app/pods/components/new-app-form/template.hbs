@@ -1,28 +1,28 @@
-<form {{action 'createApp' on='submit'}}>
+<form {{action "createApp" on="submit"}}>
+  <legend>New app</legend>
 
-  <fieldset>
-    <legend>New app</legend>
+  <div class="Form__row {{if showNameError "Form__row-error"}}">
+    <label class="Form__label {{if showNameError "Form__label-error"}}" for="app-name">
+      App name
+    </label>
+    {{input
+      value=app.name
+      classNames="Form__name"
+      id="app-name"
+      placeholder="Enter an app name"
+    }}
+  </div>
 
-      <div {{bind-attr class="showNameError:has-error :form-group"}}>
-        <label class="control-label">App name</label>
-        {{input value=app.name
-          classNames="New-app-form__name form-control"
-          placeholder='Enter an app name'}}
-      </div>
+  <div class="Form__buttons">
+    {{#if isCreating}}
+      <button type="submit" class="btn btn-default">Creating...</button>
+    {{else}}
+      <button type="submit" {{action "createApp"}} class="btn btn-success">Create</button>
+    {{/if}}
 
-      <div class="form-group">
-        {{async-button action="createApp"
-          type='submit'
-          class='New-app-form__create btn btn-primary'
-          default="Create"
-          pending="Creating..."
-          reset="isDirty"}}
-
-        <button {{action 'discardNewApp'}}
-          class="New-app-form__cancel btn btn-default">
-            Cancel
-        </button>
-      </div>
-
-  </fieldset>
+    <button {{action "discardNewApp"}}
+      class="Form__cancel btn btn-primary">
+        Cancel
+    </button>
+  </div>
 </form>

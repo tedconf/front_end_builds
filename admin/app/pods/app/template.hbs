@@ -1,115 +1,90 @@
 {{#page-title name=model.name}}
-  <button {{action 'willRenameApp'}}
-    class="btn btn-raised btn-default btn-sm rename-app-button">
+  <button {{action "startRenamingApp"}} disabled={{isRenamingApp}} class="btn {{if isRenamingApp "btn-default" "btn-primary"}} rename-app-button">
       Rename
   </button>
 
-  <button {{action 'willDeleteApp'}}
-    class="btn btn-raised btn-default btn-sm rename-app-button">
+  <button {{action "startDeletingApp"}} disabled={{isDeletingApp}}
+    class="btn {{if isDeletingApp "btn-default" "btn-danger"}} delete-app-button">
       Delete
   </button>
-
 {{/page-title}}
 
-<div class="row">
-  <div class="col-xs-12 col-md-4">
-    <div {{bind-attr class=":match-height :panel model.liveBuild:panel-success:panel-default"}}>
-      <div class="panel-heading">
-        <h3 class='panel-title'>
-          Active build
-
-          {{#if app.liveBuild}}
-            <a {{bind-attr href=model.location}} class="pull-right">
-              {{fa-icon 'external-link'}}
-            </a>
-          {{/if}}
-        </h3>
+<div class="flex flex-wrap -mx-3 -my-2 mb-4 items-stretch">
+  <div class="w-full px-3 py-2 sm:w-1/2 lg:w-1/3 self-stretch">
+    <div class="Panel h-full">
+      <div class="Panel-head Panel-head__active">
+        Active build
       </div>
-      <div class="panel-body">
+      <div class="Panel-content">
         {{build-info build=model.liveBuild}}
       </div>
     </div>
   </div>
 
-  <div class="col-xs-12 col-md-4">
-    <div {{bind-attr class=":match-height :panel model.activateNewDeploys:panel-success:panel-default"}}>
-      <div class="panel-heading">
-        <h3 class='panel-title'>
-          Automatically activate new deploys
-        </h3>
+  <div class="w-full px-3 py-2 sm:w-1/2 lg:w-1/3 self-stretch">
+    <div class="Panel Panel__manual-activation h-full">
+      <div class="Panel-head {{if model.activateNewDeploys "Panel-head__active" "Panel-head__inactive"}}">
+        Automatically activate new deploys
       </div>
-      <div class="panel-body">
-
+      <div class="Panel-content">
         <form>
           <div class="form-group">
             {{toggle-switch
               label="Automatically activate"
               value=model.activateNewDeploys
-              action="activateNewDeploys"}}
+              action=(action "toggleNewDeploys")}}
 
-            <span class="help-block">
+            <p class="text-sm text-grey pt-5 leading-loose">
               When this option is on Front End Builds will
               automatically start serving new master branch
               deploys. If you want to smoke test your deploys
               before making them live then turn this option off.
-            </span>
+            </p>
           </div>
         </form>
-
       </div>
     </div>
   </div>
 
-  <div class="col-xs-12 col-md-4">
-    <div class="match-height panel panel-info">
-
-      <div class="panel-heading">
-        <h3 class='panel-title'>
-          Help &amp; Guides
-        </h3>
+  <div class="w-full px-3 py-2 sm:w-1/2 lg:w-1/3 self-stretch">
+    <div class="Panel h-full">
+      <div class="Panel-head">
+        Help &amp; Guides
       </div>
-
-      <div class="panel-body">
-
-        <div>
-          Rails router setup
-          <span class="pull-right text-muted">coming soon</span>
-        </div>
-
-        <hr class='short-divider'>
-
-        <div>
-          Amazon S3 setup
-          <span class="pull-right text-muted">coming soon</span>
-        </div>
-
-        <hr class='short-divider'>
-
-        <div>
-          Ember-cli setup
-          <span class="pull-right text-muted">coming soon</span>
-        </div>
-
+      <div class="Panel-content">
+        <ul class="list-reset flex flex-col">
+          <li class="relative -mb-px block border-b p-4 border-grey-lighter">
+            Rails router setup
+            <span class="float-right text-grey-light">coming soon-ish</span>
+          </li>
+          <li class="relative -mb-px block border-b p-4 border-grey-lighter">
+            Amazon S3 setup
+            <span class="float-right text-grey-light">coming soon-ish</span>
+          </li>
+          <li class="relative -mb-px block p-4">
+            Ember-cli setup
+            <span class="float-right text-grey-light">coming soon-ish</span>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
 </div>
 
-{{#if model.orderedBuilds}}
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h3 class="panel-title">
-        Builds
-      </h3>
-    </div>
-
-    <div class="panel-body">
-      <p>
-        A list of the most recent builds for
-        {{model.name}}.
-      </p>
-
-      {{build-list builds=model.orderedBuilds}}
-    </div>
+<div class="Panel mt-10">
+  <div class="Panel-head">
+    Builds
   </div>
+
+  <div class="Panel-content">
+    {{build-table app=model}}
+  </div>
+</div>
+
+{{#if isRenamingApp}}
+  {{rename-app-modal app=model dismiss=(action 'stopRenamingApp')}}
+{{/if}}
+
+{{#if isDeletingApp}}
+  {{delete-app-modal app=model dismiss=(action 'stopDeletingApp')}}
 {{/if}}

@@ -1,8 +1,6 @@
-<div class="togglebutton"
-  {{action "toggle" on="click"}}>
-  <label>
-    <input type="checkbox" 
-      {{bind-attr checked=value}} />
-    {{label}}
-  </label>
-</div>
+
+  <div class="Input-switch inline-block align-middle" {{action "toggle" on="click"}}>
+    {{input type="checkbox" checked=value class="Input-switch__checkbox"}}
+    <label class="Input-switch__label">&nbsp;</label>
+  </div>
+  <label class="text-sm">{{label}}</label>

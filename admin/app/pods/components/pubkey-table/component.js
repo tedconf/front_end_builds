@@ -1,16 +1,16 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { filterBy } from '@ember/object/computed';
 
-export default Ember.Component.extend({
-  tagName: 'table',
-  classNames: 'Pubkey-table table'.w(),
+export default Component.extend({
+  classNames: Object.freeze(['Pubkey-table']),
 
   removeAction: "remove",
 
   actions: {
-    remove: function(pubkey) {
-      this.sendAction('removeAction', pubkey);
+    remove(pubkey) {
+      this.removeAction(pubkey);
     }
   },
 
-  displayKeys: Ember.computed.filterBy('pubkeys', 'id'),
+  displayKeys: filterBy('pubkeys', 'id'),
 });

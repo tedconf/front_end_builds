@@ -1,5 +1,5 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
-  classNames: ['Page-title', 'clearfix']
+export default Component.extend({
+  classNames: Object.freeze(['Page-title', 'clearfix'])
 });

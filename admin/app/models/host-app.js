@@ -1,9 +1,11 @@
 import DS from 'ember-data';
+const { attr } = DS;
+import { computed } from '@ember/object';
 
 export default DS.Model.extend({
-  name: DS.attr('string'),
+  name: attr('string'),
 
-  friendlyName: function() {
+  friendlyName: computed('name', function() {
     return this.get('name').replace('_', ' ').capitalize();
-  }.property('name')
+  })
 });

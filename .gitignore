@@ -9,3 +9,4 @@ spec/dummy/tmp/
 spec/dummy/.sass-cache
 Gemfile.lock
 .byebug_history
+.DS_Store

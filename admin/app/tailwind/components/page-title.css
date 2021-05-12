@@ -1,0 +1,7 @@
+.Page-title {
+  @apply .pt-8 .h-24;
+}
+
+.Page-title__name {
+  @apply .font-hairline;
+}

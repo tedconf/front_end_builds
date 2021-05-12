@@ -1,110 +1,101 @@
-import Ember from 'ember';
-import {module, test} from 'qunit';
-import startApp from '../helpers/start-app';
-/* global server */
+import { module, test } from 'qunit';
+import { visit, currentRouteName, click, fillIn } from '@ember/test-helpers';
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { assertionInjector } from '../assertions';
 
-var App;
+module('Acceptance | app', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  hooks.beforeEach(function() {
+    assertionInjector(this);
+  });
 
-module('Acceptance: App', {
-  beforeEach: function() {
-    App = startApp();
-    server.create('host_app', { id: 'current' });
-  },
-  afterEach: function() {
-    Ember.run(App, 'destroy');
-  }
-});
+  test('I can view an app\'s overview', async function(assert) {
+    this.server.create('host_app', { id: 'current' });
+    this.server.create('app', { name: 'CRM' });
 
-test("I can view an app's overview", function(assert) {
-  server.create('app', { name: 'CRM' });
+    await visit('/apps/1');
 
-  visit('/apps/1');
-
-  andThen(function() {
     assert.equal(currentRouteName(), 'app.index');
-    assertText('h1', 'CRM');
-  });
-});
-
-test("I see an info message if an app has no builds", function(assert) {
-  server.create('app');
-
-  visit('/apps/1');
-
-  andThen(function() {
-    assertPageContainsText('No active build');
-  });
-});
-
-test("I see an info message if an app has builds, but none are live", function(assert) {
-  server.create('app', { build_ids: [1] });
-  server.create('build', { app_id: 1 });
-
-  visit('/apps/1');
-
-  andThen(function() {
-    assertPageContainsText('No active build');
-  });
-});
-
-test("I can view summary information about the app's current live build", function(assert) {
-  server.create('app', {
-    build_ids: [1],
-    live_build_id: 1
+    assert.contains('h1', 'CRM');
   });
 
-  server.create('build', {
-    app_id: 1,
-    branch: 'master',
-    sha: '123'
+  test('I see an info message if an app has no builds', async function(assert) {
+    this.server.create('host_app', { id: 'current' });
+    this.server.create('app');
+
+    await visit('/apps/1');
+
+    assert.contains('body', 'No active build');
   });
 
-  visit('/apps/1');
+  test("I see an info message if an app has builds, but none are live", async function(assert) {
+    this.server.create('host_app', { id: 'current' });
+    this.server.create('app', { build_ids: [1] });
+    this.server.create('build', { app_id: 1 });
 
-  andThen(function() {
-    var summaryPanel = find('.panel-success:contains("Active build")');
+    visit('/apps/1');
 
-    assert.ok(summaryPanel.text().match('master').length);
-    assert.ok(summaryPanel.text().match('123').length);
+    assert.contains('body', 'No active build');
   });
-});
 
-test("In the builds list, I can see all an app's builds", function(assert) {
-  server.create('app', { name: 'blog', build_ids: [1, 2, 3] });
-  server.create('build', { app_id: 1, branch: 'master', sha: '123' });
-  server.create('build', { app_id: 1, branch: 'master', sha: '789' });
-  server.create('build', { app_id: 1, branch: 'master', sha: '456' });
+  test("I can view summary information about the app's current live build", async function(assert) {
+    this.server.create('host_app', { id: 'current' });
+    this.server.create('app', {
+      build_ids: [1],
+      live_build_id: 1
+    });
 
-  visit('/apps/1');
+    this.server.create('build', {
+      app_id: 1,
+      branch: 'master',
+      sha: '123'
+    });
 
-  andThen(function() {
-    assert.equal(find('.Build-list__build-row').length, 3);
+    await visit('/apps/1');
+
+    assert.contains('.Build-info', 'master');
+    assert.contains('.Build-info', '123');
   });
-});
 
-test("In the builds list, I can view which build is live", function(assert) {
-  server.create('app', { name: 'blog', build_ids: [1, 2, 3], live_build_id: 1 });
-  server.create('build', { app_id: 1, branch: 'master', sha: '123' });
-  server.create('build', { app_id: 1, branch: 'master', sha: '456' });
-  server.create('build', { app_id: 1, branch: 'master', sha: '789' });
 
-  visit('/apps/1');
+  test("In the builds list, I can see all an app's builds", async function(assert) {
+    this.server.create('host_app', { id: 'current' });
+    this.server.create('app', { name: 'blog', build_ids: [1, 2, 3] });
+    this.server.create('build', { app_id: 1, branch: 'master', sha: '123' });
+    this.server.create('build', { app_id: 1, branch: 'master', sha: '789' });
+    this.server.create('build', { app_id: 1, branch: 'master', sha: '456' });
 
-  assertExists('.Build-list__control-live-button--live');
-});
+    await visit('/apps/1');
 
-test("I can delete an app", function(assert) {
- server.create('app', { name: 'blog' });
+    assert.count(".Build-table .Table__row", 3);
+  });
 
- visit('/apps/1');
+  test("In the builds list, I can view which build is live", async function(assert) {
+    this.server.create('host_app', { id: 'current' });
+    this.server.create('app', { name: 'blog', build_ids: [1, 2, 3], live_build_id: 1 });
+    this.server.create('build', { app_id: 1, branch: 'master', sha: '123' });
+    this.server.create('build', { app_id: 1, branch: 'master', sha: '456' });
+    this.server.create('build', { app_id: 1, branch: 'master', sha: '789' });
 
- click('button:contains("Delete")');
+    await visit('/apps/1');
 
- fillIn('input', 'blog');
- click('button:contains("I understand")');
+    assert.count(".Build-table a.btn-default", 1);
+  });
 
- andThen(function() {
+  test("I can delete an app", async function(assert) {
+    this.server.create('host_app', { id: 'current' });
+    this.server.create('app', { name: 'blog' });
+
+    await visit('/apps/1');
+
+    await click('button.delete-app-button');
+
+    await fillIn('input.Form__name', 'blog');
+    await click('button.btn-danger');
+
    assert.equal(currentRouteName(), 'apps');
-   assert.equal(find('.App-card').length, 0);
- });
+   assert.count(".App-card", 0);
+  });
 });

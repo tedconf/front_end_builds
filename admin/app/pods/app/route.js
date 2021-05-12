@@ -1,19 +1,7 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
-
-  actions: {
-    activateNewDeploys: function(value) {
-      var app = this.controller.get('model');
-
-      app.set('requireManualActivation', !value);
-      app.save();
-    },
-
-    appDeleted: function() {
-      this.set('controller.willDelete', undefined);
-      this.transitionTo('apps');
-    }
+export default Route.extend({
+  model: function(params) {
+    return this.store.findRecord('app', params.app_id);
   }
-
 });

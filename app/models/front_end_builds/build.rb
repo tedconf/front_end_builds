@@ -18,8 +18,6 @@ module FrontEndBuilds
     validates :branch, presence: true
     validates :signature, presence: true
 
-    scope :recent, -> { limit(10).order('created_at desc') }
-
     def self.find_best(params = {})
       scope = self
 

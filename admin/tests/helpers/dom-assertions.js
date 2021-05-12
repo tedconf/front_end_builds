@@ -1,9 +1,11 @@
 /* global QUnit */
-import Ember from 'ember';
+import { registerAsyncHelper } from '@ember/test';
+import $ from 'jquery';
+import { wait } from 'ember-test-helpers';
 
-console.log('running');
+// console.log('running');
 
-Ember.Test.registerAsyncHelper('assertExists', function(app, selector, times) {
+registerAsyncHelper('assertExists', function(app, selector, times) {
   if (arguments.length < 3) {
     times = 1;
   }
@@ -15,7 +17,7 @@ Ember.Test.registerAsyncHelper('assertExists', function(app, selector, times) {
     });
 });
 
-Ember.Test.registerAsyncHelper('assertText', function(app, selector, text) {
+registerAsyncHelper('assertText', function(app, selector, text) {
   return wait()
     .find(selector)
     .then(function(element) {
@@ -23,7 +25,7 @@ Ember.Test.registerAsyncHelper('assertText', function(app, selector, text) {
     });
 });
 
-Ember.Test.registerAsyncHelper('assertPageContainsText', function(app, text) {
+registerAsyncHelper('assertPageContainsText', function(app, text) {
   return wait()
     .then(function() {
       var element = $('#ember-testing:contains("' + text + '")');

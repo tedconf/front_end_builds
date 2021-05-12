@@ -1,0 +1,31 @@
+.Panel {
+  @apply .mb-2 .border-solid .border-grey-lighter .bg-white .border .shadow-md;
+}
+
+.Panel-head, .Panel-head a {
+  @apply .font-mono .capitalize .no-underline .px-2 .py-3 .border-solid .border-grey-lighter .border-b .text-white .bg-teal-dark;
+}
+
+.Panel-head__active, .Panel-head__active a {
+  @apply .bg-green-dark;
+}
+
+.Panel-head__inactive, .Panel-head__inactive a {
+  @apply .bg-grey-lighter .text-grey;
+}
+
+.Panel-head__modal {
+  @apply .bg-blue-dark;
+}
+
+.Panel-content {
+  @apply .p-3;
+}
+
+.Panel-footer {
+  @apply .border-solid .border-grey-lighter .border-t p-3;
+}
+
+.Panel-footer a {
+  @apply .leading-normal .text-blue .no-underline .uppercase;
+}
