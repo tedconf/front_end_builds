@@ -1,5 +1,6 @@
 module FrontEndBuilds
   class ApplicationController < ActionController::Base
+    skip_before_action :verify_authenticity_token
 
     # Public: A quick helper to create a respond_to block for
     # returning json to the client. Used because `respond_with`
