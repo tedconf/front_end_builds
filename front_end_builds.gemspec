@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib,public}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
-  # min supported version
+  # max supported version
   s.add_dependency 'rails', '< 7'
 
   # Ideally we'd use this https://github.com/bensie/sshkey
@@ -38,8 +38,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'shoulda-matchers', '2.7.0'
   # These 2 are needed so that the rails app version matches
   # otherwise bundle gives you sprockets 4
-  s.add_development_dependency 'sprockets', '4.0.2'
-  s.add_development_dependency 'sprockets-rails', '3.4.2'
+  # s.add_development_dependency 'sprockets', '4.0.2'
+  # s.add_development_dependency 'sprockets-rails', '3.4.2'
   s.add_development_dependency "sqlite3"
   s.add_development_dependency 'webmock'
 end
