@@ -6,7 +6,7 @@ module FrontEndBuilds
       respond_with_json({
         host_app: {
           id: params[:id],
-          name: Rails.application.class.parent_name
+          name: Rails.application.class.module_parent_name.underscore
         }
       })
     end

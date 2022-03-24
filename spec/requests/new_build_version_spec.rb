@@ -22,8 +22,8 @@ describe "Front end builds new version", type: :request do
   it "gets a different version when a new build is created" do
     # get the current version
     get version_url, headers: headers
-    expect(response).to be_success
-    expect(json['version']).to_not be_nil
+    expect(response.successful?).to be true
+    expect(json['version']).to_not be nil
 
     original_version = json['version']
 
@@ -36,12 +36,12 @@ describe "Front end builds new version", type: :request do
         signature: create_signature("dummy-#{endpoint}")
       }
 
-    expect(response).to be_success
+    expect(response.successful?).to be true
 
     # now we should get a new version
     get version_url, headers: headers
-    expect(response).to be_success
-    expect(json['version']).to_not be_nil
+    expect(response.successful?).to be true
+    expect(json['version']).to_not be nil
 
     new_version = json['version']
 

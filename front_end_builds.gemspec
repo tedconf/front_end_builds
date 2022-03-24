@@ -17,8 +17,8 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib,public}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
-  # min supported version
-  s.add_dependency 'rails', '>= 5.0'
+  # Use Rails 6
+  s.add_dependency 'rails', '> 5', '< 7'
 
   # Ideally we'd use this https://github.com/bensie/sshkey
   # for ssh key bits, but it doesn't support OpenSSL v2.x

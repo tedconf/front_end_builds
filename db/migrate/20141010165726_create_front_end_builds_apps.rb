@@ -1,4 +1,4 @@
-class CreateFrontEndBuildsApps < ActiveRecord::Migration
+class CreateFrontEndBuildsApps < ActiveRecord::Migration[4.2]
   def change
     create_table :front_end_builds_apps do |t|
       t.string :name, limit: 191

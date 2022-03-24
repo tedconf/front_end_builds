@@ -14,7 +14,7 @@ describe 'I should be able to access the admin assets', type: :request do
   it 'should return the js file' do
     get admin_javascript_url
 
-    expect(response).to be_success
+    expect(response.successful?).to be true
     expect(response.body[0..1000]).to eq(admin_javascript_content[0..1000])
   end
 end

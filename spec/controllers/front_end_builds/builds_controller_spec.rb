@@ -11,7 +11,7 @@ module FrontEndBuilds
         create_list(:front_end_builds_build, 3, app: app)
 
         get :index, params: { app_id: app.id }, format: :json
-        expect(response).to be_success
+        expect(response.successful?).to be true
         expect(json['builds'].length).to eq(3)
       end
 
@@ -20,7 +20,7 @@ module FrontEndBuilds
         create(:front_end_builds_build)
 
         get :index, params: { app_id: app.id }, format: :json
-        expect(response).to be_success
+        expect(response.successful?).to be true
         expect(json['builds'].length).to eq(1)
         expect(json['builds'].first['id']).to eq(build1.id)
       end
@@ -29,7 +29,7 @@ module FrontEndBuilds
         create_list(:front_end_builds_build, 3)
 
         get :index, format: :json
-        expect(response).to be_success
+        expect(response.successful?).to be true
         expect(json['builds'].length).to eq(0)
       end
     end
@@ -41,7 +41,7 @@ module FrontEndBuilds
 
       it "should load the app" do
         get :show, params: { id: build.id }, format: :json
-        expect(response).to be_success
+        expect(response.successful?).to be true
         expect(json['build']['id']).to eq(build.id)
       end
     end
@@ -75,7 +75,7 @@ module FrontEndBuilds
           signature: create_signature("#{app.name}-#{endpoint}")
         }
 
-        expect(response).to be_success
+        expect(response.successful?).to be true
         expect(app.reload.live_build.html).to eq('fetched html')
       end
 
@@ -91,12 +91,12 @@ module FrontEndBuilds
           signature: create_signature("#{app.name}-#{endpoint}")
         }
 
-        expect(response).to be_success
+        expect(response.successful?).to be true
         expect(app.reload.live_build.html).to eq('the old build')
       end
 
       it "should not active a build if the app requires manual activiation" do
-        app.update_attributes(require_manual_activation: true)
+        app.update(require_manual_activation: true)
 
         post :create, params: {
           app_name: app.name,
@@ -107,12 +107,12 @@ module FrontEndBuilds
           signature: create_signature("#{app.name}-#{endpoint}")
         }
 
-        expect(response).to be_success
+        expect(response.successful?).to be true
         expect(app.live_build.html).to eq('the old build')
       end
 
       it 'should error if the app cannot be found' do
-        app.update_attributes(require_manual_activation: true)
+        app.update(require_manual_activation: true)
 
         post :create, params: {
           app_name: 'this-does-not-exist',
@@ -123,7 +123,7 @@ module FrontEndBuilds
           signature: create_signature("unknown-#{endpoint}")
         }
 
-        expect(response).to_not be_success
+        expect(response.successful?).to_not be true
         expect(response.body).to eq('No app named this-does-not-exist.')
       end
 
@@ -141,7 +141,7 @@ module FrontEndBuilds
           signature: Base64.encode64(signature)
         }
 
-        expect(response).to_not be_success
+        expect(response.successful?).to_not be true
         expect(response.body).to match("No access - invalid SSH key")
       end
 
@@ -151,7 +151,7 @@ module FrontEndBuilds
           endpoint: endpoint,
           signature: create_signature("#{app.name}-#{endpoint}")
         }
-        expect(response).to_not be_success
+        expect(response.successful?).to_not be true
         expect(response.body).to match("Sha can't be blank")
       end
 
@@ -165,7 +165,7 @@ module FrontEndBuilds
           signature: create_signature('hello world')
         }
 
-        expect(response).to be_success
+        expect(response.successful?).to be true
         expect(app.live_build.html).to eq('the old build')
       end
     end

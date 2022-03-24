@@ -8,7 +8,7 @@ rails = case rails_version
 when 'master'
   { :github => 'rails/rails'}
 when 'default'
-  '~> 5.0.4'
+  '~> 6'
 else
   "~> #{rails_version}"
 end
@@ -18,5 +18,5 @@ gem 'rails', rails
 
  # these are here so travis will work
 group :test, :development do
-  gem 'sqlite3', '< 1.4'
+  gem 'sqlite3'
 end

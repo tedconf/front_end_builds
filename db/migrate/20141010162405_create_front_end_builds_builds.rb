@@ -1,4 +1,4 @@
-class CreateFrontEndBuildsBuilds < ActiveRecord::Migration
+class CreateFrontEndBuildsBuilds < ActiveRecord::Migration[4.2]
   def change
     create_table :front_end_builds_builds do |t|
       t.references :app

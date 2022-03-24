@@ -252,7 +252,7 @@ module FrontEndBuilds
 
       it 'should not fetch if the build already has html' do
         expect(build).to_not receive(:fetch!)
-        build.update_attributes(html: 'got it')
+        build.update(html: 'got it')
         build.setup!
       end
 
