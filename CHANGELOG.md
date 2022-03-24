@@ -1,5 +1,10 @@
 # What's new
 
+### 1.0.5 (May 11, 2020)
+* Version 1.0.5 may be used with Rails version 6 only.
+* Update rspec syntax to work with more modern versions
+* Bump Ruby version to 2.7.5
+
 ### 1.0.4 (May 11, 2021)
 * changed rails dependency to '>= 5.0'
 

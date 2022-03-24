@@ -104,7 +104,6 @@ module FrontEndBuilds
 
       context 'a valid app' do
         before(:each) do
-          # binding.pry
           post :destroy,
             params: {
               id: deletable_app.id

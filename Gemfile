@@ -15,6 +15,7 @@ end
 
 gem 'rails', rails
 
+gem 'bigdecimal', '1.4.2'
 
  # these are here so travis will work
 group :test, :development do
