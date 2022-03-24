@@ -118,7 +118,7 @@ module FrontEndBuilds
 
         context 'the data' do
           subject { json['app']['id'] }
-          it { expect(subject).not_to be nil }
+          it { expect(subject).to be_truthy }
         end
 
         context 'the record' do
