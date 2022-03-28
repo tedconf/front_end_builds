@@ -1,4 +1,4 @@
-class CreateFrontEndBuildsPubkeys < ActiveRecord::Migration
+class CreateFrontEndBuildsPubkeys < ActiveRecord::Migration[4.2]
   def change
     create_table :front_end_builds_pubkeys do |t|
       t.string :name, null: false, limit: 191

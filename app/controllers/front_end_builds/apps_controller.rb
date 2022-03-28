@@ -44,7 +44,7 @@ module FrontEndBuilds
     end
 
     def update
-      if @app.update_attributes( app_update_params )
+      if @app.update( app_update_params )
 
         respond_with_json(
           { app: @app.serialize },

@@ -12,7 +12,7 @@ module FrontEndBuilds
       it "should find all apps" do
         get :index, format: :json
 
-        expect(response).to be_success
+        expect(response.successful?).to be true
         expect(json['apps'].length).to eq(1)
         expect(json['builds'].length).to eq(3)
       end
@@ -34,7 +34,7 @@ module FrontEndBuilds
         it "Finds the correct builds_ids for EACH app" do
           get :index, format: :json
 
-          expect(response).to be_success
+          expect(response.successful?).to be true
           expect(json['apps'].length).to eq(2)
           app1_json = json['apps'].select{|x| x['id'] == app1.id}.first
           app2_json = json['apps'].select{|x| x['id'] == app2.id}.first
@@ -52,7 +52,7 @@ module FrontEndBuilds
       it "should find the requested app" do
         get :show, params: { id: app.id }, format: :json
 
-        expect(response).to be_success
+        expect(response.successful?).to be true
         expect(json['app']['id']).to eq(app.id)
         expect(json['builds'].length).to eq(3)
         expect(json['app']['live_build_id']).to eq(app.live_build.id)
@@ -68,7 +68,7 @@ module FrontEndBuilds
           },
           format: :json
 
-        expect(response).to be_success
+        expect(response.successful?).to be true
 
         app = FrontEndBuilds::App.where(name: 'my-new-app').limit(1).first
         expect(json['app']['id']).to eq(app.id)
@@ -90,7 +90,7 @@ module FrontEndBuilds
           },
           format: :json
 
-        expect(response).to be_success
+        expect(response.successful?).to be true
 
         app.reload
 
@@ -113,12 +113,12 @@ module FrontEndBuilds
 
         context 'the response' do
           subject { response }
-          it { should be_success }
+          it { expect(subject.successful?).to be true }
         end
 
         context 'the data' do
           subject { json['app']['id'] }
-          it { should_not be_nil }
+          it { expect(subject).to be_truthy }
         end
 
         context 'the record' do
