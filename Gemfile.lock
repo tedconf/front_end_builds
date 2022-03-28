@@ -225,6 +225,7 @@ PLATFORMS
 
 DEPENDENCIES
   bigdecimal (= 1.4.2)
+  bundler (>= 1.15.0)
   bundler-audit
   byebug
   database_cleaner
