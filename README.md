@@ -2,8 +2,10 @@
 
 TED has shifted to React and will no longer maintain this application/library. If you wish to continue using this application/library, please create a pull request and repo ownership can be transferred. This repository will be archived at the end of 2022.
 
-[![Build Status](https://travis-ci.org/tedconf/front_end_builds.svg)](https://travis-ci.org/tedconf/front_end_builds) [![Code
-Climate](https://codeclimate.com/github/tedconf/front_end_builds/badges/gpa.svg)](https://codeclimate.com/github/tedconf/front_end_builds) [![Gem Version](https://badge.fury.io/rb/front_end_builds.svg)](http://badge.fury.io/rb/front_end_builds)
+You can read documentation on how we curently use FrontEndBuilds in [Confluence](https://tedconferences.atlassian.net/l/cp/9LYpxC2z).
+
+# SSH Key Warning
+Only **RSA keys** are supported for authentication. This means you cannot and should not use your regular TED SSH public key for front end builds deployments. Make sure you're checking your `FEB_DEPLOY_KEY` value in the environment and that it is pointing to an RSA key. You can't generate the keys using ssh-add you'll need the use [something like this](https://www.scottbrady91.com/openssl/creating-rsa-keys-using-openssl).
 
 # FrontEndBuilds
 
@@ -106,9 +108,6 @@ bin/rails server
 
 Visit `/frontends` to access the Admin interface, and visit the `front_end` route, which will initially return 404 Not found since you haven't configured and deployed any front-end builds yet.
 
-## A note on SSH Keys
-At this time only RSA keys are supported for authentication. You can't generate the keys using ssh-add you'll need the use [something like this](https://www.scottbrady91.com/openssl/creating-rsa-keys-using-openssl)
-
 ### Example Next Steps with Heroku and Ember.js
 
 A common configuration is to deploy your FEB-enabled Rails app to Heroku, and deploy your Ember.js frontend to S3:
@@ -143,15 +142,6 @@ rspec
 # Admin tests, from /admin dir
 ember test
 ```
-
-## Build status
-[This gem is built on Travis-CI.](https://travis-ci.org/tedconf/front_end_builds)
-
-![](https://travis-ci.org/tedconf/front_end_builds.svg?branch=master)
-
-## TODO
-
-* Create docs site
 * Auto live setting
 * make posts idempotent (i think they are), but dont insert a new row if
   it already exists.
