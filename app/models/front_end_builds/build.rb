@@ -88,7 +88,7 @@ module FrontEndBuilds
       self.fetched = true
       save
 
-      if automatic_activation? && master?
+      if automatic_activation?
         activate!
       end
     end
