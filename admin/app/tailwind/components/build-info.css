@@ -1,0 +1,11 @@
+.Build-info__label {
+  @apply .uppercase .text-grey-darker;
+}
+
+.Build-info__value {
+  @apply .font-mono .text-sm .text-grey-dark;
+}
+
+.Build-info__no-build {
+  @apply .font-mono .text-sm .text-grey-dark .text-center;
+}

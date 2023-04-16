@@ -1,0 +1,31 @@
+{{#modal-panel title="Rename this app?"
+  showCancel=true
+  dismiss=(action 'dismiss')
+  submitLabel="I UNDERSTAND, DELETE THE APP"
+  submittingLabel="Deleting..."
+  submitClass="btn-danger"
+  submitDisabled=showNameError
+  submit=(action 'submit')
+  isSubmitting=isSubmitting
+  }}
+
+  <p>
+    This action <strong>CANNOT</strong> be undone. If you delete the <strong>{{app.name}}</strong> app, users will no longer be able to view it when they visit <a href="{{app.location}}" target='_blank'>{{app.location}}</a>.
+  </p>
+
+  <p>
+    Please type in the name of this app to confirm.
+  </p>
+
+  <form {{action "submit" on="submit"}}>
+    <div class="Form__row {{if showNameError "Form__row-error"}}">
+      {{input
+        value=confirmedName
+        classNames="Form__name"
+        id="app-name"
+        placeholder="Type in the name of this app to confirm"
+      }}
+    </div>
+  </form>
+
+{{/modal-panel}}

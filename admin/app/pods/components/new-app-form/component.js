@@ -1,20 +1,20 @@
-import Ember from 'ember';
-import EmberValidations from 'ember-validations';
+import Component from '@ember/component';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
 
-export default Ember.Component.extend(
-  EmberValidations.Mixin, {
+export default Component.extend({
 
-  classNames: ['New-app-form'],
+  classNames: Object.freeze(['App-form', 'Form']),
+  store: service(),
 
-  hasNoNameError: Ember.computed.empty('errors.app.name'),
-  hasNameError: Ember.computed.not('hasNoNameError'),
-  showNameError: Ember.computed.and('hasNameError', 'isValidating'),
+  showNameError: computed('app.name', function(){
+    return !this.get('app.validations.attrs.name.isValid');
+  }),
 
-  validations: {
-    'app.name': { presence: true }
-  },
+  didInsertElement() {
+    let app = this.get('store').createRecord('app', {});
 
-  didInsertElement: function() {
+    this.set('app', app);
     this.$('input')
       .focus()
       .on('keyup', (e) => {
@@ -25,18 +25,21 @@ export default Ember.Component.extend(
   },
 
   actions: {
-    createApp: function(callback) {
-      this.set('isValidating', true);
-
-      var promise = this.validate()
-        .then(() => this.set('isValidating', false))
-        .then(() => this.get('app').save());
-
-      callback(promise);
+    createApp() {
+      this.set('isCreating', true);
+      if (this.get('app.validations.isValid')) {
+        this.get('app').save().then(() => {
+          this.set('isCreating', false);
+          this.dismiss();
+        });
+      } else {
+        this.set('isCreating', false);
+      }
     },
 
-    discardNewApp: function() {
+    discardNewApp() {
       this.get('app').deleteRecord();
+      this.dismiss();
     }
   }
 });

@@ -5,7 +5,7 @@ module FrontEndBuilds
     before_action :set_app!, only: [:create]
 
     def index
-      builds = FrontEndBuilds::Build.where(app_id: params[:app_id])
+      builds = FrontEndBuilds::Build.where(app_id: params[:app_id]).order('created_at desc').page(params.fetch(:page, 1))
       respond_with_json({
           builds: builds.map(&:serialize)
         })

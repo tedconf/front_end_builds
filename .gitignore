@@ -7,3 +7,4 @@ spec/dummy/public/assets/*
 spec/dummy/tmp/
 spec/dummy/.sass-cache
 .byebug_history
+.DS_Store

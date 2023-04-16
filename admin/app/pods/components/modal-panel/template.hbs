@@ -1,0 +1,35 @@
+<div class="fixed z-50 pin overflow-auto bg-smoke-dark flex">
+  <div class="Panel fixed shadow-inner max-w-md md:relative pin-b pin-x align-top m-auto justify-end md:justify-center w-full md:h-auto md:shadow">
+
+    <div class="Panel-head Panel-head__modal">
+      {{title}}
+      <div {{action 'dismiss'}} class="float-right cursor-pointer mr-2">
+        {{fa-icon "times"}}
+      </div>
+    </div>
+
+
+    <div class="Panel-content">
+      {{yield}}
+    </div>
+
+    <div class="Panel-footer">
+      {{#if submitDisabled}}
+        <button type="submit" class="btn btn-default">{{submitLabel}}</button>
+      {{else}}
+        {{#if isSubmitting}}
+          <button type="submit" class="btn btn-default">{{submittingLabel}}</button>
+        {{else}}
+          <button type="submit" {{action "submit"}} class="btn {{if submitClass submitClass "btn-success"}}">{{submitLabel}}</button>
+        {{/if}}
+      {{/if}}
+
+      {{#if showCancel}}
+        <button {{action "dismiss"}}
+          class="Form__cancel btn btn-primary">
+            Cancel
+        </button>
+      {{/if}}
+    </div>
+  </div>
+</div>

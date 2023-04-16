@@ -1,0 +1,45 @@
+<form {{action "createPubkey" on="submit"}}>
+  <legend>Add SSH public key</legend>
+
+  <div class="Form__row {{if showNameError "Form__row-error"}}">
+    <label class="Form__label {{if showNameError "Form__label-error"}}" for="pubkey-name">
+      Name
+    </label>
+    {{input
+      value=pubkey.name
+      classNames="Form__name"
+      id="pubkey-name"
+      placeholder="Whos key is this"
+    }}
+  </div>
+
+  <div class="Form__row {{if showPubkeyError "Form__row-error"}}">
+    <label class="Form__label {{if showPubkeyError "Form__label-error"}}" for="pubkey-pubkey">
+      Public key
+    </label>
+    <p class="help-block">
+      Copy and paste your public key here. This is usually in your home folder under <em>~/.ssh/id_rsa.pub</em>.
+    </p>
+    {{textarea
+      value=pubkey.pubkey
+      rows="10"
+      classNames="Form__pubkey"
+      id="pubkey-pubkey"
+    }}
+  </div>
+
+  <div class="Form__buttons">
+    {{#if isCreating}}
+      <button type="submit" class="btn btn-default">Creating...</button>
+    {{else}}
+      <button type="submit" {{action "createPubkey"}} class="btn btn-success">Create</button>
+    {{/if}}
+
+    {{#if showCancel}}
+      <button {{action "discardNewPubkey"}}
+        class="Form__cancel btn btn-primary">
+          Cancel
+      </button>
+    {{/if}}
+  </div>
+</form>

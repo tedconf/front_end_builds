@@ -1,15 +1,20 @@
-/* jshint node: true */
+'use strict';
+
 module.exports = function(environment) {
-  var ENV = {
+  let ENV = {
     modulePrefix: 'admin',
     podModulePrefix: 'admin/pods',
-    environment: environment,
-    baseURL: '/',
+    environment,
+    rootURL: '/',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
+      },
+      EXTEND_PROTOTYPES: {
+        // Prevent Ember Data from overriding Date.parse.
+        Date: false
       }
     },
 
@@ -29,7 +34,6 @@ module.exports = function(environment) {
 
   if (environment === 'test') {
     // Testem prefers this...
-    ENV.baseURL = '/';
     ENV.locationType = 'none';
 
     // keep test console output quieter
@@ -37,10 +41,12 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
+    ENV.APP.autoboot = false;
   }
 
   if (environment === 'production') {
-    ENV.baseURL = 'BASEURL';
+    // here you can enable a production-specific feature
+    ENV.rootURL = 'BASEURL';
   }
 
   return ENV;

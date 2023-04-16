@@ -1,24 +1,19 @@
 {{#page-title name="Apps"}}
-  <button {{action 'createApp'}} class="btn btn-primary btn-sm new-app-button">
-    {{fa-icon 'plus'}}
-    New app
+  <button {{action "showForm"}} disabled={{isAdding}} class="btn {{if isAdding "btn-default" "btn-primary"}} new-app">
+    {{fa-icon "plus"}} New app
   </button>
 {{/page-title}}
 
-{{#liquid-if newApp class="animate-sliding-drawer"}}
+{{#liquid-if isAdding class="animate-sliding-drawer"}}
   <div class="well">
-    {{new-app-form app=newApp}}
+    {{new-app-form dismiss=(action "hideForm")}}
   </div>
-
-  <hr />
 {{/liquid-if}}
 
-<div class="row">
-  {{#each app in orderedApps}}
-    <div class="col-xs-12 col-sm-6 col-md-4 col-eq-height">
+<div class="flex flex-wrap -mx-3 -my-2 mb-4 items-stretch">
+  {{#each orderedApps as |app|}}
+    <div class="w-full px-3 py-2 sm:w-1/2 lg:w-1/3 self-stretch">
       {{app-card app=app}}
     </div>
   {{/each}}
 </div>
-
-{{liquid-modal}}

@@ -1,0 +1,36 @@
+.Table {
+  @apply .table .border-collapse .w-full .mt-3;
+}
+
+.Table__head {
+  @apply .h-8 .text-left .border-b .border-solid .border-grey-lighter;
+}
+
+.Table__head th {
+  @apply .px-3;
+}
+
+.Table__row {
+  @apply .h-16 .border-b .border-solid .border-grey-lighter;
+}
+
+.Table__row td {
+  @apply .px-3;
+}
+
+.Table__build {
+  @apply .font-mono .no-underline .text-grey;
+}
+
+.Table__row .btn-primary {
+  display:none;
+}
+
+.Table__row:hover .btn-primary {
+  display:inline-block;
+  margin-right: 3px;
+}
+
+.Table__actions {
+  width: 150px;
+}

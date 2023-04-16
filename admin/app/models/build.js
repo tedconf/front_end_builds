@@ -1,30 +1,42 @@
 import DS from 'ember-data';
+const { attr, belongsTo } = DS;
+import { computed } from '@ember/object';
+import moment from 'moment';
 
 export default DS.Model.extend({
-  app: DS.belongsTo('app', {inverse: 'builds'}),
+  app: belongsTo('app', {inverse: 'builds'}),
 
-  sha: DS.attr('string'),
-  job: DS.attr('string'),
-  branch: DS.attr('string'),
-  createdAt: DS.attr('date'),
+  sha: attr('string'),
+  job: attr('string'),
+  branch: attr('string'),
+  createdAt: attr('date'),
 
-  isLive: function() {
-    return this === this.get('app.liveBuild');
-  }.property('app.liveBuild'),
+  createdAtFormatted: computed('createdAt', function(){
+    let createdAt = this.get('createdAt');
+    return `${moment(createdAt).fromNow()} (${moment(createdAt).format('MMM D YYYY')})`;
+  }),
 
-  activate: function() {
-    return this.get('app').set('liveBuild', this).save();
-  },
+  isLive: computed('app.liveBuild', function() {
+    return this.get('id') === this.get('app.liveBuild.id');
+  }),
 
-  shortSha: function() {
-    return this.get('sha').slice(0, 7);
-  }.property('sha'),
+  shortSha: computed('sha', function() {
+    return this.get('sha') ? this.get('sha').slice(0, 7) : '';
+  }),
 
-  location: function() {
+  location: computed('app.location', 'isLive', 'id', function() {
     var base = this.get('app.location');
     var isLive = this.get('isLive');
     var id = this.get('id');
 
     return isLive ? base : `${base}?id=${id}`;
-  }.property('app.location', 'isLive', 'id')
+  }),
+
+  locationBranch: computed('app.location', 'isLive', 'branch', function() {
+    var base = this.get('app.location');
+    var isLive = this.get('isLive');
+    var branch = this.get('branch');
+
+    return isLive ? base : `${base}?branch=${branch}`;
+  })
 });

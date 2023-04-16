@@ -1,18 +1,18 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
-  pubkey: null,
-  removeAction: "remove",
-
-  classNames: ["Delete-pubkey-modal"],
+export default Component.extend({
+  classNames: Object.freeze(['Delete-pubkey-modal']),
 
   actions: {
-    remove: function() {
-      this.sendAction('removeAction', this.get('pubkey'));
+    dismiss() {
+      this.dismiss();
     },
-
-    dismiss: function() {
-      this.sendAction('dismiss');
+    submit() {
+      this.set('isSubmitting', true);
+      this.get('pubkey').destroyRecord().then(() => {
+        this.set('isSubmitting', false);
+        this.dismiss();
+      });
     }
   }
 });

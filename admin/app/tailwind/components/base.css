@@ -1,0 +1,19 @@
+body {
+  @apply .font-thin text-base bg-grey-lightest;
+}
+
+a {
+  @apply .capitalize .no-underline .text-blue;
+}
+
+pre {
+  @apply .bg-grey-lightest .border border-solid .border-grey-light .text-grey-darker .p-3 .my-3;
+}
+
+code {
+  @apply .text-red;
+}
+
+p {
+  @apply .py-2;
+}
