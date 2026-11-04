@@ -1,5 +1,4 @@
 require 'rack/utils'
-require 'active_support/core_ext/uri'
 require 'action_dispatch/middleware/static'
 
 module FrontEndBuilds
