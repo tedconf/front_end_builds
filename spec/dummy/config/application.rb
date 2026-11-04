@@ -1,6 +1,8 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+# Rails 7 dropped sprockets from rails/all; the dummy app's assets initializer needs it.
+require 'sprockets/railtie'
 
 Bundler.require(*Rails.groups)
 require "front_end_builds"
