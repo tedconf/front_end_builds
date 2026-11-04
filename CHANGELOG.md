@@ -1,5 +1,11 @@
 # What's new
 
+### 1.0.6 (November 2026)
+* Allow Rails 7 (`> 5, < 8`). Tested on Rails 6.1 and 7.0.
+* Use `errors.add` for the invalid SSH key message; Rails 7 drops `errors[:base] <<`.
+* Remove the unused `active_support/core_ext/uri` require (deprecated in 7.0, gone in 7.1).
+* Ruby 2.7.8.
+
 ### 1.0.5 (May 11, 2020)
 * Version 1.0.5 may be used with Rails version 6 only.
 * Update rspec syntax to work with more modern versions

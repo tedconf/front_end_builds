@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    front_end_builds (1.0.5)
-      rails (> 5, < 7)
+    front_end_builds (1.0.6)
+      rails (> 5, < 8)
 
 GEM
   remote: https://rubygems.org/
