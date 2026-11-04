@@ -19,7 +19,7 @@ module FrontEndBuilds
         head :ok
 
       else
-        build.errors[:base] << 'No access - invalid SSH key' if !build.verify
+        build.errors.add(:base, 'No access - invalid SSH key') if !build.verify
 
         render(
           plain: 'Could not create the build: ' + build.errors.full_messages.to_s,
